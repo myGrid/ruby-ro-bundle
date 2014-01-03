@@ -1,0 +1,10 @@
+pkg/
+html/
+.buildpath
+.project
+.settings
+.idea
+.rvmrc
+example.zip
+.bundle
+Gemfile.lock
