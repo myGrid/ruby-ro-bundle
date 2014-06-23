@@ -11,7 +11,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'ro-bundle/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "research-object-bundle"
+  spec.name          = "ro-bundle"
   spec.version       = ROBundle::VERSION
   spec.authors       = ["Robert Haines"]
   spec.email         = ["support@mygrid.org.uk"]
