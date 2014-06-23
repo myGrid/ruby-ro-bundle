@@ -6,13 +6,7 @@
 # Author: Robert Haines
 #------------------------------------------------------------------------------
 
-require "bundler/gem_tasks"
-require "rake/testtask"
+# Example data files
+$hello = "test/data/HelloAnyone.robundle"
 
-task :default => [:test]
-
-Rake::TestTask.new do |t|
-  t.libs << "test"
-  t.test_files = FileList['test/ts_ro_bundle.rb']
-  t.verbose = true
-end
+require "tc_read"

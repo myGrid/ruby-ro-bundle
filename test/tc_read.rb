@@ -6,13 +6,17 @@
 # Author: Robert Haines
 #------------------------------------------------------------------------------
 
-require "bundler/gem_tasks"
-require "rake/testtask"
+require 'test/unit'
+require "ro-bundle"
 
-task :default => [:test]
+class TestRead < Test::Unit::TestCase
 
-Rake::TestTask.new do |t|
-  t.libs << "test"
-  t.test_files = FileList['test/ts_ro_bundle.rb']
-  t.verbose = true
+  def test_verify
+    assert_nothing_raised(ZipContainer::MalformedContainerError, Zip::ZipError) do
+      ROBundle::File.verify!($hello)
+    end
+
+    assert(ROBundle::File.verify($hello))
+  end
+
 end
