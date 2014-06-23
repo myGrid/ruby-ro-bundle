@@ -6,6 +6,9 @@
 # Author: Robert Haines
 #------------------------------------------------------------------------------
 
+require 'coveralls'
+Coveralls.wear!
+
 # Example data files
 $hello = "test/data/HelloAnyone.robundle"
 
