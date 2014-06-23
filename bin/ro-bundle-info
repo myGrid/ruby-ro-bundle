@@ -1,0 +1,46 @@
+#!/usr/bin/env ruby
+#------------------------------------------------------------------------------
+# Copyright (c) 2014 The University of Manchester, UK.
+#
+# BSD Licenced. See LICENCE.rdoc for details.
+#
+# Author: Robert Haines
+#------------------------------------------------------------------------------
+
+
+require 'rubygems'
+require 'ro-bundle'
+
+def usage
+  puts "Usage:\n  ro-bundle-info <ro-bundle>"
+  exit 1
+end
+
+usage unless ARGV.length == 1
+
+bundle = ARGV[0]
+
+begin
+  ro = ROBundle::File.open(bundle)
+rescue ZipContainer::MalformedContainerError, Zip::ZipError => err
+  puts err.to_s
+  exit 1
+end
+
+puts "Research Object Bundle: #{ro.to_s}"
+puts "Bundle file size: #{File.size(bundle)} bytes, number of entries: #{ro.size}"
+
+total_size = 0
+total_comp = 0
+
+ro.each do |entry|
+  total_size += entry.size
+  total_comp += entry.compressed_size
+  comp = entry.compression_method == 0 ? "stor" : "defN"
+  size = entry.size.to_s.rjust(8)
+  puts "#{size} #{comp} #{entry.time} #{entry.name}"
+end
+
+ratio = ((total_size - total_comp) / total_size.to_f) * 100
+puts "%d files, %d bytes uncompressed, %d bytes compressed: %.1f%%" %
+  [ro.size, total_size, total_comp, ratio]
