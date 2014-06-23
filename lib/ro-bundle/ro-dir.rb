@@ -6,12 +6,16 @@
 # Author: Robert Haines
 #------------------------------------------------------------------------------
 
-require "bundler/setup"
-require "ucf"
-
-require "ro-bundle/version"
-require "ro-bundle/ro-dir"
-require "ro-bundle/file"
-
 module ROBundle
+  class RODir < ZipContainer::ManagedDirectory
+    def initialize
+      super(".ro", false, [Manifest.new])
+    end
+  end
+
+  class Manifest < ZipContainer::ManagedFile
+    def initialize
+      super("manifest.json", false)
+    end
+  end
 end
