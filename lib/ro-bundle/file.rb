@@ -6,7 +6,12 @@
 # Author: Robert Haines
 #------------------------------------------------------------------------------
 
+#
 module ROBundle
+
+  # This class represents a Research Object Bundle file. See the
+  # {RO Bundle specification}[http://wf4ever.github.io/ro/bundle/]
+  # for more details.
   class File < UCF::Container
 
     private_class_method :new
@@ -22,6 +27,20 @@ module ROBundle
     end
     # :startdoc:
 
+    # :call-seq:
+    #   create(filename) -> File
+    #   create(filename, mimetype) -> File
+    #   create(filename) {|container| ...}
+    #   create(filename, mimetype) {|container| ...}
+    #
+    # Create a new RO Bundle file on disk and open it for editing. A custom
+    # mimetype for the bundle may be specified but is unnecessary if the
+    # default, "application/vnd.wf4ever.robundle+zip", will be used.
+    #
+    # Please see the
+    # {UCF documentation}[http://mygrid.github.io/ruby-ucf/]
+    # for much more information and a list of all the other methods available
+    # in this class. RDoc does not list inherited methods, unfortunately.
     def File.create(filename, mimetype = MIMETYPE, &block)
       super(filename, mimetype, &block)
     end
