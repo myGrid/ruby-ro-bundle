@@ -12,7 +12,7 @@ require "ro-bundle"
 
 class TestCreation < Test::Unit::TestCase
 
-  def test_create_enpty_bundle
+  def test_create_empty_bundle
     Dir.mktmpdir do |dir|
       filename = File.join(dir, "test.bundle")
 
