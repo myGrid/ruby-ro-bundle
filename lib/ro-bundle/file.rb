@@ -23,7 +23,8 @@ module ROBundle
       super(filename)
 
       # Initialize the managed entries and register the .ro directory.
-      initialize_managed_entries(RODir.new)
+      @manifest = Manifest.new
+      initialize_managed_entries(RODir.new(@manifest))
     end
     # :startdoc:
 
@@ -43,6 +44,12 @@ module ROBundle
     # in this class. RDoc does not list inherited methods, unfortunately.
     def File.create(filename, mimetype = MIMETYPE, &block)
       super(filename, mimetype, &block)
+    end
+
+    protected
+
+    def manifest
+      @manifest.structure
     end
   end
 end

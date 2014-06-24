@@ -8,14 +8,30 @@
 
 module ROBundle
   class RODir < ZipContainer::ManagedDirectory
-    def initialize
-      super(".ro", false, [Manifest.new])
+
+    DIR_NAME = ".ro"
+
+    def initialize(manifest)
+      super(DIR_NAME, false, [manifest])
     end
   end
 
   class Manifest < ZipContainer::ManagedFile
+
+    FILE_NAME = "manifest.json"
+
     def initialize
-      super("manifest.json", false)
+      super(FILE_NAME, false)
     end
+
+    # Need this because we can't access file contents in the constructor.
+    def structure
+      begin
+        @structure ||= JSON.parse(contents)
+      rescue
+        @structure = {}
+      end
+    end
+
   end
 end

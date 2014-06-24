@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 
 require "bundler/setup"
+require "json"
 require "ucf"
 
 require "ro-bundle/version"
