@@ -33,5 +33,17 @@ module ROBundle
       end
     end
 
+    protected
+
+    def validate
+      begin
+        structure
+      rescue JSON::ParserError
+        return false
+      end
+
+      true
+    end
+
   end
 end
