@@ -11,6 +11,7 @@ require "json"
 require "ucf"
 
 require "ro-bundle/version"
+require "ro-bundle/agent"
 require "ro-bundle/ro-dir"
 require "ro-bundle/file"
 
