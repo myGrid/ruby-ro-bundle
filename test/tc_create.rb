@@ -23,11 +23,16 @@ class TestCreation < Test::Unit::TestCase
 
           assert(b.find_entry("mimetype").local_header_offset == 0)
           assert_equal("application/vnd.wf4ever.robundle+zip", b.mimetype)
+
+          b.mkdir(".ro")
+          b.file.open(".ro/manifest.json", "w") do |m|
+            m.puts "{ }"
+          end
         end
       end
 
       assert_nothing_raised(ZipContainer::MalformedContainerError, ZipContainer::ZipError) do
-        ZipContainer::Container.verify!(filename)
+        ROBundle::File.verify!(filename)
       end
     end
   end
