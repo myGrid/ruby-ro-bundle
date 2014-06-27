@@ -12,7 +12,7 @@ module ROBundle
     DIR_NAME = ".ro"
 
     def initialize(manifest)
-      super(DIR_NAME, false, [manifest])
+      super(DIR_NAME, :required => false, :entries => manifest)
     end
   end
 
@@ -21,7 +21,7 @@ module ROBundle
     FILE_NAME = "manifest.json"
 
     def initialize
-      super(FILE_NAME, false)
+      super(FILE_NAME, :required => false)
     end
 
     # Need this because we can't access file contents in the constructor.

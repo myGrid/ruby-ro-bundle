@@ -12,7 +12,7 @@ module ROBundle
   # This class represents a Research Object Bundle file. See the
   # {RO Bundle specification}[http://wf4ever.github.io/ro/bundle/]
   # for more details.
-  class File < UCF::Container
+  class File < UCF::File
 
     private_class_method :new
 
