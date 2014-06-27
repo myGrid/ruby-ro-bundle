@@ -31,8 +31,8 @@ module ROBundle
     # :call-seq:
     #   create(filename) -> File
     #   create(filename, mimetype) -> File
-    #   create(filename) {|container| ...}
-    #   create(filename, mimetype) {|container| ...}
+    #   create(filename) {|file| ...}
+    #   create(filename, mimetype) {|file| ...}
     #
     # Create a new RO Bundle file on disk and open it for editing. A custom
     # mimetype for the bundle may be specified but is unnecessary if the
@@ -42,7 +42,7 @@ module ROBundle
     # {UCF documentation}[http://mygrid.github.io/ruby-ucf/]
     # for much more information and a list of all the other methods available
     # in this class. RDoc does not list inherited methods, unfortunately.
-    def File.create(filename, mimetype = MIMETYPE, &block)
+    def self.create(filename, mimetype = MIMETYPE, &block)
       super(filename, mimetype, &block)
     end
 
