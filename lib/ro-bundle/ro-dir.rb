@@ -28,7 +28,7 @@ module ROBundle
     def structure
       begin
         @structure ||= JSON.parse(contents)
-      rescue
+      rescue Errno::ENOENT
         @structure = {}
       end
     end

@@ -24,6 +24,11 @@ class TestCreation < Test::Unit::TestCase
           assert(b.find_entry("mimetype").local_header_offset == 0)
           assert_equal("application/vnd.wf4ever.robundle+zip", b.mimetype)
 
+          # Try and get something from the manifest before it exists
+          assert_nothing_raised(Errno::ENOENT) do
+            b.id
+          end
+
           b.mkdir(".ro")
           b.file.open(".ro/manifest.json", "w") do |m|
             m.puts "{ }"
