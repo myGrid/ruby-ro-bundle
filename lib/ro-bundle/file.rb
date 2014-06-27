@@ -46,6 +46,15 @@ module ROBundle
       super(filename, mimetype, &block)
     end
 
+    # :call-seq:
+    #   id -> String
+    #
+    # An RO identifier (usually '/') indicating the relative top-level folder
+    # as the identifier.
+    def id
+      manifest["id"]
+    end
+
     protected
 
     def manifest

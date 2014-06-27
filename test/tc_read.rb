@@ -19,4 +19,10 @@ class TestRead < Test::Unit::TestCase
     assert(ROBundle::File.verify($hello))
   end
 
+  def test_manifest
+    ROBundle::File.open($hello) do |b|
+      assert_equal("/", b.id)
+    end
+  end
+
 end
