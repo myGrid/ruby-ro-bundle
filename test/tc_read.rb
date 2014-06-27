@@ -12,7 +12,7 @@ require "ro-bundle"
 class TestRead < Test::Unit::TestCase
 
   def test_verify
-    assert_nothing_raised(ZipContainer::MalformedContainerError, Zip::ZipError) do
+    assert_nothing_raised(ZipContainer::MalformedContainerError, ZipContainer::ZipError) do
       ROBundle::File.verify!($hello)
     end
 

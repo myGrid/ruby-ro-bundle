@@ -26,7 +26,7 @@ class TestCreation < Test::Unit::TestCase
         end
       end
 
-      assert_nothing_raised(ZipContainer::MalformedContainerError, Zip::ZipError) do
+      assert_nothing_raised(ZipContainer::MalformedContainerError, ZipContainer::ZipError) do
         ZipContainer::Container.verify!(filename)
       end
     end

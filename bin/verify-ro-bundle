@@ -45,7 +45,7 @@ rofile = ARGV[0]
 
 begin
   ROBundle::File.verify!(rofile)
-rescue ZipContainer::MalformedContainerError, Zip::ZipError => err
+rescue ZipContainer::MalformedContainerError, ZipContainer::ZipError => err
   puts err.to_s
   exit 1
 end

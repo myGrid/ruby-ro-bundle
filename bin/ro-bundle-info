@@ -22,7 +22,7 @@ bundle = ARGV[0]
 
 begin
   ro = ROBundle::File.open(bundle)
-rescue ZipContainer::MalformedContainerError, Zip::ZipError => err
+rescue ZipContainer::MalformedContainerError, ZipContainer::ZipError => err
   puts err.to_s
   exit 1
 end
