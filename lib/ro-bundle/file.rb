@@ -6,7 +6,8 @@
 # Author: Robert Haines
 #------------------------------------------------------------------------------
 
-#
+require "time"
+
 module ROBundle
 
   # This class represents a Research Object Bundle file. See the
@@ -55,10 +56,36 @@ module ROBundle
       manifest["id"]
     end
 
+    # :call-seq:
+    #   created_on -> Time
+    #
+    # Return the time that this RO Bundle was created as a Time object.
+    def created_on
+      parse_time(:createdOn)
+    end
+
+    # :call-seq:
+    #   authored_on -> Time
+    #
+    # Return the time that this RO Bundle was edited as a Time object.
+    def authored_on
+      parse_time(:authoredOn)
+    end
+
     protected
 
     def manifest
       @manifest.structure
     end
+
+    private
+
+    def parse_time(key)
+      time = manifest[key.to_s]
+      return if time.nil?
+
+      Time.parse(time)
+    end
+
   end
 end

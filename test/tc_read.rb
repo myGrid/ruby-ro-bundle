@@ -22,6 +22,8 @@ class TestRead < Test::Unit::TestCase
   def test_manifest
     ROBundle::File.open($hello) do |b|
       assert_equal("/", b.id)
+      assert b.created_on.instance_of?(Time)
+      assert_nil b.authored_on
     end
   end
 
