@@ -20,9 +20,7 @@ end
 
 RDoc::Task.new do |r|
   r.main = "ReadMe.rdoc"
-  lib = Dir.glob("lib/**/*.rb").delete_if do |item|
-    item.include?("ro/directory.rb")
-  end
+  lib = Dir.glob("lib/**/*.rb")
   r.rdoc_files.include("ReadMe.rdoc", "Licence.rdoc", "Changes.rdoc", lib)
   r.options << "-t Research Object Bundle Ruby Library version " +
     "#{ROBundle::VERSION}"
