@@ -28,9 +28,10 @@ module ROBundle
     #   id -> String
     #
     # An RO identifier (usually '/') indicating the relative top-level folder
-    # as the identifier.
+    # as the identifier. Returns +nil+ if the id is not present in the
+    # manifest.
     def id
-      structure["id"]
+      structure.fetch("id", nil)
     end
 
     # :call-seq:
