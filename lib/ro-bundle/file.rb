@@ -6,14 +6,21 @@
 # Author: Robert Haines
 #------------------------------------------------------------------------------
 
-require "time"
+require "forwardable"
 
 module ROBundle
 
   # This class represents a Research Object Bundle file. See the
   # {RO Bundle specification}[http://wf4ever.github.io/ro/bundle/]
   # for more details.
+  #
+  # Many of the methods that this class provides are actually implemented in
+  # the Manifest class, so please see its documentation for details.
   class File < UCF::File
+
+    extend Forwardable
+    def_delegators :@manifest, :authored_by, :authored_on, :created_by,
+      :created_on, :id
 
     private_class_method :new
 
@@ -45,64 +52,6 @@ module ROBundle
     # in this class. RDoc does not list inherited methods, unfortunately.
     def self.create(filename, mimetype = MIMETYPE, &block)
       super(filename, mimetype, &block)
-    end
-
-    # :call-seq:
-    #   id -> String
-    #
-    # An RO identifier (usually '/') indicating the relative top-level folder
-    # as the identifier.
-    def id
-      manifest["id"]
-    end
-
-    # :call-seq:
-    #   created_on -> Time
-    #
-    # Return the time that this RO Bundle was created as a Time object.
-    def created_on
-      parse_time(:createdOn)
-    end
-
-    # :call-seq:
-    #   created_by -> Agent
-    #
-    # Return the Agent that created this Research Object.
-    def created_by
-      @created_by ||= Agent.new(manifest["createdBy"])
-    end
-
-    # :call-seq:
-    #   authored_on -> Time
-    #
-    # Return the time that this RO Bundle was edited as a Time object.
-    def authored_on
-      parse_time(:authoredOn)
-    end
-
-    # :call-seq:
-    #   authored_by -> Agents
-    #
-    # Return the list of Agents that authored this Research Object.
-    def authored_by
-      @authored_by ||= (manifest["authoredBy"] || []).map do |agent|
-        Agent.new(agent)
-      end
-    end
-
-    protected
-
-    def manifest
-      @manifest.structure
-    end
-
-    private
-
-    def parse_time(key)
-      time = manifest[key.to_s]
-      return if time.nil?
-
-      Time.parse(time)
     end
 
   end

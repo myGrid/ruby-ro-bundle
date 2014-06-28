@@ -6,7 +6,8 @@
 # Author: Robert Haines
 #------------------------------------------------------------------------------
 
-#
+require "time"
+
 module ROBundle
 
   # The manifest.json managed file entry for a Research Object.
@@ -24,6 +25,51 @@ module ROBundle
     end
 
     # :call-seq:
+    #   id -> String
+    #
+    # An RO identifier (usually '/') indicating the relative top-level folder
+    # as the identifier.
+    def id
+      structure["id"]
+    end
+
+    # :call-seq:
+    #   created_on -> Time
+    #
+    # Return the time that this RO Bundle was created as a Time object.
+    def created_on
+      parse_time(:createdOn)
+    end
+
+    # :call-seq:
+    #   created_by -> Agent
+    #
+    # Return the Agent that created this Research Object.
+    def created_by
+      @created_by ||= Agent.new(structure["createdBy"])
+    end
+
+    # :call-seq:
+    #   authored_on -> Time
+    #
+    # Return the time that this RO Bundle was edited as a Time object.
+    def authored_on
+      parse_time(:authoredOn)
+    end
+
+    # :call-seq:
+    #   authored_by -> Agents
+    #
+    # Return the list of Agents that authored this Research Object.
+    def authored_by
+      @authored_by ||= (structure["authoredBy"] || []).map do |agent|
+        Agent.new(agent)
+      end
+    end
+
+    protected
+
+    # :call-seq:
     #   structure -> Hash
     #
     # Returns the structure of the manifest json as a hash.
@@ -34,8 +80,6 @@ module ROBundle
         @structure = {}
       end
     end
-
-    protected
 
     # :call-seq:
     #   validate -> true or false
@@ -49,6 +93,15 @@ module ROBundle
       end
 
       true
+    end
+
+    private
+
+    def parse_time(key)
+      time = structure[key.to_s]
+      return if time.nil?
+
+      Time.parse(time)
     end
 
   end
