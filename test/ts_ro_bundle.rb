@@ -13,5 +13,6 @@ Coveralls.wear!
 $hello = "test/data/HelloAnyone.robundle"
 
 require "tc_agent"
+require "tc_manifest"
 require "tc_read"
 require "tc_create"
