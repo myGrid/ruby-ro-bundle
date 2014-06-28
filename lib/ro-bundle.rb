@@ -12,6 +12,7 @@ require "ucf"
 
 require "ro-bundle/version"
 require "ro-bundle/ro/agent"
+require "ro-bundle/ro/manifest"
 require "ro-bundle/ro/directory"
 require "ro-bundle/file"
 
