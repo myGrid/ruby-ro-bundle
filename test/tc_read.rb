@@ -31,6 +31,9 @@ class TestRead < Test::Unit::TestCase
 
       author = b.authored_by
       assert author.instance_of?(Array)
+
+      history = b.history
+      assert history.instance_of?(Array)
     end
   end
 

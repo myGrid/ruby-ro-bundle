@@ -20,7 +20,7 @@ module ROBundle
 
     extend Forwardable
     def_delegators :@manifest, :authored_by, :authored_on, :created_by,
-      :created_on, :id
+      :created_on, :history, :id
 
     private_class_method :new
 

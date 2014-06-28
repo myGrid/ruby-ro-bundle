@@ -70,6 +70,15 @@ module ROBundle
       end
     end
 
+    # :call-seq:
+    #   history -> List of history entry names
+    #
+    # Return a list of filenames that hold provenance information for this
+    # Research Object.
+    def history
+      @history ||= structure.fetch("history", [])
+    end
+
     protected
 
     # :call-seq:
