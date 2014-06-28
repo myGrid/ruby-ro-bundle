@@ -11,8 +11,8 @@ require "json"
 require "ucf"
 
 require "ro-bundle/version"
-require "ro-bundle/agent"
-require "ro-bundle/ro-dir"
+require "ro-bundle/ro/agent"
+require "ro-bundle/ro/directory"
 require "ro-bundle/file"
 
 # This is a ruby library to read and write Research Object Bundle files in PK
