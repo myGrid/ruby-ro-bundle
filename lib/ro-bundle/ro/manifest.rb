@@ -48,7 +48,7 @@ module ROBundle
     #
     # Return the Agent that created this Research Object.
     def created_by
-      @created_by ||= Agent.new(structure["createdBy"])
+      @created_by ||= Agent.new(structure.fetch("createdBy", {}))
     end
 
     # :call-seq:
@@ -65,7 +65,7 @@ module ROBundle
     #
     # Return the list of Agents that authored this Research Object.
     def authored_by
-      @authored_by ||= (structure["authoredBy"] || []).map do |agent|
+      @authored_by ||= structure.fetch("authoredBy", []).map do |agent|
         Agent.new(agent)
       end
     end
