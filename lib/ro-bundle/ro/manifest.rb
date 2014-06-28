@@ -36,7 +36,8 @@ module ROBundle
     # :call-seq:
     #   created_on -> Time
     #
-    # Return the time that this RO Bundle was created as a Time object.
+    # Return the time that this RO Bundle was created as a Time object, or
+    # +nil+ if not present in the manifest.
     def created_on
       parse_time(:createdOn)
     end
@@ -52,7 +53,8 @@ module ROBundle
     # :call-seq:
     #   authored_on -> Time
     #
-    # Return the time that this RO Bundle was edited as a Time object.
+    # Return the time that this RO Bundle was edited as a Time object, or
+    # +nil+ if not present in the manifest.
     def authored_on
       parse_time(:authoredOn)
     end
@@ -98,8 +100,8 @@ module ROBundle
     private
 
     def parse_time(key)
-      time = structure[key.to_s]
-      return if time.nil?
+      time = structure.fetch(key.to_s, "")
+      return if time.empty?
 
       Time.parse(time)
     end
