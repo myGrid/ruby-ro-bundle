@@ -27,6 +27,14 @@ class TestAgent < Test::Unit::TestCase
     assert_equal URI.parse(@orcid), agent.orcid
   end
 
+  def test_create_from_empty_json_hash
+    agent = ROBundle::Agent.new({})
+
+    assert_equal "", agent.name
+    assert_nil agent.uri
+    assert_nil agent.orcid
+  end
+
   def test_create_from_parameters
     agent = ROBundle::Agent.new(@name, @uri, @orcid)
 

@@ -30,7 +30,7 @@ module ROBundle
     # Create a new Agent with the supplied details.
     def initialize(first, uri = nil, orcid = nil)
       if first.instance_of?(Hash)
-        @name = first["name"]
+        @name = first["name"] || ""
         @uri = parse_uri(first["uri"])
         @orcid = parse_uri(first["orcid"])
       else
