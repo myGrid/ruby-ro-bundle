@@ -65,7 +65,7 @@ module ROBundle
     #
     # Return the list of Agents that authored this Research Object.
     def authored_by
-      @authored_by ||= structure.fetch("authoredBy", []).map do |agent|
+      @authored_by ||= [*structure.fetch("authoredBy", [])].map do |agent|
         Agent.new(agent)
       end
     end
@@ -76,7 +76,7 @@ module ROBundle
     # Return a list of filenames that hold provenance information for this
     # Research Object.
     def history
-      @history ||= structure.fetch("history", [])
+      @history ||= [*structure.fetch("history", [])]
     end
 
     protected
