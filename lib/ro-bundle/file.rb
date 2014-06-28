@@ -65,11 +65,29 @@ module ROBundle
     end
 
     # :call-seq:
+    #   created_by -> Agent
+    #
+    # Return the Agent that created this Research Object.
+    def created_by
+      @created_by ||= Agent.new(manifest["createdBy"])
+    end
+
+    # :call-seq:
     #   authored_on -> Time
     #
     # Return the time that this RO Bundle was edited as a Time object.
     def authored_on
       parse_time(:authoredOn)
+    end
+
+    # :call-seq:
+    #   authored_by -> Agents
+    #
+    # Return the list of Agents that authored this Research Object.
+    def authored_by
+      @authored_by ||= (manifest["authoredBy"] || []).map do |agent|
+        Agent.new(agent)
+      end
     end
 
     protected
