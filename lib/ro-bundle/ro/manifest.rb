@@ -13,8 +13,7 @@ module ROBundle
   # The manifest.json managed file entry for a Research Object.
   class Manifest < ZipContainer::ManagedFile
 
-    # :nodoc:
-    FILE_NAME = "manifest.json"
+    FILE_NAME = "manifest.json" # :nodoc:
 
     # :call-seq:
     #   new

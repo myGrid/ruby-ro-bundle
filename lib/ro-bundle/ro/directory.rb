@@ -12,8 +12,7 @@ module ROBundle
   # The managed .ro directory entry of a Research Object.
   class RODir < ZipContainer::ManagedDirectory
 
-    # :nodoc:
-    DIR_NAME = ".ro"
+    DIR_NAME = ".ro" # :nodoc:
 
     # :call-seq:
     #   new(manifest)
