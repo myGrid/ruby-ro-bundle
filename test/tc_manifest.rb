@@ -42,6 +42,12 @@ class TestManifest < Test::Unit::TestCase
     history.each do |h|
       assert h.instance_of?(String)
     end
+
+    aggregates = @manifest.aggregates
+    assert aggregates.instance_of?(Array)
+    aggregates.each do |a|
+      assert a.instance_of?(ROBundle::Aggregate)
+    end
   end
 
 end
