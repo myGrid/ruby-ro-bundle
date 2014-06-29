@@ -100,7 +100,7 @@ module ROBundle
     def validate
       begin
         structure
-      rescue JSON::ParserError
+      rescue JSON::ParserError, ROError
         return false
       end
 
