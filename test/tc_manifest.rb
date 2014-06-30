@@ -48,6 +48,12 @@ class TestManifest < Test::Unit::TestCase
     aggregates.each do |a|
       assert a.instance_of?(ROBundle::Aggregate)
     end
+
+    annotations = @manifest.annotations
+    assert annotations.instance_of?(Array)
+    annotations.each do |a|
+      assert a.instance_of?(ROBundle::Annotation)
+    end
   end
 
 end

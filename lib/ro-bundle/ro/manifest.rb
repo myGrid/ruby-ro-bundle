@@ -88,6 +88,16 @@ module ROBundle
       end
     end
 
+    # :call-seq:
+    #   annotations
+    #
+    # Return a list of all the annotations in this Research Object.
+    def annotations
+      @annotations ||= [*structure.fetch("annotations", [])].map do |ann|
+        Annotation.new(ann)
+      end
+    end
+
     protected
 
     # :call-seq:
