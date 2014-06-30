@@ -83,7 +83,7 @@ module ROBundle
     #
     # Return a list of all the aggregated resources in this Research Object.
     def aggregates
-      @aggregates ||= structure.fetch("aggregates", []).map do |aggregate|
+      @aggregates ||= [*structure.fetch("aggregates", [])].map do |aggregate|
         Aggregate.new(aggregate)
       end
     end
