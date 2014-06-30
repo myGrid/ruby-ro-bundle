@@ -34,6 +34,9 @@ class TestRead < Test::Unit::TestCase
 
       history = b.history
       assert history.instance_of?(Array)
+
+      aggregates = b.aggregates
+      assert aggregates.instance_of?(Array)
     end
   end
 
