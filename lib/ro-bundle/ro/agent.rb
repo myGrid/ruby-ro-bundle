@@ -40,6 +40,23 @@ module ROBundle
       end
     end
 
+    # :call-seq:
+    #   to_json -> String
+    #   to_json(:compact) -> String
+    #
+    # Write this Agent out as a json string. The default is to produce a human
+    # readable indented format; the compact version is as compressed as
+    # possible on a single line.
+    def to_json(format = false)
+      hash = { "uri" => uri, "orcid" => orcid, "name" => name }
+
+      if format == :compact
+        JSON.generate hash
+      else
+        JSON.pretty_generate hash
+      end
+    end
+
     private
 
     def parse_uri(uri)
