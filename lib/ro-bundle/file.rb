@@ -19,8 +19,8 @@ module ROBundle
   class File < UCF::File
 
     extend Forwardable
-    def_delegators :@manifest, :aggregates, :authored_by, :authored_on,
-      :created_by, :created_on, :history, :id
+    def_delegators :@manifest, :aggregates, :annotations, :authored_by,
+      :authored_on, :created_by, :created_on, :history, :id
 
     private_class_method :new
 

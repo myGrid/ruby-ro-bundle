@@ -37,6 +37,9 @@ class TestRead < Test::Unit::TestCase
 
       aggregates = b.aggregates
       assert aggregates.instance_of?(Array)
+
+      annotations = b.annotations
+      assert annotations.instance_of?(Array)
     end
   end
 
