@@ -67,9 +67,9 @@ module ROBundle
     # possible on a single line.
     def to_json(format = false)
       if format == :compact
-        JSON.generate @structure
+        JSON.generate Util.clean_json(@structure)
       else
-        JSON.pretty_generate @structure
+        JSON.pretty_generate Util.clean_json(@structure)
       end
     end
 

@@ -15,6 +15,16 @@ module ROBundle
   module Util
 
     # :call-seq:
+    #   clean_json(json_hash) -> Hash
+    #
+    # Remove empty strings and nils from a json hash structure.
+    def self.clean_json(structure)
+      structure.delete_if do |_, v|
+        v.nil? || (v.instance_of?(String) && v.empty?)
+      end
+    end
+
+    # :call-seq:
     #   parse_time(time) -> Time
     #
     # Parse a time string into a Time object. Does not try to parse +nil+.
