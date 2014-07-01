@@ -53,13 +53,11 @@ class TestAgent < Test::Unit::TestCase
 
   def test_json_output
     agent = ROBundle::Agent.new(@json)
-    json_p = JSON.parse(agent.to_json)
-    json_c = JSON.parse(agent.to_json(:compact))
+    json = JSON.parse(JSON.generate(agent))
 
-    assert_equal @name, json_p["name"]
-    assert_equal @uri, json_p["uri"]
-    assert_equal @orcid, json_p["orcid"]
-    assert_equal json_p, json_c
+    assert_equal @name, json["name"]
+    assert_equal @uri, json["uri"]
+    assert_equal @orcid, json["orcid"]
   end
 
 end

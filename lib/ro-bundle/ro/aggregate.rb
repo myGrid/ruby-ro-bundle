@@ -59,7 +59,7 @@ module ROBundle
     #
     # The time that this resource was created.
     def created_on
-      @structure[:created_on]
+      Util.parse_time(@structure[:createdOn])
     end
 
     # :call-seq:
@@ -67,7 +67,16 @@ module ROBundle
     #
     # The Agent which created this aggregated resource.
     def created_by
-      @structure[:created_by]
+      @structure[:createdBy]
+    end
+
+    # :call-seq:
+    #   to_json(options = nil) -> String
+    #
+    # Write this Aggregate out as a json string. Takes the same options as
+    # JSON#generate.
+    def to_json(*a)
+      Util.clean_json(@structure).to_json(*a)
     end
 
     private
@@ -77,8 +86,8 @@ module ROBundle
 
       if @structure[:file]
         @structure[:mediatype] = object[:mediatype]
-        @structure[:created_on] = Util.parse_time(object[:createdOn])
-        @structure[:created_by] = Agent.new(object.fetch(:createdBy, {}))
+        @structure[:createdOn] = object[:createdOn]
+        @structure[:createdBy] = Agent.new(object.fetch(:createdBy, {}))
       end
     end
 

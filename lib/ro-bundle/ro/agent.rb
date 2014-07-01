@@ -59,18 +59,12 @@ module ROBundle
     end
 
     # :call-seq:
-    #   to_json -> String
-    #   to_json(:compact) -> String
+    #   to_json(options = nil) -> String
     #
-    # Write this Agent out as a json string. The default is to produce a human
-    # readable indented format; the compact version is as compressed as
-    # possible on a single line.
-    def to_json(format = false)
-      if format == :compact
-        JSON.generate Util.clean_json(@structure)
-      else
-        JSON.pretty_generate Util.clean_json(@structure)
-      end
+    # Write this Agent out as a json string. Takes the same options as
+    # JSON#generate.
+    def to_json(*a)
+      Util.clean_json(@structure).to_json(*a)
     end
 
   end

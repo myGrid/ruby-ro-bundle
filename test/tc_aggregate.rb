@@ -97,4 +97,23 @@ class TestAggregate < Test::Unit::TestCase
     end
   end
 
+  def test_json_output_file
+    file = "/good.txt"
+    type = "text/plain"
+    time = "2013-02-12T19:37:32.939Z"
+    json = {
+      :file => file,
+      :mediatype => type,
+      :createdOn => time,
+      :createdBy => { :name => "Robert Haines" }
+    }
+
+    agg = ROBundle::Aggregate.new(json)
+    json = JSON.parse(JSON.generate(agg))
+
+    assert_equal file, json["file"]
+    assert_equal type, json["mediatype"]
+    assert_equal time, json["createdOn"]
+  end
+
 end
