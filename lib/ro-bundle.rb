@@ -11,6 +11,7 @@ require "json"
 require "ucf"
 
 require "ro-bundle/version"
+require "ro-bundle/util"
 require "ro-bundle/exceptions"
 require "ro-bundle/ro/agent"
 require "ro-bundle/ro/annotation"
