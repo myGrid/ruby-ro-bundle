@@ -16,7 +16,7 @@ class TestAgent < Test::Unit::TestCase
     @uri = "https://github.com/hainesr"
     @orcid = "http://orcid.org/0000-0002-9538-7919"
 
-    @json = { "name" => @name, "uri" => @uri, "orcid" => @orcid }
+    @json = { :name => @name, :uri => @uri, :orcid => @orcid }
   end
 
   def test_create_from_json_hash
@@ -30,7 +30,7 @@ class TestAgent < Test::Unit::TestCase
   def test_create_from_empty_json_hash
     agent = ROBundle::Agent.new({})
 
-    assert_equal "", agent.name
+    assert_nil agent.name
     assert_nil agent.uri
     assert_nil agent.orcid
   end

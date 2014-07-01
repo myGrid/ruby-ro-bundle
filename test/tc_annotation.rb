@@ -25,9 +25,9 @@ class TestAnnotation < Test::Unit::TestCase
     id = UUID.generate(:urn)
 
     json = {
-      "about" => about,
-      "content" => content,
-      "annotation" => id
+      :about => about,
+      :content => content,
+      :annotation => id
     }
 
     an = ROBundle::Annotation.new(json)

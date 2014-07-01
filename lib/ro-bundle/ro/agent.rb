@@ -14,30 +14,49 @@ module ROBundle
   # example, a person or software.
   class Agent
 
-    # The name of this agent.
-    attr_reader :name
-
-    # A URI identifying the agent. This should be a
-    # {WebID}[http://www.w3.org/wiki/WebID].
-    attr_reader :uri
-
-    # An ORCID identifier for this agent.
-    attr_reader :orcid
-
     # :call-seq:
     #   new(name, uri = nil, orcid = nil)
     #
     # Create a new Agent with the supplied details.
     def initialize(first, uri = nil, orcid = nil)
       if first.instance_of?(Hash)
-        @name = first["name"] || ""
-        @uri = parse_uri(first["uri"])
-        @orcid = parse_uri(first["orcid"])
+        name = first[:name]
+        uri = first[:uri]
+        orcid = first[:orcid]
       else
-        @name = first
-        @uri = parse_uri(uri)
-        @orcid = parse_uri(orcid)
+        name = first
       end
+
+      @structure = {
+        :name => name,
+        :uri => parse_uri(uri),
+        :orcid => parse_uri(orcid)
+      }
+    end
+
+    # :call-seq:
+    #   name -> string
+    #
+    # The name of this agent.
+    def name
+      @structure[:name]
+    end
+
+    # :call-seq:
+    #   uri -> URI
+    #
+    # A URI identifying the agent. This should, if it exists, be a
+    # {WebID}[http://www.w3.org/wiki/WebID].
+    def uri
+      @structure[:uri]
+    end
+
+    # :call-seq:
+    #   orcid -> URI
+    #
+    # An ORCID identifier URI for this agent.
+    def orcid
+      @structure[:orcid]
     end
 
     # :call-seq:
@@ -48,12 +67,10 @@ module ROBundle
     # readable indented format; the compact version is as compressed as
     # possible on a single line.
     def to_json(format = false)
-      hash = { "uri" => uri, "orcid" => orcid, "name" => name }
-
       if format == :compact
-        JSON.generate hash
+        JSON.generate @structure
       else
-        JSON.pretty_generate hash
+        JSON.pretty_generate @structure
       end
     end
 

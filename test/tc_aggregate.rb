@@ -66,10 +66,10 @@ class TestAggregate < Test::Unit::TestCase
       type = "text/plain"
 
       json = {
-        "file" => file,
-        "mediatype" => type,
-        "createdOn" => "2013-02-12T19:37:32.939Z",
-        "createdBy" => { "name" => "Robert Haines" }
+        :file => file,
+        :mediatype => type,
+        :createdOn => "2013-02-12T19:37:32.939Z",
+        :createdBy => { "name" => "Robert Haines" }
       }
 
       agg = ROBundle::Aggregate.new(json)
@@ -87,7 +87,7 @@ class TestAggregate < Test::Unit::TestCase
       uri = "http://example.com/good.txt"
 
       json = {
-        "uri" => uri
+        :uri => uri
       }
 
       agg = ROBundle::Aggregate.new(json)

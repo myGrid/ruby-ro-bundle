@@ -16,28 +16,14 @@ module ROBundle
   # represent a file OR a URI resource, not both at once.
   class Aggregate
 
-    # The path of this aggregate. It should start with '/'.
-    attr_reader :file
-
-    # The URI of this aggregate. It should be an absolute URI.
-    attr_reader :uri
-
-    # For a file aggregate,
-    # its {IANA media type}[http://www.iana.org/assignments/media-types].
-    attr_reader :mediatype
-
-    # The time that this resource was created.
-    attr_reader :created_on
-
-    # The Agent which created this aggregated resource.
-    attr_reader :created_by
-
     # :call-seq:
     #   new(filename)
     #   new(URI)
     #
     # Create a new file or URI aggregate.
     def initialize(object)
+      @structure = {}
+
       if object.instance_of?(Hash)
         init_json(object)
       else
@@ -45,30 +31,71 @@ module ROBundle
       end
     end
 
+    # :call-seq:
+    #   file
+    #
+    # The path of this aggregate. It should start with '/'.
+    def file
+      @structure[:file]
+    end
+
+    # :call-seq:
+    #   uri
+    #
+    # The URI of this aggregate. It should be an absolute URI.
+    def uri
+      @structure[:uri]
+    end
+
+    # :call-seq:
+    #   mediatype
+    #
+    # For a file aggregate, its
+    # {IANA media type}[http://www.iana.org/assignments/media-types].
+    def mediatype
+      @structure[:mediatype]
+    end
+
+    # :call-seq:
+    #   created_on
+    #
+    # The time that this resource was created.
+    def created_on
+      @structure[:created_on]
+    end
+
+    # :call-seq:
+    #   created_by
+    #
+    # The Agent which created this aggregated resource.
+    def created_by
+      @structure[:created_by]
+    end
+
     private
 
     def init_json(object)
-      init_file_or_uri(object["file"] || object["uri"])
+      init_file_or_uri(object[:file] || object[:uri])
 
-      if @file
-        @mediatype = object["mediatype"]
-        @created_on = parse_time(object.fetch("createdOn", ""))
-        @created_by = Agent.new(object.fetch("createdBy", {}))
+      if @structure[:file]
+        @structure[:mediatype] = object[:mediatype]
+        @structure[:created_on] = parse_time(object.fetch(:createdOn, ""))
+        @structure[:created_by] = Agent.new(object.fetch(:createdBy, {}))
       end
     end
 
     def init_file_or_uri(object)
-      return @uri = object if object.is_a?(URI)
-      return @file = object if object.is_a?(String) && object.start_with?("/")
+      return @structure[:uri] = object if object.is_a?(URI)
+      return @structure[:file] = object if object.is_a?(String) && object.start_with?("/")
 
       invalid = false
       begin
-        @uri = URI.parse(object)
+        @structure[:uri] = URI.parse(object)
       rescue URI::InvalidURIError
         invalid = true
       end
 
-      raise InvalidAggregateError.new(object) if invalid || @uri.scheme.nil?
+      raise InvalidAggregateError.new(object) if invalid || @structure[:uri].scheme.nil?
     end
 
     def parse_time(time)

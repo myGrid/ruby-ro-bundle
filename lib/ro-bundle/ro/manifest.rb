@@ -30,7 +30,7 @@ module ROBundle
     # as the identifier. Returns +nil+ if the id is not present in the
     # manifest.
     def id
-      structure.fetch("id", nil)
+      structure.fetch(:id, nil)
     end
 
     # :call-seq:
@@ -47,7 +47,7 @@ module ROBundle
     #
     # Return the Agent that created this Research Object.
     def created_by
-      @created_by ||= Agent.new(structure.fetch("createdBy", {}))
+      @created_by ||= Agent.new(structure.fetch(:createdBy, {}))
     end
 
     # :call-seq:
@@ -64,7 +64,7 @@ module ROBundle
     #
     # Return the list of Agents that authored this Research Object.
     def authored_by
-      @authored_by ||= [*structure.fetch("authoredBy", [])].map do |agent|
+      @authored_by ||= [*structure.fetch(:authoredBy, [])].map do |agent|
         Agent.new(agent)
       end
     end
@@ -75,7 +75,7 @@ module ROBundle
     # Return a list of filenames that hold provenance information for this
     # Research Object.
     def history
-      @history ||= [*structure.fetch("history", [])]
+      @history ||= [*structure.fetch(:history, [])]
     end
 
     # :call-seq:
@@ -83,7 +83,7 @@ module ROBundle
     #
     # Return a list of all the aggregated resources in this Research Object.
     def aggregates
-      @aggregates ||= [*structure.fetch("aggregates", [])].map do |aggregate|
+      @aggregates ||= [*structure.fetch(:aggregates, [])].map do |aggregate|
         Aggregate.new(aggregate)
       end
     end
@@ -93,7 +93,7 @@ module ROBundle
     #
     # Return a list of all the annotations in this Research Object.
     def annotations
-      @annotations ||= [*structure.fetch("annotations", [])].map do |ann|
+      @annotations ||= [*structure.fetch(:annotations, [])].map do |ann|
         Annotation.new(ann)
       end
     end
@@ -106,7 +106,7 @@ module ROBundle
     # Returns the structure of the manifest json as a hash.
     def structure
       begin
-        @structure ||= JSON.parse(contents)
+        @structure ||= JSON.parse(contents, :symbolize_names => true)
       rescue Errno::ENOENT
         @structure = {}
       end
@@ -129,8 +129,8 @@ module ROBundle
     private
 
     def parse_time(key)
-      time = structure.fetch(key.to_s, "")
-      return if time.empty?
+      time = structure.fetch(key, nil)
+      return if time.nil?
 
       Time.parse(time)
     end
