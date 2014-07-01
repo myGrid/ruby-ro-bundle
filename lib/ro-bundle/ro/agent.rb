@@ -6,8 +6,7 @@
 # Author: Robert Haines
 #------------------------------------------------------------------------------
 
-require "uri"
-
+#
 module ROBundle
 
   # A class to represent an agent in a Research Object. An agent can be, for
@@ -29,8 +28,8 @@ module ROBundle
 
       @structure = {
         :name => name,
-        :uri => parse_uri(uri),
-        :orcid => parse_uri(orcid)
+        :uri => Util.parse_uri(uri),
+        :orcid => Util.parse_uri(orcid)
       }
     end
 
@@ -74,13 +73,6 @@ module ROBundle
       end
     end
 
-    private
-
-    def parse_uri(uri)
-      return uri if uri.nil? || uri.is_a?(URI)
-
-      URI.parse(uri)
-    end
   end
 
 end

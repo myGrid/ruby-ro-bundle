@@ -6,8 +6,7 @@
 # Author: Robert Haines
 #------------------------------------------------------------------------------
 
-require "uri"
-
+#
 module ROBundle
 
   # A class to represent an aggregated resource in a Research Object. It holds
@@ -84,17 +83,22 @@ module ROBundle
     end
 
     def init_file_or_uri(object)
-      return @structure[:uri] = object if object.is_a?(URI)
-      return @structure[:file] = object if object.is_a?(String) && object.start_with?("/")
+      if object.is_a?(String) && object.start_with?("/")
+        return @structure[:file] = object
+      end
 
       invalid = false
       begin
-        @structure[:uri] = URI.parse(object)
+        uri = Util.parse_uri(object)
       rescue URI::InvalidURIError
         invalid = true
       end
 
-      raise InvalidAggregateError.new(object) if invalid || @structure[:uri].scheme.nil?
+      if uri.nil? || invalid || uri.scheme.nil?
+        raise InvalidAggregateError.new(object)
+      end
+
+      @structure[:uri] = uri
     end
 
   end
