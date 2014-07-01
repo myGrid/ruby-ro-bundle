@@ -6,7 +6,6 @@
 # Author: Robert Haines
 #------------------------------------------------------------------------------
 
-require "time"
 require "uri"
 
 module ROBundle
@@ -79,7 +78,7 @@ module ROBundle
 
       if @structure[:file]
         @structure[:mediatype] = object[:mediatype]
-        @structure[:created_on] = parse_time(object.fetch(:createdOn, ""))
+        @structure[:created_on] = Util.parse_time(object[:createdOn])
         @structure[:created_by] = Agent.new(object.fetch(:createdBy, {}))
       end
     end
@@ -96,11 +95,6 @@ module ROBundle
       end
 
       raise InvalidAggregateError.new(object) if invalid || @structure[:uri].scheme.nil?
-    end
-
-    def parse_time(time)
-      return if time.empty?
-      Time.parse(time)
     end
 
   end

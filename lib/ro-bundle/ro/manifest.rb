@@ -6,8 +6,7 @@
 # Author: Robert Haines
 #------------------------------------------------------------------------------
 
-require "time"
-
+#
 module ROBundle
 
   # The manifest.json managed file entry for a Research Object.
@@ -39,7 +38,7 @@ module ROBundle
     # Return the time that this RO Bundle was created as a Time object, or
     # +nil+ if not present in the manifest.
     def created_on
-      @created_on ||= parse_time(:createdOn)
+      @created_on ||= Util.parse_time(structure[:createdOn])
     end
 
     # :call-seq:
@@ -56,7 +55,7 @@ module ROBundle
     # Return the time that this RO Bundle was edited as a Time object, or
     # +nil+ if not present in the manifest.
     def authored_on
-      @authored_on ||= parse_time(:authoredOn)
+      @authored_on ||= Util.parse_time(structure[:authoredOn])
     end
 
     # :call-seq:
@@ -124,15 +123,6 @@ module ROBundle
       end
 
       true
-    end
-
-    private
-
-    def parse_time(key)
-      time = structure.fetch(key, nil)
-      return if time.nil?
-
-      Time.parse(time)
     end
 
   end
