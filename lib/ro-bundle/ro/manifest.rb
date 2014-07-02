@@ -91,6 +91,15 @@ module ROBundle
       structure[:annotations]
     end
 
+    # :call-seq:
+    #   to_json(options = nil) -> String
+    #
+    # Write this Manifest out as a json string. Takes the same options as
+    # JSON#generate.
+    def to_json(*a)
+      Util.clean_json(structure).to_json(*a)
+    end
+
     protected
 
     # :call-seq:
