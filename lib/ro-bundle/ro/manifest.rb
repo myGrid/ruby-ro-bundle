@@ -33,6 +33,14 @@ module ROBundle
     end
 
     # :call-seq:
+    #   id = new_id
+    #
+    # Set the id of this Manifest.
+    def id=(new_id)
+      structure[:id] = new_id
+    end
+
+    # :call-seq:
     #   created_on -> Time
     #
     # Return the time that this RO Bundle was created as a Time object, or

@@ -56,4 +56,12 @@ class TestManifest < Test::Unit::TestCase
     end
   end
 
+  def test_change_id
+    old = @manifest.id
+    @manifest.id = "/new"
+
+    assert_equal "/new", @manifest.id
+    assert_not_equal old, @manifest.id
+  end
+
 end
