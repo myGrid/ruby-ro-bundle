@@ -50,6 +50,16 @@ module ROBundle
     end
 
     # :call-seq:
+    #   created_on = new_time
+    #
+    # Set a new createdOn time for this Manifest. Anything that Ruby can
+    # interpret as a time is accepted and converted to ISO8601 format on
+    # serialization.
+    def created_on=(new_time)
+      set_time(:createdOn, new_time)
+    end
+
+    # :call-seq:
     #   created_by -> Agent
     #
     # Return the Agent that created this Research Object.
@@ -64,6 +74,16 @@ module ROBundle
     # +nil+ if not present in the manifest.
     def authored_on
       Util.parse_time(structure[:authoredOn])
+    end
+
+    # :call-seq:
+    #   authored_on = new_time
+    #
+    # Set a new authoredOn time for this Manifest. Anything that Ruby can
+    # interpret as a time is accepted and converted to ISO8601 format on
+    # serialization.
+    def authored_on=(new_time)
+      set_time(:authoredOn, new_time)
     end
 
     # :call-seq:
@@ -125,6 +145,14 @@ module ROBundle
     end
 
     private
+
+    def set_time(key, time)
+      if time.instance_of?(String)
+        time = Time.parse(time)
+      end
+
+      structure[key] = time.iso8601
+    end
 
     # The internal structure of this class cannot be setup at construction
     # time in the initializer as there is no route to its data on disk at that

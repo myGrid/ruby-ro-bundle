@@ -64,4 +64,22 @@ class TestManifest < Test::Unit::TestCase
     assert_not_equal old, @manifest.id
   end
 
+  def test_change_created_on
+    old = @manifest.created_on
+    now = Time.now.to_s
+    @manifest.created_on = now
+
+    assert_equal now, @manifest.created_on.to_s
+    assert_not_equal old.to_s, @manifest.created_on.to_s
+  end
+
+  def test_change_authored_on
+    old = @manifest.authored_on
+    now = Time.now.to_s
+    @manifest.authored_on = now
+
+    assert_equal now, @manifest.authored_on.to_s
+    assert_not_equal old.to_s, @manifest.authored_on.to_s
+  end
+
 end
