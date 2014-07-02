@@ -38,7 +38,7 @@ module ROBundle
     # Return the time that this RO Bundle was created as a Time object, or
     # +nil+ if not present in the manifest.
     def created_on
-      @created_on ||= Util.parse_time(structure[:createdOn])
+      Util.parse_time(structure[:createdOn])
     end
 
     # :call-seq:
@@ -46,7 +46,7 @@ module ROBundle
     #
     # Return the Agent that created this Research Object.
     def created_by
-      @created_by ||= Agent.new(structure.fetch(:createdBy, {}))
+      structure[:createdBy]
     end
 
     # :call-seq:
@@ -55,7 +55,7 @@ module ROBundle
     # Return the time that this RO Bundle was edited as a Time object, or
     # +nil+ if not present in the manifest.
     def authored_on
-      @authored_on ||= Util.parse_time(structure[:authoredOn])
+      Util.parse_time(structure[:authoredOn])
     end
 
     # :call-seq:
@@ -63,9 +63,7 @@ module ROBundle
     #
     # Return the list of Agents that authored this Research Object.
     def authored_by
-      @authored_by ||= [*structure.fetch(:authoredBy, [])].map do |agent|
-        Agent.new(agent)
-      end
+      structure[:authoredBy]
     end
 
     # :call-seq:
@@ -74,7 +72,7 @@ module ROBundle
     # Return a list of filenames that hold provenance information for this
     # Research Object.
     def history
-      @history ||= [*structure.fetch(:history, [])]
+      structure[:history]
     end
 
     # :call-seq:
@@ -82,9 +80,7 @@ module ROBundle
     #
     # Return a list of all the aggregated resources in this Research Object.
     def aggregates
-      @aggregates ||= [*structure.fetch(:aggregates, [])].map do |aggregate|
-        Aggregate.new(aggregate)
-      end
+      structure[:aggregates]
     end
 
     # :call-seq:
@@ -92,24 +88,10 @@ module ROBundle
     #
     # Return a list of all the annotations in this Research Object.
     def annotations
-      @annotations ||= [*structure.fetch(:annotations, [])].map do |ann|
-        Annotation.new(ann)
-      end
+      structure[:annotations]
     end
 
     protected
-
-    # :call-seq:
-    #   structure -> Hash
-    #
-    # Returns the structure of the manifest json as a hash.
-    def structure
-      begin
-        @structure ||= JSON.parse(contents, :symbolize_names => true)
-      rescue Errno::ENOENT
-        @structure = {}
-      end
-    end
 
     # :call-seq:
     #   validate -> true or false
@@ -123,6 +105,36 @@ module ROBundle
       end
 
       true
+    end
+
+    private
+
+    # The internal structure of this class cannot be setup at construction
+    # time in the initializer as there is no route to its data on disk at that
+    # point. Once loaded, parts of the structure are converted to local
+    # objects where appropriate.
+    def structure
+      return @structure if @structure
+
+      begin
+        struct ||= JSON.parse(contents, :symbolize_names => true)
+      rescue Errno::ENOENT
+        struct = {}
+      end
+
+      struct[:createdBy] = Agent.new(struct.fetch(:createdBy, {}))
+      struct[:authoredBy] = [*struct.fetch(:authoredBy, [])].map do |agent|
+        Agent.new(agent)
+      end
+      struct[:history] = [*struct.fetch(:history, [])]
+      struct[:aggregates] = [*struct.fetch(:aggregates, [])].map do |agg|
+        Aggregate.new(agg)
+      end
+      struct[:annotations] = [*struct.fetch(:annotations, [])].map do |ann|
+        Annotation.new(ann)
+      end
+
+      @structure = struct
     end
 
   end
