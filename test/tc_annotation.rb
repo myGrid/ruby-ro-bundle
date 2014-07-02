@@ -11,34 +11,35 @@ require "ro-bundle"
 
 class TestAnnotation < Test::Unit::TestCase
 
-  def test_create
-    about = "/file.txt"
-    an = ROBundle::Annotation.new(about)
+  def setup
+    @about = "/file.txt"
+    @content = [ "/", "http://www.example.com/example.txt" ]
+    @id = UUID.generate(:urn)
 
-    assert_equal about, an.about
+    @json = {
+      :about => @about,
+      :content => @content,
+      :annotation => @id
+    }
+  end
+
+  def test_create
+    an = ROBundle::Annotation.new(@about)
+
+    assert_equal @about, an.about
     assert_nil an.content
   end
 
   def test_create_from_json
-    about = "/file.txt"
-    content = [ "/", "http://www.example.com/example.txt" ]
-    id = UUID.generate(:urn)
+    an = ROBundle::Annotation.new(@json)
 
-    json = {
-      :about => about,
-      :content => content,
-      :annotation => id
-    }
-
-    an = ROBundle::Annotation.new(json)
-
-    assert_equal about, an.about
-    assert_equal content, an.content
-    assert_equal id, an.annotation
+    assert_equal @about, an.about
+    assert_equal @content, an.content
+    assert_equal @id, an.annotation
   end
 
   def test_generate_annotation_id
-    an = ROBundle::Annotation.new("/file.txt")
+    an = ROBundle::Annotation.new(@about)
     id = an.annotation
 
     assert id.instance_of?(String)
