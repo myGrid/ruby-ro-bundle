@@ -6,16 +6,17 @@
 # Author: Robert Haines
 #------------------------------------------------------------------------------
 
-require 'coveralls'
-Coveralls.wear!
+require 'test/unit'
+require "ro-bundle"
 
-# Example data files
-$hello = "test/data/HelloAnyone.robundle"
+class TestUtil < Test::Unit::TestCase
 
-require "tc_util"
-require "tc_agent"
-require "tc_annotation"
-require "tc_aggregate"
-require "tc_manifest"
-require "tc_read"
-require "tc_create"
+  def test_parse_time
+    now = Time.now
+    iso = now.iso8601
+
+    assert ROBundle::Util.parse_time(iso).instance_of?(Time)
+    assert_nil ROBundle::Util.parse_time(nil)
+  end
+
+end
