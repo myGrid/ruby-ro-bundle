@@ -57,6 +57,15 @@ module ROBundle
       @structure[:annotation] ||= UUID.generate(:urn)
     end
 
+    # :call-seq:
+    #   to_json(options = nil) -> String
+    #
+    # Write this Annotation out as a json string. Takes the same options as
+    # JSON#generate.
+    def to_json(*a)
+      Util.clean_json(@structure).to_json(*a)
+    end
+
   end
 
 end

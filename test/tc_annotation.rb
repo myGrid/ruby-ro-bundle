@@ -47,4 +47,13 @@ class TestAnnotation < Test::Unit::TestCase
     assert_same id, an.annotation
   end
 
+  def test_json_output
+    agent = ROBundle::Annotation.new(@json)
+    json = JSON.parse(JSON.generate(agent))
+
+    assert_equal @about, json["about"]
+    assert_equal @content, json["content"]
+    assert_equal @id, json["annotation"]
+  end
+
 end
