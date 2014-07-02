@@ -29,7 +29,7 @@ module ROBundle
     # as the identifier. Returns +nil+ if the id is not present in the
     # manifest.
     def id
-      structure.fetch(:id, nil)
+      structure.fetch(:id, "/")
     end
 
     # :call-seq:
