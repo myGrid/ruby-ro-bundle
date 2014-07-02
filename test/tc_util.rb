@@ -14,7 +14,7 @@ class TestUtil < Test::Unit::TestCase
   def test_clean_json
     json_ok = { :one => "one", :uri => URI.parse("/file.txt") }
     json_nil = { :nil => nil }
-    json_empty = { :empty => "" }
+    json_empty = { :empty1 => "", :empty2 => [], :empty3 => {} }
     json_mix = json_ok.merge(json_nil).merge(json_empty)
     empty = {}
 

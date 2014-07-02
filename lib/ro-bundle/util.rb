@@ -20,7 +20,7 @@ module ROBundle
     # Remove empty strings and nils from a json hash structure.
     def self.clean_json(structure)
       structure.delete_if do |_, v|
-        v.nil? || (v.instance_of?(String) && v.empty?)
+        v.nil? || (v.respond_to?(:empty?) && v.empty?)
       end
     end
 
