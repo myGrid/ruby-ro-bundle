@@ -14,7 +14,7 @@ class Example3Manifest < ROBundle::Manifest
   private
 
   def contents
-    File.read("test/data/example3-manifest.json")
+    File.read($man_ex3)
   end
 
 end
