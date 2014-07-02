@@ -11,7 +11,7 @@ require "time"
 #
 module ROBundle
 
-  # A module with lots of utility functions. Most (maybe all) are private.
+  # A module with lots of utility functions.
   module Util
 
     # :call-seq:
