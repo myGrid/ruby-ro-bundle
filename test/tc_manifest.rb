@@ -73,6 +73,21 @@ class TestManifest < Test::Unit::TestCase
     assert_not_equal old.to_s, @manifest.created_on.to_s
   end
 
+  def test_change_created_by
+    agent = ROBundle::Agent.new("Robert Haines")
+    @manifest.created_by = agent
+
+    assert_same agent, @manifest.created_by
+  end
+
+  def test_created_by_bad_agent
+    old = @manifest.created_by
+    agent = "Robert Haines"
+    @manifest.created_by = agent
+
+    assert_same old, @manifest.created_by
+  end
+
   def test_change_authored_on
     old = @manifest.authored_on
     now = Time.now.to_s

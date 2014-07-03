@@ -68,6 +68,15 @@ module ROBundle
     end
 
     # :call-seq:
+    #   created_by = Agent
+    #
+    # Set the Agent that has created this RO Bundle. Anything passed to this
+    # method that is not an Agent will be ignored.
+    def created_by=(new_creator)
+      structure[:createdBy] = new_creator if new_creator.instance_of?(Agent)
+    end
+
+    # :call-seq:
     #   authored_on -> Time
     #
     # Return the time that this RO Bundle was edited as a Time object, or
