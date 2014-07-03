@@ -55,5 +55,45 @@ module ROBundle
       super(filename, mimetype, &block)
     end
 
+    # :call-seq:
+    #   add(entry, src_path, options = {}, &continue_on_exists_proc)
+    #
+    # Convenience method for adding the contents of a file to the bundle
+    # file. If asked to add a file with a reserved name, such as the special
+    # mimetype header file or .ro/manifest.json, this method will raise a
+    # ReservedNameClashError.
+    #
+    # This method automatically adds new entries to the list of bundle
+    # aggregates unless the <tt>:aggregate</tt> option is set to false.
+    #
+    # See the rubyzip documentation for details of the
+    # +continue_on_exists_proc+ parameter.
+    def add(entry, src_path, options = {}, &continue_on_exists_proc)
+      super(entry, src_path, &continue_on_exists_proc)
+
+      options = { :aggregate => true }.merge(options)
+
+      if options[:aggregate]
+        @manifest.add_aggregate(entry)
+      end
+    end
+
+    # :call-seq:
+    #   add_aggregate(entry, &continue_on_exists_proc)
+    #   add_aggregate(entry, src_path, &continue_on_exists_proc)
+    #
+    # The first form of this method adds an already existing entry in the
+    # bundle to the list of aggregates. <tt>Errno:ENOENT</tt> is raised if the
+    # entry does not exist.
+    #
+    # The second form is equivalent to File#add called without any options.
+    def add_aggregate(entry, src_path = nil, &continue_on_exists_proc)
+      if src_path.nil?
+        @manifest.add_aggregate(entry)
+      else
+        add(entry, src_path, &continue_on_exists_proc)
+      end
+    end
+
   end
 end

@@ -10,6 +10,8 @@ require "test/unit"
 require "tmpdir"
 require "ro-bundle"
 
+require "helpers/list_tests"
+
 class TestCreation < Test::Unit::TestCase
 
   def test_create_empty_bundle
@@ -38,6 +40,38 @@ class TestCreation < Test::Unit::TestCase
 
       assert_nothing_raised(ZipContainer::MalformedContainerError, ZipContainer::ZipError) do
         ROBundle::File.verify!(filename)
+      end
+    end
+  end
+
+  def test_add_aggregates
+    Dir.mktmpdir do |dir|
+      filename = File.join(dir, "test.bundle")
+
+      entry1 = "test1.json"
+      entry2 = "test2.json"
+      entry3 = "test3.json"
+
+      assert_nothing_raised do
+        ROBundle::File.create(filename) do |b|
+          assert b.aggregates.empty?
+          assert_nil b.find_entry(entry1)
+
+          b.add(entry1, $man_ex3, :aggregate => false)
+          assert b.aggregates.empty?
+          assert_not_nil b.find_entry(entry1)
+
+          b.add(entry2, $man_ex3)
+          assert file_aggregate_in_list(entry2, b.aggregates)
+          assert_not_nil b.find_entry(entry2)
+
+          b.add_aggregate(entry3, $man_ex3)
+          assert file_aggregate_in_list(entry3, b.aggregates)
+          assert_not_nil b.find_entry(entry3)
+
+          b.add_aggregate(entry1)
+          assert file_aggregate_in_list(entry1, b.aggregates)
+        end
       end
     end
   end
