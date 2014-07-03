@@ -56,6 +56,14 @@ class TestManifest < Test::Unit::TestCase
     end
   end
 
+  def test_ensure_copied_lists
+    %w(authored_by history aggregates annotations).map(&:to_sym).each do |m|
+      list = @manifest.send(m)
+      list << "new item"
+      assert_not_equal list, @manifest.send(m)
+    end
+  end
+
   def test_change_id
     old = @manifest.id
     @manifest.id = "/new"

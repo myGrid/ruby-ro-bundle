@@ -100,7 +100,7 @@ module ROBundle
     #
     # Return the list of Agents that authored this Research Object.
     def authored_by
-      structure[:authoredBy]
+      structure[:authoredBy].dup
     end
 
     # :call-seq:
@@ -109,7 +109,7 @@ module ROBundle
     # Return a list of filenames that hold provenance information for this
     # Research Object.
     def history
-      structure[:history]
+      structure[:history].dup
     end
 
     # :call-seq:
@@ -117,7 +117,7 @@ module ROBundle
     #
     # Return a list of all the aggregated resources in this Research Object.
     def aggregates
-      structure[:aggregates]
+      structure[:aggregates].dup
     end
 
     # :call-seq:
@@ -125,7 +125,7 @@ module ROBundle
     #
     # Return a list of all the annotations in this Research Object.
     def annotations
-      structure[:annotations]
+      structure[:annotations].dup
     end
 
     # :call-seq:
