@@ -70,6 +70,7 @@ class TestManifest < Test::Unit::TestCase
 
     assert_equal "/new", @manifest.id
     assert_not_equal old, @manifest.id
+    assert @manifest.edited?
   end
 
   def test_change_created_on
@@ -79,6 +80,7 @@ class TestManifest < Test::Unit::TestCase
 
     assert_equal now, @manifest.created_on.to_s
     assert_not_equal old.to_s, @manifest.created_on.to_s
+    assert @manifest.edited?
   end
 
   def test_change_created_by
@@ -86,6 +88,7 @@ class TestManifest < Test::Unit::TestCase
     @manifest.created_by = agent
 
     assert_same agent, @manifest.created_by
+    assert @manifest.edited?
   end
 
   def test_created_by_bad_agent
@@ -94,6 +97,7 @@ class TestManifest < Test::Unit::TestCase
     @manifest.created_by = agent
 
     assert_same old, @manifest.created_by
+    refute @manifest.edited?
   end
 
   def test_change_authored_on
@@ -103,6 +107,7 @@ class TestManifest < Test::Unit::TestCase
 
     assert_equal now, @manifest.authored_on.to_s
     assert_not_equal old.to_s, @manifest.authored_on.to_s
+    assert @manifest.edited?
   end
 
 end

@@ -20,6 +20,8 @@ module ROBundle
     # Create a new managed file entry to represent the manifest.json file.
     def initialize
       super(FILE_NAME, :required => true)
+
+      @edited = false
     end
 
     # :call-seq:
@@ -37,6 +39,7 @@ module ROBundle
     #
     # Set the id of this Manifest.
     def id=(new_id)
+      @edited = true
       structure[:id] = new_id
     end
 
@@ -56,6 +59,7 @@ module ROBundle
     # interpret as a time is accepted and converted to ISO8601 format on
     # serialization.
     def created_on=(new_time)
+      @edited = true
       set_time(:createdOn, new_time)
     end
 
@@ -73,7 +77,10 @@ module ROBundle
     # Set the Agent that has created this RO Bundle. Anything passed to this
     # method that is not an Agent will be ignored.
     def created_by=(new_creator)
-      structure[:createdBy] = new_creator if new_creator.instance_of?(Agent)
+      if new_creator.instance_of?(Agent)
+        @edited = true
+        structure[:createdBy] = new_creator
+      end
     end
 
     # :call-seq:
@@ -92,6 +99,7 @@ module ROBundle
     # interpret as a time is accepted and converted to ISO8601 format on
     # serialization.
     def authored_on=(new_time)
+      @edited = true
       set_time(:authoredOn, new_time)
     end
 
@@ -126,6 +134,14 @@ module ROBundle
     # Return a list of all the annotations in this Research Object.
     def annotations
       structure[:annotations].dup
+    end
+
+    # :call-seq:
+    #   edited? -> true or false
+    #
+    # Has this manifest been altered in any way?
+    def edited?
+      @edited
     end
 
     # :call-seq:
