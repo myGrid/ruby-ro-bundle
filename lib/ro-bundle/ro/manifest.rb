@@ -121,6 +121,23 @@ module ROBundle
     end
 
     # :call-seq:
+    #   add_history(entry)
+    #
+    # Add the given entry to the history list in this manifest.
+    # <tt>Errno:ENOENT</tt> is raised if the entry does not exist.
+    def add_history(entry)
+      raise Errno::ENOENT if container.find_entry(entry).nil?
+
+      # Mangle the filename according to the RO Bundle specification.
+      name = entry_name(entry)
+      dir = "#{@parent.full_name}/"
+      name = name.start_with?(dir) ? name.sub(dir, "") : "/#{name}"
+
+      @edited = true
+      structure[:history] << name
+    end
+
+    # :call-seq:
     #   aggregates -> List of aggregated resources.
     #
     # Return a list of all the aggregated resources in this Research Object.

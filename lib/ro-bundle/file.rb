@@ -95,5 +95,23 @@ module ROBundle
       end
     end
 
+    # :call-seq:
+    #   add_history(entry, &continue_on_exists_proc)
+    #   add_history(entry, src_path, &continue_on_exists_proc)
+    #
+    # The first form of this method adds an already existing entry in the
+    # bundle to the history list in the manifest. <tt>Errno:ENOENT</tt> is
+    # raised if the entry does not exist.
+    #
+    # The second form adds the entry before adding it to the history list. The
+    # entry is not aggregated.
+    def add_history(entry, src_path = nil, &continue_on_exists_proc)
+      unless src_path.nil?
+        add(entry, src_path, :aggregate => false, &continue_on_exists_proc)
+      end
+
+      @manifest.add_history(entry)
+    end
+
   end
 end

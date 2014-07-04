@@ -76,4 +76,31 @@ class TestCreation < Test::Unit::TestCase
     end
   end
 
+  def test_add_history
+    Dir.mktmpdir do |dir|
+      filename = File.join(dir, "test.bundle")
+
+      entry1 = "test1.json"
+      entry2 = ".ro/test2.json"
+
+      assert_nothing_raised do
+        ROBundle::File.create(filename) do |b|
+          assert b.history.empty?
+          assert_nil b.find_entry(entry1)
+
+          b.add(entry1, $man_ex3, :aggregate => false)
+          assert_not_nil b.find_entry(entry1)
+
+          b.mkdir(".ro")
+          b.add_history(entry2, $man_ex3)
+          assert_not_nil b.find_entry(entry2)
+          assert entry_in_history_list(entry2, b.history)
+
+          b.add_history(entry1)
+          assert entry_in_history_list(entry1, b.history)
+        end
+      end
+    end
+  end
+
 end

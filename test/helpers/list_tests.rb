@@ -14,3 +14,9 @@ def file_aggregate_in_list(agg, list)
 
   false
 end
+
+# Is the given file name in the list of history objects
+def entry_in_history_list(entry, list)
+  name = entry.start_with?(".ro/") ? entry.sub(".ro/", "") : "/#{entry}"
+  list.include?(name)
+end
