@@ -40,6 +40,8 @@ class TestRead < Test::Unit::TestCase
 
       annotations = b.annotations
       assert annotations.instance_of?(Array)
+
+      refute b.commit_required?
     end
   end
 

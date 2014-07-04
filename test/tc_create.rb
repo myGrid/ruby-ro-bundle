@@ -22,6 +22,7 @@ class TestCreation < Test::Unit::TestCase
         ROBundle::File.create(filename) do |b|
           assert(b.on_disk?)
           refute(b.in_memory?)
+          refute b.commit_required?
 
           assert(b.find_entry("mimetype").local_header_offset == 0)
           assert_equal("application/vnd.wf4ever.robundle+zip", b.mimetype)
@@ -56,10 +57,12 @@ class TestCreation < Test::Unit::TestCase
         ROBundle::File.create(filename) do |b|
           assert b.aggregates.empty?
           assert_nil b.find_entry(entry1)
+          refute b.commit_required?
 
           b.add(entry1, $man_ex3, :aggregate => false)
           assert b.aggregates.empty?
           assert_not_nil b.find_entry(entry1)
+          assert b.commit_required?
 
           b.add(entry2, $man_ex3)
           assert file_aggregate_in_list(entry2, b.aggregates)
@@ -118,9 +121,11 @@ class TestCreation < Test::Unit::TestCase
       assert_nothing_raised do
         ROBundle::File.create(filename) do |b|
           assert b.authored_by.empty?
+          refute b.commit_required?
 
           b.add_author(agent)
           assert b.authored_by.include?(agent)
+          assert b.commit_required?
 
           b.add_author(name)
           assert name_in_agent_list(name, b.authored_by)

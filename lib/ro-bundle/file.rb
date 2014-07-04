@@ -113,5 +113,14 @@ module ROBundle
       @manifest.add_history(entry)
     end
 
+    # :call-seq:
+    #   commit_required? -> true or false
+    #
+    # Returns +true+ if any changes have been made to this RO Bundle file
+    # since the last commit, +false+ otherwise.
+    def commit_required?
+      super || @manifest.edited?
+    end
+
   end
 end
