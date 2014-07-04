@@ -112,6 +112,21 @@ module ROBundle
     end
 
     # :call-seq:
+    #   add_author(author)
+    #
+    # Add an author to the list of authors for this Research Object. The
+    # supplied parameter can either be an Agent or the name of an author as a
+    # String.
+    def add_author(author)
+      unless author.is_a?(Agent)
+        author = Agent.new(author.to_s)
+      end
+
+      @edited = true
+      structure[:authoredBy] << author
+    end
+
+    # :call-seq:
     #   history -> List of history entry names
     #
     # Return a list of filenames that hold provenance information for this

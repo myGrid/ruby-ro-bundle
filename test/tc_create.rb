@@ -103,4 +103,30 @@ class TestCreation < Test::Unit::TestCase
     end
   end
 
+  def test_add_author
+    Dir.mktmpdir do |dir|
+      filename = File.join(dir, "test.bundle")
+
+      agent = ROBundle::Agent.new(
+        "Robert Haines",
+        "https://github.com/hainesr",
+        "http://orcid.org/0000-0002-9538-7919"
+      )
+
+      name = "Mr. Bigglesworth"
+
+      assert_nothing_raised do
+        ROBundle::File.create(filename) do |b|
+          assert b.authored_by.empty?
+
+          b.add_author(agent)
+          assert b.authored_by.include?(agent)
+
+          b.add_author(name)
+          assert name_in_agent_list(name, b.authored_by)
+        end
+      end
+    end
+  end
+
 end

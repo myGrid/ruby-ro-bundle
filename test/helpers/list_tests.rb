@@ -20,3 +20,12 @@ def entry_in_history_list(entry, list)
   name = entry.start_with?(".ro/") ? entry.sub(".ro/", "") : "/#{entry}"
   list.include?(name)
 end
+
+# Is the given name in the list of agent objects
+def name_in_agent_list(name, list)
+  list.each do |e|
+    return true if e.name == name
+  end
+
+  false
+end
