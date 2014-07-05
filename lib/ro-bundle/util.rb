@@ -43,6 +43,18 @@ module ROBundle
       URI.parse(uri)
     end
 
+    # :call-seq:
+    #   is_absolute_uri?(uri) -> true or false
+    #
+    # IS the supplied URI absolute? An absolute URI starts with a scheme, such
+    # as http, https or urn.
+    def self.is_absolute_uri?(uri)
+      uri = URI.parse(uri)
+      !uri.scheme.nil?
+    rescue URI::InvalidURIError
+      false
+    end
+
   end
 
 end
