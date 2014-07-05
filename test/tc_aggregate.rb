@@ -15,10 +15,12 @@ class TestAggregate < Test::Unit::TestCase
   def test_simple_file
     assert_nothing_raised(ROBundle::InvalidAggregateError) do
       file = "/good.txt"
-      agg = ROBundle::Aggregate.new(file)
+      type = "text/plain"
+      agg = ROBundle::Aggregate.new(file, type)
 
       assert_nil agg.uri
       assert_equal file, agg.file
+      assert_equal type, agg.mediatype
     end
   end
 
@@ -28,6 +30,7 @@ class TestAggregate < Test::Unit::TestCase
       agg = ROBundle::Aggregate.new(uri)
 
       assert_nil agg.file
+      assert_nil agg.mediatype
       assert_equal URI.parse(uri), agg.uri
     end
   end
@@ -38,6 +41,7 @@ class TestAggregate < Test::Unit::TestCase
       agg = ROBundle::Aggregate.new(uri)
 
       assert_nil agg.file
+      assert_nil agg.mediatype
       assert_equal uri, agg.uri
     end
   end
@@ -93,6 +97,7 @@ class TestAggregate < Test::Unit::TestCase
       agg = ROBundle::Aggregate.new(json)
 
       assert_nil agg.file
+      assert_nil agg.mediatype
       assert_equal URI.parse(uri), agg.uri
     end
   end

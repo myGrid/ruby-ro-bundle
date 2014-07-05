@@ -15,17 +15,21 @@ module ROBundle
   class Aggregate
 
     # :call-seq:
-    #   new(filename)
+    #   new(filename, mediatype = nil)
     #   new(URI)
     #
     # Create a new file or URI aggregate.
-    def initialize(object)
+    def initialize(object, second = nil)
       @structure = {}
 
       if object.instance_of?(Hash)
         init_json(object)
       else
         init_file_or_uri(object)
+
+        if @structure[:file]
+          @structure[:mediatype] = second
+        end
       end
     end
 
