@@ -14,6 +14,7 @@ module ROBundle
 
     FILE_NAME = "manifest.json" # :nodoc:
     DEFAULT_CONTEXT = "https://w3id.org/bundle/context" # :nodoc:
+    DEFAULT_ID = "/" # :nodoc:
 
     # :call-seq:
     #   new
@@ -46,10 +47,9 @@ module ROBundle
     #   id -> String
     #
     # An RO identifier (usually '/') indicating the relative top-level folder
-    # as the identifier. Returns +nil+ if the id is not present in the
-    # manifest.
+    # as the identifier.
     def id
-      structure.fetch(:id, "/")
+      structure[:id]
     end
 
     # :call-seq:
@@ -262,6 +262,7 @@ module ROBundle
 
     def init_defaults(struct)
       init_default_context(struct)
+      init_default_id(struct)
       creator = struct[:createdBy]
       struct[:createdBy] = Agent.new(creator) unless creator.nil?
       struct[:authoredBy] = [*struct.fetch(:authoredBy, [])].map do |agent|
@@ -285,6 +286,16 @@ module ROBundle
         struct[:@context] = [ DEFAULT_CONTEXT ]
       else
         struct[:@context] = [*context]
+      end
+
+      struct
+    end
+
+    def init_default_id(struct)
+      id = struct[:id]
+      if id.nil?
+        @edited = true
+        struct[:id] = DEFAULT_ID
       end
 
       struct
