@@ -75,6 +75,19 @@ class TestCreation < Test::Unit::TestCase
           assert file_aggregate_in_list(entry1, b.aggregates)
         end
       end
+
+      ROBundle::File.open(filename) do |b|
+        refute b.aggregates.empty?
+
+        assert file_aggregate_in_list(entry1, b.aggregates)
+        assert_not_nil b.find_entry(entry1)
+
+        assert file_aggregate_in_list(entry2, b.aggregates)
+        assert_not_nil b.find_entry(entry2)
+
+        assert file_aggregate_in_list(entry3, b.aggregates)
+        assert_not_nil b.find_entry(entry3)
+      end
     end
   end
 
@@ -100,6 +113,16 @@ class TestCreation < Test::Unit::TestCase
           b.add_history(entry1)
           assert entry_in_history_list(entry1, b.history)
         end
+      end
+
+      ROBundle::File.open(filename) do |b|
+        refute b.history.empty?
+
+        assert entry_in_history_list(entry1, b.history)
+        assert_not_nil b.find_entry(entry1)
+
+        assert_not_nil b.find_entry(entry2)
+        assert entry_in_history_list(entry2, b.history)
       end
     end
   end
@@ -128,6 +151,13 @@ class TestCreation < Test::Unit::TestCase
           b.add_author(name)
           assert name_in_agent_list(name, b.authored_by)
         end
+      end
+
+      ROBundle::File.open(filename) do |b|
+        refute b.authored_by.empty?
+
+        assert name_in_agent_list(agent.name, b.authored_by)
+        assert name_in_agent_list(name, b.authored_by)
       end
     end
   end

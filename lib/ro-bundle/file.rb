@@ -121,6 +121,29 @@ module ROBundle
     end
 
     # :call-seq:
+    #   commit -> true or false
+    #   close -> true or false
+    #
+    # Commits changes that have been made since the previous commit to the
+    # RO Bundle file. Returns +true+ if anything was actually done, +false+
+    # otherwise.
+    def commit
+      if @manifest.edited?
+        name = @manifest.full_name
+        remove(name) unless find_entry(name).nil?
+
+        file.open(name, "w") do |m|
+          m.puts JSON.pretty_generate(@manifest)
+        end
+      end
+
+      super
+    end
+
+    alias :close :commit
+
+
+    # :call-seq:
     #   commit_required? -> true or false
     #
     # Returns +true+ if any changes have been made to this RO Bundle file
