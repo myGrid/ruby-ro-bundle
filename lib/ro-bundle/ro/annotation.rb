@@ -14,7 +14,7 @@ module ROBundle
   class Annotation
 
     # :call-seq:
-    #   new(about, content = nil)
+    #   new(target, content = nil)
     #
     # Create a new Annotation with the specified "about" identifier. A new
     # annotation ID is generated and set for the new annotation. The +content+
@@ -35,12 +35,12 @@ module ROBundle
     end
 
     # :call-seq:
-    #   about
+    #   target
     #
     # The identifier for the annotated resource. This is considered the target
     # of the annotation, that is the resource the annotation content is
     # "somewhat about".
-    def about
+    def target
       @structure[:about]
     end
 
