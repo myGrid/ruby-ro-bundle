@@ -256,6 +256,10 @@ module ROBundle
         struct = {}
       end
 
+      @structure = init_defaults(struct)
+    end
+
+    def init_defaults(struct)
       struct[:@context] = [*struct.fetch(:@context, [])]
       creator = struct[:createdBy]
       struct[:createdBy] = Agent.new(creator) unless creator.nil?
@@ -270,7 +274,7 @@ module ROBundle
         Annotation.new(ann)
       end
 
-      @structure = struct
+      struct
     end
 
   end
