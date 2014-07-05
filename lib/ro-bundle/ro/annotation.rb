@@ -14,20 +14,23 @@ module ROBundle
   class Annotation
 
     # :call-seq:
-    #   new(about)
+    #   new(about, content = nil)
     #
     # Create a new Annotation with the specified "about" identifier. A new
-    # annotation ID is generated and set for the new annotation.
+    # annotation ID is generated and set for the new annotation. The +content+
+    # parameter can be optionally used to set the file or URI that holds the
+    # body of the annotation.
     #
     # An annotation id is a UUID prefixed with "urn:uuid" as per
     # {RFC4122}[http://www.ietf.org/rfc/rfc4122.txt].
-    def initialize(object)
+    def initialize(object, content = nil)
       if object.instance_of?(Hash)
         @structure = object
       else
         @structure = {}
         @structure[:about] = object
         @structure[:annotation] = UUID.generate(:urn)
+        @structure[:content] = content
       end
     end
 

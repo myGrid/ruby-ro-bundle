@@ -31,6 +31,14 @@ class TestAnnotation < Test::Unit::TestCase
     assert_not_nil an.annotation_id
   end
 
+  def test_create_with_content
+    an = ROBundle::Annotation.new(@about, @content)
+
+    assert_equal @about, an.about
+    assert_equal @content, an.content
+    assert_not_nil an.annotation_id
+  end
+
   def test_create_from_json
     an = ROBundle::Annotation.new(@json)
 
