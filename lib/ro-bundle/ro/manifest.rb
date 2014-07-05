@@ -257,7 +257,8 @@ module ROBundle
       end
 
       struct[:@context] = [*struct.fetch(:@context, [])]
-      struct[:createdBy] = Agent.new(struct.fetch(:createdBy, {}))
+      creator = struct[:createdBy]
+      struct[:createdBy] = Agent.new(creator) unless creator.nil?
       struct[:authoredBy] = [*struct.fetch(:authoredBy, [])].map do |agent|
         Agent.new(agent)
       end
