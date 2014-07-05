@@ -12,8 +12,8 @@ require "ro-bundle"
 class TestAnnotation < Test::Unit::TestCase
 
   def setup
-    @about = "/file.txt"
-    @content = [ "/", "http://www.example.com/example.txt" ]
+    @about = [ "/", "/file.txt" ]
+    @content = "http://www.example.com/example.txt"
     @id = UUID.generate(:urn)
 
     @json = {
