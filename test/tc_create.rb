@@ -32,6 +32,9 @@ class TestCreation < Test::Unit::TestCase
             b.id
           end
 
+          # Manifest has been accessed so has been populated with defaults.
+          assert b.commit_required?
+
           b.file.open(".ro/manifest.json", "w") do |m|
             m.puts "{ }"
           end
@@ -56,7 +59,7 @@ class TestCreation < Test::Unit::TestCase
         ROBundle::File.create(filename) do |b|
           assert b.aggregates.empty?
           assert_nil b.find_entry(entry1)
-          refute b.commit_required?
+          assert b.commit_required?
 
           b.add(entry1, $man_ex3, :aggregate => false)
           assert b.aggregates.empty?
@@ -78,6 +81,7 @@ class TestCreation < Test::Unit::TestCase
 
       ROBundle::File.open(filename) do |b|
         refute b.aggregates.empty?
+        refute b.commit_required?
 
         assert file_aggregate_in_list(entry1, b.aggregates)
         assert_not_nil b.find_entry(entry1)
@@ -142,7 +146,7 @@ class TestCreation < Test::Unit::TestCase
       assert_nothing_raised do
         ROBundle::File.create(filename) do |b|
           assert b.authored_by.empty?
-          refute b.commit_required?
+          assert b.commit_required?
 
           b.add_author(agent)
           assert b.authored_by.include?(agent)
@@ -155,6 +159,7 @@ class TestCreation < Test::Unit::TestCase
 
       ROBundle::File.open(filename) do |b|
         refute b.authored_by.empty?
+        refute b.commit_required?
 
         assert name_in_agent_list(agent.name, b.authored_by)
         assert name_in_agent_list(name, b.authored_by)

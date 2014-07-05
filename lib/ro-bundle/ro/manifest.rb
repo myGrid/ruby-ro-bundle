@@ -13,6 +13,7 @@ module ROBundle
   class Manifest < ZipContainer::ManagedFile
 
     FILE_NAME = "manifest.json" # :nodoc:
+    DEFAULT_CONTEXT = "https://w3id.org/bundle/context" # :nodoc:
 
     # :call-seq:
     #   new
@@ -260,7 +261,7 @@ module ROBundle
     end
 
     def init_defaults(struct)
-      struct[:@context] = [*struct.fetch(:@context, [])]
+      init_default_context(struct)
       creator = struct[:createdBy]
       struct[:createdBy] = Agent.new(creator) unless creator.nil?
       struct[:authoredBy] = [*struct.fetch(:authoredBy, [])].map do |agent|
@@ -272,6 +273,18 @@ module ROBundle
       end
       struct[:annotations] = [*struct.fetch(:annotations, [])].map do |ann|
         Annotation.new(ann)
+      end
+
+      struct
+    end
+
+    def init_default_context(struct)
+      context = struct[:@context]
+      if context.nil?
+        @edited = true
+        struct[:@context] = [ DEFAULT_CONTEXT ]
+      else
+        struct[:@context] = [*context]
       end
 
       struct
