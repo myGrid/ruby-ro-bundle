@@ -74,7 +74,8 @@ class TestCreation < Test::Unit::TestCase
           assert file_aggregate_in_list(entry3, b.aggregates)
           assert_not_nil b.find_entry(entry3)
 
-          b.add_aggregate(entry1)
+          new_agg = ROBundle::Aggregate.new("/#{entry1}")
+          b.add_aggregate(new_agg)
           assert file_aggregate_in_list(entry1, b.aggregates)
         end
       end
