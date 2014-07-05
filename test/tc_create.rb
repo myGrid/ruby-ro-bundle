@@ -32,7 +32,6 @@ class TestCreation < Test::Unit::TestCase
             b.id
           end
 
-          b.mkdir(".ro")
           b.file.open(".ro/manifest.json", "w") do |m|
             m.puts "{ }"
           end
@@ -94,7 +93,6 @@ class TestCreation < Test::Unit::TestCase
           b.add(entry1, $man_ex3, :aggregate => false)
           assert_not_nil b.find_entry(entry1)
 
-          b.mkdir(".ro")
           b.add_history(entry2, $man_ex3)
           assert_not_nil b.find_entry(entry2)
           assert entry_in_history_list(entry2, b.history)
