@@ -26,6 +26,8 @@ class TestManifest < Test::Unit::TestCase
   end
 
   def test_top_level
+    assert @manifest.context.instance_of?(Array)
+
     assert_equal("/", @manifest.id)
 
     assert @manifest.created_on.instance_of?(Time)
@@ -62,6 +64,17 @@ class TestManifest < Test::Unit::TestCase
       list << "new item"
       assert_not_equal list, @manifest.send(m)
     end
+  end
+
+  def test_change_context
+    old = @manifest.context
+    context = "http://example.com/context"
+    @manifest.add_context(context)
+
+    assert @manifest.context.include?(context)
+    assert @manifest.context.include?(old[0])
+    assert_equal old[0], @manifest.context[1]
+    assert @manifest.edited?
   end
 
   def test_change_id

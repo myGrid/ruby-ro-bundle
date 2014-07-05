@@ -25,6 +25,23 @@ module ROBundle
     end
 
     # :call-seq:
+    #   context -> List of context URIs
+    #
+    # Return the list of @context URIs for this Research Object manifest.
+    def context
+      structure[:@context].dup
+    end
+
+    # :call-seq:
+    #   add_context
+    #
+    # Add a URI to the front of the @context list.
+    def add_context(uri)
+      @edited = true
+      structure[:@context].insert(0, uri.to_s)
+    end
+
+    # :call-seq:
     #   id -> String
     #
     # An RO identifier (usually '/') indicating the relative top-level folder
@@ -239,6 +256,7 @@ module ROBundle
         struct = {}
       end
 
+      struct[:@context] = [*struct.fetch(:@context, [])]
       struct[:createdBy] = Agent.new(struct.fetch(:createdBy, {}))
       struct[:authoredBy] = [*struct.fetch(:authoredBy, [])].map do |agent|
         Agent.new(agent)
