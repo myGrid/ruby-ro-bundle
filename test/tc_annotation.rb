@@ -28,6 +28,7 @@ class TestAnnotation < Test::Unit::TestCase
 
     assert_equal @about, an.about
     assert_nil an.content
+    assert_not_nil an.annotation_id
   end
 
   def test_create_from_json
@@ -35,16 +36,16 @@ class TestAnnotation < Test::Unit::TestCase
 
     assert_equal @about, an.about
     assert_equal @content, an.content
-    assert_equal @id, an.annotation
+    assert_equal @id, an.annotation_id
   end
 
   def test_generate_annotation_id
     an = ROBundle::Annotation.new(@about)
-    id = an.annotation
+    id = an.annotation_id
 
     assert id.instance_of?(String)
     assert id.start_with?("urn:uuid:")
-    assert_same id, an.annotation
+    assert_same id, an.annotation_id
   end
 
   def test_json_output

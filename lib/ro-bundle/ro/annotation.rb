@@ -16,13 +16,18 @@ module ROBundle
     # :call-seq:
     #   new(about)
     #
-    # Create a new Annotation with the specified "about" identifier.
+    # Create a new Annotation with the specified "about" identifier. A new
+    # annotation ID is generated and set for the new annotation.
+    #
+    # An annotation id is a UUID prefixed with "urn:uuid" as per
+    # {RFC4122}[http://www.ietf.org/rfc/rfc4122.txt].
     def initialize(object)
       if object.instance_of?(Hash)
         @structure = object
       else
         @structure = {}
         @structure[:about] = object
+        @structure[:annotation] = UUID.generate(:urn)
       end
     end
 
@@ -45,16 +50,11 @@ module ROBundle
     end
 
     # :call-seq:
-    #   annotation -> String
+    #   annotation_id -> String
     #
-    # Return the annotation id of this Annotation. An annotation id is a UUID
-    # prefixed with "urn:uuid" as per
-    # {RFC4122}[http://www.ietf.org/rfc/rfc4122.txt].
-    #
-    # If this Annotation has no annotation id a new one is generated and set
-    # as the annotation id of this Annotation.
-    def annotation
-      @structure[:annotation] ||= UUID.generate(:urn)
+    # Return the annotation id of this Annotation.
+    def annotation_id
+      @structure[:annotation]
     end
 
     # :call-seq:
