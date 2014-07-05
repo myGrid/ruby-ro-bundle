@@ -53,6 +53,14 @@ module ROBundle
     end
 
     # :call-seq:
+    #   content = new_content
+    #
+    # Set the content of this annotation.
+    def content=(new_content)
+      @structure[:content] = new_content
+    end
+
+    # :call-seq:
     #   annotation_id -> String
     #
     # Return the annotation id of this Annotation.

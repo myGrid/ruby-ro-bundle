@@ -47,6 +47,14 @@ class TestAnnotation < Test::Unit::TestCase
     assert_equal @id, an.annotation_id
   end
 
+  def test_change_content
+    an = ROBundle::Annotation.new(@json)
+    new_content = "/file.txt"
+    an.content = new_content
+
+    assert_equal new_content, an.content
+  end
+
   def test_generate_annotation_id
     an = ROBundle::Annotation.new(@about)
     id = an.annotation_id
