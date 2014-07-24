@@ -33,12 +33,12 @@ module ROBundle
 
       # Initialize the managed entries and register the .ro directory.
       @manifest = Manifest.new
-      ro_dir = RODir.new(@manifest)
-      initialize_managed_entries(ro_dir)
+      @ro_dir = RODir.new(@manifest)
+      initialize_managed_entries(@ro_dir)
 
       # Create the .ro directory if it does not already exist.
-      if find_entry(ro_dir.full_name).nil?
-        mkdir(ro_dir.full_name)
+      if find_entry(@ro_dir.full_name).nil?
+        mkdir(@ro_dir.full_name)
         commit
       end
     end
