@@ -121,6 +121,21 @@ module ROBundle
     end
 
     # :call-seq:
+    #   aggregate?(entry) -> true or false
+    #
+    # Is the supplied entry aggregated in this Research Object?
+    def aggregate?(entry)
+      name = entry_name(entry)
+      return true if name == @manifest.id
+
+      aggregates.each do |agg|
+        return true if agg.uri == name || agg.file == "/#{name}"
+      end
+
+      false
+    end
+
+    # :call-seq:
     #   commit -> true or false
     #   close -> true or false
     #

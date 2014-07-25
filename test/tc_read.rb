@@ -45,4 +45,14 @@ class TestRead < Test::Unit::TestCase
     end
   end
 
+  def test_aggregates
+    ROBundle::File.open($hello) do |b|
+      assert b.aggregate?(b.id)
+      assert b.aggregate?("/")
+
+      refute b.aggregate?("/inputs/name.txt")
+      assert b.aggregate?("inputs/name.txt")
+    end
+  end
+
 end

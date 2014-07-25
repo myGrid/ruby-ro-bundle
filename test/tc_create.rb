@@ -67,16 +67,16 @@ class TestCreation < Test::Unit::TestCase
           assert b.commit_required?
 
           b.add(entry2, $man_ex3)
-          assert file_aggregate_in_list(entry2, b.aggregates)
+          assert b.aggregate?(entry2)
           assert_not_nil b.find_entry(entry2)
 
           b.add_aggregate(entry3, $man_ex3)
-          assert file_aggregate_in_list(entry3, b.aggregates)
+          assert b.aggregate?(entry3)
           assert_not_nil b.find_entry(entry3)
 
           new_agg = ROBundle::Aggregate.new("/#{entry1}")
           b.add_aggregate(new_agg)
-          assert file_aggregate_in_list(entry1, b.aggregates)
+          assert b.aggregate?(entry1)
         end
       end
 
@@ -84,13 +84,13 @@ class TestCreation < Test::Unit::TestCase
         refute b.aggregates.empty?
         refute b.commit_required?
 
-        assert file_aggregate_in_list(entry1, b.aggregates)
+        assert b.aggregate?(entry1)
         assert_not_nil b.find_entry(entry1)
 
-        assert file_aggregate_in_list(entry2, b.aggregates)
+        assert b.aggregate?(entry2)
         assert_not_nil b.find_entry(entry2)
 
-        assert file_aggregate_in_list(entry3, b.aggregates)
+        assert b.aggregate?(entry3)
         assert_not_nil b.find_entry(entry3)
       end
     end
