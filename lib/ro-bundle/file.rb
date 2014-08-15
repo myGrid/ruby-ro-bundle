@@ -167,7 +167,6 @@ module ROBundle
 
     alias :close :commit
 
-
     # :call-seq:
     #   commit_required? -> true or false
     #
