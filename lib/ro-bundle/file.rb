@@ -177,5 +177,17 @@ module ROBundle
       super || @manifest.edited?
     end
 
+    # :call-seq:
+    #   find_entry(entry_name, options = {}) -> Zip::Entry or nil
+    #
+    # Searches for the entry with the specified name. Returns +nil+ if no
+    # entry is found or if the specified entry is hidden for normal use. You
+    # can specify <tt>:include_hidden => true</tt> to include hidden entries
+    # in the search.
+    def find_entry(entry_name, options = {})
+      return if Util.is_absolute_uri?(entry_name)
+
+      super(entry_name, options)
+    end
   end
 end
