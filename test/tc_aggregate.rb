@@ -48,14 +48,6 @@ class TestAggregate < Test::Unit::TestCase
 
   def test_bad_aggregates
     assert_raise(ROBundle::InvalidAggregateError) do
-      ROBundle::Aggregate.new(":bad")
-    end
-
-    assert_raise(ROBundle::InvalidAggregateError) do
-      ROBundle::Aggregate.new("bad/bad.txt")
-    end
-
-    assert_raise(ROBundle::InvalidAggregateError) do
       ROBundle::Aggregate.new([])
     end
 

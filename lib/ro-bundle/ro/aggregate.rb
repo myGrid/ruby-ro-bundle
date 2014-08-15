@@ -96,8 +96,9 @@ module ROBundle
     end
 
     def init_file_or_uri(object)
-      if object.is_a?(String) && object.start_with?("/")
-        return @structure[:file] = object
+      if object.is_a?(String) && !Util.is_absolute_uri?(object)
+        name = object.start_with?("/") ? object : "/#{object}"
+        return @structure[:file] = name
       end
 
       invalid = false
