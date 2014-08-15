@@ -44,8 +44,12 @@ class TestUtil < Test::Unit::TestCase
   def test_absolute_uri
     assert ROBundle::Util.is_absolute_uri?("http://example.com/test.txt")
     assert ROBundle::Util.is_absolute_uri?("urn:uuid:and-so-on")
+    assert ROBundle::Util.is_absolute_uri?(URI.parse("http://example.com/test.txt"))
+    assert ROBundle::Util.is_absolute_uri?(URI.parse("urn:uuid:and-so-on"))
     refute ROBundle::Util.is_absolute_uri?("/file.txt")
     refute ROBundle::Util.is_absolute_uri?("file.txt")
+    refute ROBundle::Util.is_absolute_uri?(URI.parse("/file.txt"))
+    refute ROBundle::Util.is_absolute_uri?(URI.parse("file.txt"))
     refute ROBundle::Util.is_absolute_uri?(":file.txt")
     refute ROBundle::Util.is_absolute_uri?("")
     refute ROBundle::Util.is_absolute_uri?(nil)
