@@ -47,7 +47,7 @@ class TestCreation < Test::Unit::TestCase
     end
   end
 
-  def test_add_aggregates
+  def test_add_file_aggregates
     Dir.mktmpdir do |dir|
       filename = File.join(dir, "test.bundle")
 
@@ -92,6 +92,38 @@ class TestCreation < Test::Unit::TestCase
 
         assert b.aggregate?(entry3)
         assert_not_nil b.find_entry(entry3)
+      end
+    end
+  end
+
+  def test_add_uri_aggregates
+    Dir.mktmpdir do |dir|
+      filename = File.join(dir, "test.bundle")
+
+      entry1 = "http://www.example.com/example"
+      entry2 = URI.parse(entry1)
+
+      assert_nothing_raised do
+        ROBundle::File.create(filename) do |b|
+          b.add_aggregate(entry1)
+          assert b.aggregate?(entry1)
+          assert_nil b.find_entry(entry1)
+
+          b.add_aggregate(entry2)
+          assert b.aggregate?(entry2)
+          assert_nil b.find_entry(entry2)
+        end
+      end
+
+      ROBundle::File.open(filename) do |b|
+        refute b.aggregates.empty?
+        refute b.commit_required?
+
+        assert b.aggregate?(entry1)
+        assert_nil b.find_entry(entry1)
+
+        assert b.aggregate?(entry2)
+        assert_nil b.find_entry(entry2)
       end
     end
   end
