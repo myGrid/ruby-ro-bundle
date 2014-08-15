@@ -124,15 +124,22 @@ module ROBundle
     end
 
     # :call-seq:
+    #   aggregate?(uri) -> true or false
     #   aggregate?(entry) -> true or false
     #
-    # Is the supplied entry aggregated in this Research Object?
+    # Is the supplied URI or entry aggregated in this Research Object?
     def aggregate?(entry)
-      name = entry_name(entry)
-      return true if name == @manifest.id
+      return true if entry == @manifest.id
+
+      if Util.is_absolute_uri?(entry)
+        entry = Util.parse_uri(entry)
+      else
+        entry = entry_name(entry)
+        entry = entry.start_with?("/") ? entry : "/#{entry}"
+      end
 
       aggregates.each do |agg|
-        return true if agg.uri == name || agg.file == "/#{name}"
+        return true if agg.uri == entry || agg.file == entry
       end
 
       false

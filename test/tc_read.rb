@@ -50,7 +50,7 @@ class TestRead < Test::Unit::TestCase
       assert b.aggregate?(b.id)
       assert b.aggregate?("/")
 
-      refute b.aggregate?("/inputs/name.txt")
+      assert b.aggregate?("/inputs/name.txt")
       assert b.aggregate?("inputs/name.txt")
     end
   end
