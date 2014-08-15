@@ -180,16 +180,17 @@ module ROBundle
 
     # :call-seq:
     #   add_aggregate(entry)
+    #   add_aggregate(uri)
     #
-    # Add the given entry to the list of aggregates in this manifest.
+    # Add the given entry or URI to the list of aggregates in this manifest.
     # <tt>Errno:ENOENT</tt> is raised if the entry does not exist.
     def add_aggregate(entry)
       unless entry.instance_of?(Aggregate)
-        raise Errno::ENOENT if container.find_entry(entry).nil?
+        unless Util.is_absolute_uri?(entry)
+          raise Errno::ENOENT if container.find_entry(entry).nil?
+        end
 
-        # Mangle the filename according to the RO Bundle specification.
-        name = "/#{entry_name(entry)}"
-        entry = Aggregate.new(name)
+        entry = Aggregate.new(entry)
       end
 
       @edited = true
