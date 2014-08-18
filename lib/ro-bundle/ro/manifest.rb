@@ -198,6 +198,37 @@ module ROBundle
     end
 
     # :call-seq:
+    #   add_annotation(annotation)
+    #   add_annotation(target, content = nil)
+    #
+    # Add an annotation to this Research Object. An annotation can either be
+    # an already created annotation object, or a pair of values to build a new
+    # annotation object explicitly.
+    #
+    # <tt>Errno:ENOENT</tt> is raised if the target of the annotation is not
+    # an annotatable resource in this RO.
+    def add_annotation(object, content = nil)
+      if object.instance_of?(Annotation)
+        # If the supplied Annotation object is already registered then it is
+        # the annotation itself we are annotating!
+        if container.annotation?(object)
+          object = Annotation.new(object.annotation_id, content)
+        end
+      else
+        object = Annotation.new(object, content)
+      end
+
+      target = object.target
+      unless container.annotatable?(target)
+        raise Errno::ENOENT,
+          "'#{target}' is not a member of this Research Object or a URI."
+      end
+
+      @edited = true
+      structure[:annotations] << object
+    end
+
+    # :call-seq:
     #   annotations
     #
     # Return a list of all the annotations in this Research Object.
