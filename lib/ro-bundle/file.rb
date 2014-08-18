@@ -146,6 +146,16 @@ module ROBundle
     end
 
     # :call-seq:
+    #   annotatable?(target) -> true or false
+    #
+    # Is the supplied target an annotatable resource? An annotatable resource
+    # is either an absolute URI (which may or may not be aggregated in the
+    # RO), an aggregated resource or another registered annotation.
+    def annotatable?(target)
+      Util.is_absolute_uri?(target) || annotation?(target) || aggregate?(target)
+    end
+
+    # :call-seq:
     #   annotation?(id) -> true or false
     #   annotation?(annotation) -> true or false
     #
