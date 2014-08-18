@@ -21,9 +21,26 @@ module ROBundle
     # file object.
     def initialize(manifest)
       @manifest = manifest
+      @annotations_directory = AnnotationsDir.new
 
-      super(DIR_NAME, :required => true, :entries => @manifest)
+      super(DIR_NAME, :required => true,
+        :entries => [@manifest, @annotations_directory])
+    end
+
+    # The managed annotations directory within the .ro directory.
+    class AnnotationsDir < ZipContainer::ManagedDirectory
+
+      DIR_NAME = "annotations" # :nodoc:
+
+      # :call-seq:
+      #   new
+      #
+      # Create a new annotations managed directory. The directory is hidden
+      # under normal circumstances.
+      def initialize
+        super(DIR_NAME, :hidden => true)
+      end
+
     end
   end
-
 end
