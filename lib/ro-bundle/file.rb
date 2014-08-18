@@ -146,6 +146,21 @@ module ROBundle
     end
 
     # :call-seq:
+    #   annotation?(id) -> true or false
+    #   annotation?(annotation) -> true or false
+    #
+    # Is the supplied id or annotation registered in this Research Object?
+    def annotation?(id)
+      id = id.annotation_id if id.instance_of?(Annotation)
+
+      annotations.each do |ann|
+        return true if ann.annotation_id == id
+      end
+
+      false
+    end
+
+    # :call-seq:
     #   commit -> true or false
     #   close -> true or false
     #
