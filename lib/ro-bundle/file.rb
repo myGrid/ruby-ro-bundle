@@ -106,6 +106,49 @@ module ROBundle
     end
 
     # :call-seq:
+    #   add_annotation(annotation_object)
+    #   add_annotation(aggregate, content, options = {})
+    #   add_annotation(aggregate, file, options = {})
+    #   add_annotation(aggregate, uri, options = {})
+    #   add_annotation(uri, content, options = {})
+    #   add_annotation(uri, file, options = {})
+    #   add_annotation(uri, uri, options = {})
+    #   add_annotation(annotation, content, options = {})
+    #   add_annotation(annotation, file, options = {})
+    #   add_annotation(annotation, uri, options = {})
+    #
+    # This method has two forms.
+    #
+    # The first form registers an already initialized Annotation object in
+    # this Research Object.
+    #
+    # The second form creates a new Annotation object for the specified target
+    # with the specified (or empty content) and registers it in this Research
+    # Object.
+    #
+    # In both cases <tt>Errno:ENOENT</tt> is raised if the target of the
+    # annotation is not an annotatable resource.
+    def add_annotation(target, body = nil, options = {})
+      options = { :aggregate => false }.merge(options)
+
+      if target.is_a?(Annotation) || annotatable?(target)
+        if body.nil? || aggregate?(body)
+          content = body
+        elsif Util.is_absolute_uri?(body)
+          content = body
+          @manifest.add_aggregate(body) if options[:aggregate]
+        else
+          content = @ro_dir.write_annotation_data(body, options)
+        end
+
+        @manifest.add_annotation(target, content)
+      else
+        raise Errno::ENOENT,
+          "'#{target}' is not a member of this Research Object or a URI."
+      end
+    end
+
+    # :call-seq:
     #   add_history(entry, &continue_on_exists_proc)
     #   add_history(entry, src_path, &continue_on_exists_proc)
     #
@@ -213,5 +256,6 @@ module ROBundle
 
       super(entry_name, options)
     end
+
   end
 end
