@@ -64,6 +64,47 @@ class TestAddAnnotation < Test::Unit::TestCase
     end
   end
 
+  def test_add_annotation_object_no_target
+    Dir.mktmpdir do |dir|
+      filename = File.join(dir, "test.bundle")
+
+      entry = "test.html"
+      annotation = ROBundle::Annotation.new(entry)
+
+      ROBundle::File.create(filename) do |b|
+        assert_raises(Errno::ENOENT) do
+          b.add_annotation(annotation)
+        end
+      end
+
+      ROBundle::File.open(filename) do |b|
+        assert b.aggregates.empty?
+        assert b.annotations.empty?
+        refute b.commit_required?
+      end
+    end
+  end
+
+  def test_add_annotation_no_target
+    Dir.mktmpdir do |dir|
+      filename = File.join(dir, "test.bundle")
+
+      entry = "test.html"
+
+      ROBundle::File.create(filename) do |b|
+        assert_raises(Errno::ENOENT) do
+          b.add_annotation(entry)
+        end
+      end
+
+      ROBundle::File.open(filename) do |b|
+        assert b.aggregates.empty?
+        assert b.annotations.empty?
+        refute b.commit_required?
+      end
+    end
+  end
+
   def test_add_file_annotations_to_aggregate
     Dir.mktmpdir do |dir|
       filename = File.join(dir, "test.bundle")
