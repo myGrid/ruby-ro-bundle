@@ -241,6 +241,35 @@ module ROBundle
     end
 
     # :call-seq:
+    #   remove_annotation(Annotation)
+    #   remove_annotation(target)
+    #   remove_annotation(id)
+    #
+    # Remove (unregister) annotations from this Research Object and return
+    # them. Return +nil+ if the annotation does not exist.
+    def remove_annotation(object)
+      removed = []
+
+      if object.is_a?(Annotation)
+        removed << structure[:annotations].delete(object)
+      else
+        annotations.each do |ann|
+          if ann.annotation_id == object || ann.target == object
+            removed << structure[:annotations].delete(ann)
+          end
+        end
+      end
+
+      removed.compact!
+      removed.each do |ann|
+        id = ann.annotation_id
+        remove_annotation(id) unless id.nil?
+      end
+
+      @edited = true unless removed.empty?
+    end
+
+    # :call-seq:
     #   annotations
     #
     # Return a list of all the annotations in this Research Object.
