@@ -36,7 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.1"
   spec.add_development_dependency("rdoc", "~> 4.1")
   spec.add_development_dependency "coveralls"
-  #spec.add_runtime_dependency "ucf", "~> 0.7"
+  spec.add_runtime_dependency "ucf", "~> 1.0"
   spec.add_runtime_dependency "json", "~> 1.8"
   spec.add_runtime_dependency "uuid", "~> 2.3"
 end
