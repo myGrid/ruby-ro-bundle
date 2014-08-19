@@ -112,16 +112,16 @@ module ROBundle
     end
 
     # :call-seq:
-    #   add_annotation(annotation_object)
-    #   add_annotation(aggregate, content, options = {})
-    #   add_annotation(aggregate, file, options = {})
-    #   add_annotation(aggregate, uri, options = {})
-    #   add_annotation(uri, content, options = {})
-    #   add_annotation(uri, file, options = {})
-    #   add_annotation(uri, uri, options = {})
-    #   add_annotation(annotation, content, options = {})
-    #   add_annotation(annotation, file, options = {})
-    #   add_annotation(annotation, uri, options = {})
+    #   add_annotation(annotation_object) -> Annotation
+    #   add_annotation(aggregate, content, options = {}) -> Annotation
+    #   add_annotation(aggregate, file, options = {}) -> Annotation
+    #   add_annotation(aggregate, uri, options = {}) -> Annotation
+    #   add_annotation(uri, content, options = {}) -> Annotation
+    #   add_annotation(uri, file, options = {}) -> Annotation
+    #   add_annotation(uri, uri, options = {}) -> Annotation
+    #   add_annotation(annotation, content, options = {}) -> Annotation
+    #   add_annotation(annotation, file, options = {}) -> Annotation
+    #   add_annotation(annotation, uri, options = {}) -> Annotation
     #
     # This method has two forms.
     #
@@ -134,6 +134,8 @@ module ROBundle
     #
     # In both cases <tt>Errno:ENOENT</tt> is raised if the target of the
     # annotation is not an annotatable resource.
+    #
+    # The Annotation object added to the Research Object is returned.
     def add_annotation(target, body = nil, options = {})
       options = { :aggregate => false }.merge(options)
 

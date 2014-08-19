@@ -25,9 +25,11 @@ class TestAddAnnotation < Test::Unit::TestCase
       ROBundle::File.create(filename) do |b|
         b.add_aggregate(entry, $man_ex3)
 
-        b.add_annotation(annotation1)
+        ann = b.add_annotation(annotation1)
         b.add_annotation(annotation2)
         b.add_annotation(annotation3)
+
+        assert_equal annotation1, ann
 
         ann1, ann2, ann3 = b.annotations
 
@@ -73,9 +75,11 @@ class TestAddAnnotation < Test::Unit::TestCase
         b.add_aggregate(entry, $man_ex3)
         b.add_aggregate(entry2, $man_ex3)
 
-        b.add_annotation(entry, $man_ex3)
+        ann = b.add_annotation(entry, $man_ex3)
         b.add_annotation(entry, $man_ex3, :aggregate => true)
         b.add_annotation(entry, entry2)
+
+        assert ann.instance_of?(ROBundle::Annotation)
 
         ann1, ann2, ann3 = b.annotations
 
@@ -121,9 +125,11 @@ class TestAddAnnotation < Test::Unit::TestCase
         b.add_aggregate(entry, $man_ex3)
         b.add_aggregate(uri3)
 
-        b.add_annotation(entry, uri1)
+        ann = b.add_annotation(entry, uri1)
         b.add_annotation(entry, uri2, :aggregate => true)
         b.add_annotation(entry, uri3)
+
+        assert ann.instance_of?(ROBundle::Annotation)
 
         ann1, ann2, ann3 = b.annotations
 
@@ -168,9 +174,11 @@ class TestAddAnnotation < Test::Unit::TestCase
         b.add_aggregate(entry, $man_ex3)
         b.add_aggregate(uri)
 
-        b.add_annotation(entry, content)
+        ann = b.add_annotation(entry, content)
         b.add_annotation(entry, content, :aggregate => true)
         b.add_annotation(uri, content)
+
+        assert ann.instance_of?(ROBundle::Annotation)
 
         ann1, ann2, ann3 = b.annotations
 
@@ -223,9 +231,11 @@ class TestAddAnnotation < Test::Unit::TestCase
         b.add_aggregate(uri2)
         b.add_aggregate(entry3, $man_ex3)
 
-        b.add_annotation(uri1, entry1)
+        ann = b.add_annotation(uri1, entry1)
         b.add_annotation(uri1, entry2, :aggregate => true)
         b.add_annotation(uri2, entry3)
+
+        assert ann.instance_of?(ROBundle::Annotation)
 
         ann1, ann2, ann3 = b.annotations
 
@@ -274,9 +284,11 @@ class TestAddAnnotation < Test::Unit::TestCase
         b.add_aggregate(uri3)
         b.add_aggregate(uri5)
 
-        b.add_annotation(uri1, uri2)
+        ann = b.add_annotation(uri1, uri2)
         b.add_annotation(uri1, uri4, :aggregate => true)
         b.add_annotation(uri3, uri5)
+
+        assert ann.instance_of?(ROBundle::Annotation)
 
         ann1, ann2, ann3 = b.annotations
 
@@ -322,9 +334,11 @@ class TestAddAnnotation < Test::Unit::TestCase
       ROBundle::File.create(filename) do |b|
         b.add_aggregate(uri2)
 
-        b.add_annotation(uri1, content)
+        ann = b.add_annotation(uri1, content)
         b.add_annotation(uri1, content, :aggregate => true)
         b.add_annotation(uri2, content)
+
+        assert ann.instance_of?(ROBundle::Annotation)
 
         ann1, ann2, ann3 = b.annotations
 
@@ -378,9 +392,11 @@ class TestAddAnnotation < Test::Unit::TestCase
         b.add_annotation(annotation1)
         b.add_annotation(annotation2)
 
-        b.add_annotation(annotation1.annotation_id, $man_ex3)
+        ann = b.add_annotation(annotation1.annotation_id, $man_ex3)
         b.add_annotation(annotation1, $man_ex3, :aggregate => true)
         b.add_annotation(annotation2, entry)
+
+        assert ann.instance_of?(ROBundle::Annotation)
 
         _, _, ann1, ann2, ann3 = b.annotations
 
@@ -428,9 +444,11 @@ class TestAddAnnotation < Test::Unit::TestCase
         b.add_aggregate(uri3)
         b.add_annotation(annotation)
 
-        b.add_annotation(annotation, uri1)
+        ann = b.add_annotation(annotation, uri1)
         b.add_annotation(annotation, uri2, :aggregate => true)
         b.add_annotation(annotation, uri3)
+
+        assert ann.instance_of?(ROBundle::Annotation)
 
         _, ann1, ann2, ann3 = b.annotations
 
@@ -475,8 +493,10 @@ class TestAddAnnotation < Test::Unit::TestCase
       ROBundle::File.create(filename) do |b|
         b.add_annotation(annotation)
 
-        b.add_annotation(annotation, content)
+        ann = b.add_annotation(annotation, content)
         b.add_annotation(annotation, content, :aggregate => true)
+
+        assert ann.instance_of?(ROBundle::Annotation)
 
         _, ann1, ann2 = b.annotations
 

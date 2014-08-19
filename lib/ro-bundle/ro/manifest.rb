@@ -204,8 +204,8 @@ module ROBundle
     end
 
     # :call-seq:
-    #   add_annotation(annotation)
-    #   add_annotation(target, content = nil)
+    #   add_annotation(annotation) -> Annotation
+    #   add_annotation(target, content = nil) -> Annotation
     #
     # Add an annotation to this Research Object. An annotation can either be
     # an already created annotation object, or a pair of values to build a new
@@ -213,6 +213,8 @@ module ROBundle
     #
     # <tt>Errno:ENOENT</tt> is raised if the target of the annotation is not
     # an annotatable resource in this RO.
+    #
+    # The Annotation object added to the Research Object is returned.
     def add_annotation(object, content = nil)
       if object.instance_of?(Annotation)
         # If the supplied Annotation object is already registered then it is
@@ -232,6 +234,7 @@ module ROBundle
 
       @edited = true
       structure[:annotations] << object
+      object
     end
 
     # :call-seq:
