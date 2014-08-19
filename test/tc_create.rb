@@ -61,14 +61,16 @@ class TestCreation < Test::Unit::TestCase
           assert_nil b.find_entry(entry1)
           assert b.commit_required?
 
-          b.add(entry1, $man_ex3, :aggregate => false)
+          agg = b.add(entry1, $man_ex3, :aggregate => false)
           assert b.aggregates.empty?
           assert_not_nil b.find_entry(entry1)
           assert b.commit_required?
+          assert_nil agg
 
-          b.add(entry2, $man_ex3)
+          agg = b.add(entry2, $man_ex3)
           assert b.aggregate?(entry2)
           assert_not_nil b.find_entry(entry2)
+          assert agg.instance_of?(ROBundle::Aggregate)
 
           b.add_aggregate(entry3, $man_ex3)
           assert b.aggregate?(entry3)
@@ -105,9 +107,10 @@ class TestCreation < Test::Unit::TestCase
 
       assert_nothing_raised do
         ROBundle::File.create(filename) do |b|
-          b.add_aggregate(entry1)
+          agg = b.add_aggregate(entry1)
           assert b.aggregate?(entry1)
           assert_nil b.find_entry(entry1)
+          assert agg.instance_of?(ROBundle::Aggregate)
 
           b.add_aggregate(entry2)
           assert b.aggregate?(entry2)

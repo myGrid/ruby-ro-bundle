@@ -182,11 +182,13 @@ module ROBundle
     end
 
     # :call-seq:
-    #   add_aggregate(entry)
-    #   add_aggregate(uri)
+    #   add_aggregate(entry) -> Aggregate
+    #   add_aggregate(uri) -> Aggregate
     #
     # Add the given entry or URI to the list of aggregates in this manifest.
     # <tt>Errno:ENOENT</tt> is raised if the entry does not exist.
+    #
+    # The Aggregate object added to the Research Object is returned.
     def add_aggregate(entry)
       unless entry.instance_of?(Aggregate)
         unless Util.is_absolute_uri?(entry)
@@ -198,6 +200,7 @@ module ROBundle
 
       @edited = true
       structure[:aggregates] << entry
+      entry
     end
 
     # :call-seq:

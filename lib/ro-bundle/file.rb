@@ -63,7 +63,7 @@ module ROBundle
     end
 
     # :call-seq:
-    #   add(entry, src_path, options = {}, &continue_on_exists_proc)
+    #   add(entry, src_path, options = {}, &continue_on_exists_proc) -> Aggregate or nil
     #
     # Convenience method for adding the contents of a file to the bundle
     # file. If asked to add a file with a reserved name, such as the special
@@ -72,6 +72,9 @@ module ROBundle
     #
     # This method automatically adds new entries to the list of bundle
     # aggregates unless the <tt>:aggregate</tt> option is set to false.
+    #
+    # If the added entry is aggregated then the Aggregate object is returned,
+    # otherwise +nil+ is returned.
     #
     # See the rubyzip documentation for details of the
     # +continue_on_exists_proc+ parameter.
@@ -86,9 +89,9 @@ module ROBundle
     end
 
     # :call-seq:
-    #   add_aggregate(uri)
-    #   add_aggregate(entry)
-    #   add_aggregate(entry, src_path, &continue_on_exists_proc)
+    #   add_aggregate(uri) -> Aggregate
+    #   add_aggregate(entry) -> Aggregate
+    #   add_aggregate(entry, src_path, &continue_on_exists_proc) -> Aggregate
     #
     # The first form of this method adds a URI as an aggregate of the bundle.
     #
@@ -97,6 +100,9 @@ module ROBundle
     # exist.
     #
     # The third form is equivalent to File#add called without any options.
+    #
+    # In all cases the Aggregate object added to the Research Object is
+    # returned.
     def add_aggregate(entry, src_path = nil, &continue_on_exists_proc)
       if src_path.nil?
         @manifest.add_aggregate(entry)
