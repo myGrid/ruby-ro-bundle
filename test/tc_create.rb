@@ -181,12 +181,14 @@ class TestCreation < Test::Unit::TestCase
           assert b.authored_by.empty?
           assert b.commit_required?
 
-          b.add_author(agent)
+          author = b.add_author(agent)
           assert b.authored_by.include?(agent)
           assert b.commit_required?
+          assert_same agent, author
 
-          b.add_author(name)
+          author = b.add_author(name)
           assert name_in_agent_list(name, b.authored_by)
+          assert author.instance_of?(ROBundle::Agent)
         end
       end
 
