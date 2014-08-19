@@ -90,15 +90,18 @@ module ROBundle
     end
 
     # :call-seq:
-    #   created_by = Agent
+    #   created_by = new_creator
     #
     # Set the Agent that has created this RO Bundle. Anything passed to this
-    # method that is not an Agent will be ignored.
+    # method that is not an Agent will be converted to an Agent before setting
+    # the value.
     def created_by=(new_creator)
-      if new_creator.instance_of?(Agent)
-        @edited = true
-        structure[:createdBy] = new_creator
+      unless new_creator.instance_of?(Agent)
+        new_creator = Agent.new(new_creator.to_s)
       end
+
+      @edited = true
+      structure[:createdBy] = new_creator
     end
 
     # :call-seq:

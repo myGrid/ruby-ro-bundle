@@ -104,13 +104,13 @@ class TestManifest < Test::Unit::TestCase
     assert @manifest.edited?
   end
 
-  def test_created_by_bad_agent
+  def test_created_by_string_agent
     old = @manifest.created_by
     agent = "Robert Haines"
     @manifest.created_by = agent
 
-    assert_same old, @manifest.created_by
-    refute @manifest.edited?
+    assert_not_same old, @manifest.created_by
+    assert @manifest.edited?
   end
 
   def test_change_authored_on
