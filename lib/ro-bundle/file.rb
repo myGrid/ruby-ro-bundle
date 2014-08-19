@@ -157,7 +157,7 @@ module ROBundle
     end
 
     # :call-seq:
-    #   add_history(entry, &continue_on_exists_proc)
+    #   add_history(entry)
     #   add_history(entry, src_path, &continue_on_exists_proc)
     #
     # The first form of this method adds an already existing entry in the
