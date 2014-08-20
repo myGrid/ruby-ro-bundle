@@ -31,7 +31,7 @@ class TestAggregate < Test::Unit::TestCase
 
       assert_nil agg.file
       assert_nil agg.mediatype
-      assert_equal URI.parse(uri), agg.uri
+      assert_equal uri, agg.uri
     end
   end
 
@@ -42,7 +42,7 @@ class TestAggregate < Test::Unit::TestCase
 
       assert_nil agg.file
       assert_nil agg.mediatype
-      assert_equal uri, agg.uri
+      assert_equal uri.to_s, agg.uri
     end
   end
 
@@ -90,7 +90,7 @@ class TestAggregate < Test::Unit::TestCase
 
       assert_nil agg.file
       assert_nil agg.mediatype
-      assert_equal URI.parse(uri), agg.uri
+      assert_equal uri, agg.uri
     end
   end
 

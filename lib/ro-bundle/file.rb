@@ -183,7 +183,7 @@ module ROBundle
       return true if entry == @manifest.id
 
       if Util.is_absolute_uri?(entry)
-        entry = Util.parse_uri(entry)
+        entry = entry.to_s
       else
         entry = entry_name(entry)
         entry = entry.start_with?("/") ? entry : "/#{entry}"

@@ -98,21 +98,12 @@ module ROBundle
     def init_file_or_uri(object)
       if object.is_a?(String) && !Util.is_absolute_uri?(object)
         name = object.start_with?("/") ? object : "/#{object}"
-        return @structure[:file] = name
-      end
-
-      invalid = false
-      begin
-        uri = Util.parse_uri(object)
-      rescue URI::InvalidURIError
-        invalid = true
-      end
-
-      if uri.nil? || invalid || uri.scheme.nil?
+        @structure[:file] = name
+      elsif Util.is_absolute_uri?(object)
+        @structure[:uri] = object.to_s
+      else
         raise InvalidAggregateError.new(object)
       end
-
-      @structure[:uri] = uri
     end
 
   end
