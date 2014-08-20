@@ -34,16 +34,6 @@ module ROBundle
     end
 
     # :call-seq:
-    #   parse_uri(uri) -> URI
-    #
-    # Parse a string into a URI. Does not try to parse something that is
-    # already a URI, or +nil+.
-    def self.parse_uri(uri)
-      return uri if uri.nil? || uri.is_a?(URI)
-      URI.parse(uri)
-    end
-
-    # :call-seq:
     #   is_absolute_uri?(uri) -> true or false
     #
     # Is the supplied URI absolute? An absolute URI is a valid URI that starts

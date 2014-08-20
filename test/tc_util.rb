@@ -32,15 +32,6 @@ class TestUtil < Test::Unit::TestCase
     assert_nil ROBundle::Util.parse_time(nil)
   end
 
-  def test_parse_uri
-    str = "http://example.com/test.txt"
-    uri = URI.parse(str)
-
-    assert_nil ROBundle::Util.parse_uri(nil)
-    assert_same uri, ROBundle::Util.parse_uri(uri)
-    assert_equal uri, ROBundle::Util.parse_uri(str)
-  end
-
   def test_absolute_uri
     assert ROBundle::Util.is_absolute_uri?("http://example.com/test.txt")
     assert ROBundle::Util.is_absolute_uri?("urn:uuid:and-so-on")
