@@ -16,7 +16,8 @@ module ROBundle
     # :call-seq:
     #   new(name, uri = nil, orcid = nil)
     #
-    # Create a new Agent with the supplied details.
+    # Create a new Agent with the supplied details. If +uri+ or +orcid+ are
+    # not absolute URIs then they are set to +nil+.
     def initialize(first, uri = nil, orcid = nil)
       if first.instance_of?(Hash)
         name = first[:name]
@@ -28,8 +29,8 @@ module ROBundle
 
       @structure = {
         :name => name,
-        :uri => Util.parse_uri(uri),
-        :orcid => Util.parse_uri(orcid)
+        :uri => Util.is_absolute_uri?(uri) ? uri.to_s : nil,
+        :orcid => Util.is_absolute_uri?(orcid) ? orcid.to_s : nil
       }
     end
 

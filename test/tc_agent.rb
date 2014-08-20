@@ -23,8 +23,8 @@ class TestAgent < Test::Unit::TestCase
     agent = ROBundle::Agent.new(@json)
 
     assert_equal @name, agent.name
-    assert_equal URI.parse(@uri), agent.uri
-    assert_equal URI.parse(@orcid), agent.orcid
+    assert_equal @uri, agent.uri
+    assert_equal @orcid, agent.orcid
   end
 
   def test_create_from_empty_json_hash
@@ -39,16 +39,16 @@ class TestAgent < Test::Unit::TestCase
     agent = ROBundle::Agent.new(@name, @uri, @orcid)
 
     assert_equal @name, agent.name
-    assert_equal URI.parse(@uri), agent.uri
-    assert_equal URI.parse(@orcid), agent.orcid
+    assert_equal @uri, agent.uri
+    assert_equal @orcid, agent.orcid
   end
 
   def test_create_from_parameters_with_uris
     agent = ROBundle::Agent.new(@name, URI.parse(@uri), URI.parse(@orcid))
 
     assert_equal @name, agent.name
-    assert_equal URI.parse(@uri), agent.uri
-    assert_equal URI.parse(@orcid), agent.orcid
+    assert_equal @uri, agent.uri
+    assert_equal @orcid, agent.orcid
   end
 
   def test_json_output
