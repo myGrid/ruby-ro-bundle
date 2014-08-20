@@ -6,8 +6,7 @@
 # Author: Robert Haines
 #------------------------------------------------------------------------------
 
-require "forwardable"
-
+#
 module ROBundle
 
   # This class represents a Research Object Bundle file. See the

@@ -6,8 +6,7 @@
 # Author: Robert Haines
 #------------------------------------------------------------------------------
 
-require "uuid"
-
+#
 module ROBundle
 
   # A class to represent an Annotation in a Research Object.

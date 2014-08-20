@@ -6,8 +6,6 @@
 # Author: Robert Haines
 #------------------------------------------------------------------------------
 
-require "time"
-
 #
 module ROBundle
 

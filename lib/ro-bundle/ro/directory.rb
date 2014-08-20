@@ -6,8 +6,7 @@
 # Author: Robert Haines
 #------------------------------------------------------------------------------
 
-require "uuid"
-
+#
 module ROBundle
 
   # The managed .ro directory entry of a Research Object.

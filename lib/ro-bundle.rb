@@ -7,8 +7,12 @@
 #------------------------------------------------------------------------------
 
 require "bundler/setup"
+require "forwardable"
 require "json"
+require "time"
 require "ucf"
+require "uri"
+require "uuid"
 
 require "ro-bundle/version"
 require "ro-bundle/util"
