@@ -11,6 +11,7 @@ Coveralls.wear!
 
 # Example data files
 $hello = "test/data/HelloAnyone.robundle"
+$invalid = "test/data/invalid-manifest.robundle"
 $man_ex3 = "test/data/example3-manifest.json"
 $man_empty = "test/data/empty-manifest.json"
 $man_invalid = "test/data/invalid-manifest.json"

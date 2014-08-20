@@ -11,12 +11,20 @@ require "ro-bundle"
 
 class TestRead < Test::Unit::TestCase
 
-  def test_verify
+  def test_verify_valid
     assert_nothing_raised(ZipContainer::MalformedContainerError, ZipContainer::ZipError) do
       ROBundle::File.verify!($hello)
     end
 
     assert(ROBundle::File.verify($hello))
+  end
+
+  def test_verify_invalid
+    assert_raises(ZipContainer::MalformedContainerError) do
+      ROBundle::File.verify!($invalid)
+    end
+
+    refute ROBundle::File.verify($invalid)
   end
 
   def test_manifest
