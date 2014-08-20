@@ -229,4 +229,22 @@ class TestManifest < Test::Unit::TestCase
     refute @manifest.edited?
   end
 
+  def test_empty_manifest
+    manifest = FakeManifest.new($man_empty)
+
+    assert manifest.context.instance_of?(Array)
+    assert manifest.edited?
+
+    assert_equal("/", manifest.id)
+
+    assert_nil manifest.created_on
+    assert_nil manifest.authored_on
+    assert_nil manifest.created_by
+    assert manifest.authored_by.instance_of?(Array)
+
+    assert manifest.history.instance_of?(Array)
+    assert manifest.aggregates.instance_of?(Array)
+    assert manifest.annotations.instance_of?(Array)
+  end
+
 end

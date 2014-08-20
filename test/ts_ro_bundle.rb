@@ -12,6 +12,7 @@ Coveralls.wear!
 # Example data files
 $hello = "test/data/HelloAnyone.robundle"
 $man_ex3 = "test/data/example3-manifest.json"
+$man_empty = "test/data/empty-manifest.json"
 
 require "tc_util"
 require "tc_agent"
