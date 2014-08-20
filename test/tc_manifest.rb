@@ -8,21 +8,12 @@
 
 require 'test/unit'
 require "ro-bundle"
-
-class Example3Manifest < ROBundle::Manifest
-
-  private
-
-  def contents
-    File.read($man_ex3)
-  end
-
-end
+require "helpers/fake_manifest"
 
 class TestManifest < Test::Unit::TestCase
 
   def setup
-    @manifest = Example3Manifest.new
+    @manifest = FakeManifest.new($man_ex3)
   end
 
   def test_top_level
