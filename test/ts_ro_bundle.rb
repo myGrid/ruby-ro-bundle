@@ -13,6 +13,7 @@ Coveralls.wear!
 $hello = "test/data/HelloAnyone.robundle"
 $man_ex3 = "test/data/example3-manifest.json"
 $man_empty = "test/data/empty-manifest.json"
+$man_invalid = "test/data/invalid-manifest.json"
 
 require "tc_util"
 require "tc_agent"

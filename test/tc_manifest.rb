@@ -247,4 +247,12 @@ class TestManifest < Test::Unit::TestCase
     assert manifest.annotations.instance_of?(Array)
   end
 
+  def test_invalid_manifest
+    manifest = FakeManifest.new($man_invalid)
+
+    assert_raises(JSON::ParserError) do
+      assert manifest.context.instance_of?(Array)
+    end
+  end
+
 end
