@@ -176,4 +176,66 @@ class TestManifest < Test::Unit::TestCase
     refute @manifest.edited?
   end
 
+  def test_remove_aggregate_by_object
+    remove = @manifest.aggregates[0]
+    assert_equal 4, @manifest.aggregates.length
+    assert_equal 3, @manifest.annotations.length
+
+    @manifest.remove_aggregate(remove)
+    assert_equal 3, @manifest.aggregates.length
+    assert_equal 1, @manifest.annotations.length
+    assert @manifest.edited?
+
+    @manifest.remove_aggregate(remove)
+    assert_equal 3, @manifest.aggregates.length
+    assert_equal 1, @manifest.annotations.length
+    assert @manifest.edited?
+  end
+
+  def test_remove_aggregate_by_file
+    remove = "/folder/soup.jpeg"
+    assert_equal 4, @manifest.aggregates.length
+    assert_equal 3, @manifest.annotations.length
+
+    @manifest.remove_aggregate(remove)
+    assert_equal 3, @manifest.aggregates.length
+    assert_equal 1, @manifest.annotations.length
+    assert @manifest.edited?
+
+    @manifest.remove_aggregate(remove)
+    assert_equal 3, @manifest.aggregates.length
+    assert_equal 1, @manifest.annotations.length
+    assert @manifest.edited?
+  end
+
+  def test_remove_aggregate_by_uri
+    remove = "http://example.com/blog/"
+    assert_equal 4, @manifest.aggregates.length
+    assert_equal 3, @manifest.annotations.length
+
+    @manifest.remove_aggregate(remove)
+    assert_equal 3, @manifest.aggregates.length
+    assert_equal 3, @manifest.annotations.length
+    assert @manifest.edited?
+
+    @manifest.remove_aggregate(remove)
+    assert_equal 3, @manifest.aggregates.length
+    assert_equal 3, @manifest.annotations.length
+    assert @manifest.edited?
+  end
+
+  def test_remove_non_existent_aggregates
+    file = "not-here!"
+    uri = "http://example.com/not-here"
+    assert_equal 4, @manifest.aggregates.length
+
+    @manifest.remove_aggregate(file)
+    assert_equal 4, @manifest.aggregates.length
+    refute @manifest.edited?
+
+    @manifest.remove_aggregate(uri)
+    assert_equal 4, @manifest.aggregates.length
+    refute @manifest.edited?
+  end
+
 end

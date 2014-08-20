@@ -207,6 +207,36 @@ module ROBundle
     end
 
     # :call-seq:
+    #   remove_aggregate(filename)
+    #   remove_aggregate(uri)
+    #   remove_aggregate(Aggregate)
+    #
+    # Remove (unregister) an aggregate from this Research Object. If a
+    # filename is supplied then the file is no longer aggregated, but it is
+    # not deleted from the bundle by this method.
+    #
+    # Any annotations with the removed aggregate as their target are also
+    # removed from the RO.
+    def remove_aggregate(object)
+      removed = nil
+
+      if object.is_a?(Aggregate)
+        removed = structure[:aggregates].delete(object)
+
+        unless removed.nil?
+          removed = removed.file.nil? ? removed.uri : removed.file
+        end
+      else
+        removed = remove_aggregate_by_file_or_uri(object)
+      end
+
+      unless removed.nil?
+        remove_annotation(removed)
+        @edited = true
+      end
+    end
+
+    # :call-seq:
     #   add_annotation(annotation) -> Annotation
     #   add_annotation(target, content = nil) -> Annotation
     #
@@ -375,6 +405,19 @@ module ROBundle
       end
 
       struct
+    end
+
+    def remove_aggregate_by_file_or_uri(object)
+      aggregates.each do |agg|
+        if Util.is_absolute_uri?(object)
+          return structure[:aggregates].delete(agg).uri if object == agg.uri
+        else
+          return structure[:aggregates].delete(agg).file if object == agg.file
+        end
+      end
+
+      # Return nil if nothing removed.
+      nil
     end
 
   end

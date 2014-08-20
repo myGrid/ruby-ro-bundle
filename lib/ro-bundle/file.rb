@@ -21,7 +21,8 @@ module ROBundle
     extend Forwardable
     def_delegators :@manifest, :add_author, :aggregates, :annotations,
       :authored_by, :authored_on, :authored_on=, :created_by, :created_by=,
-      :created_on, :created_on=, :history, :id, :id=, :remove_annotation
+      :created_on, :created_on=, :history, :id, :id=, :remove_aggregate,
+      :remove_annotation
 
     private_class_method :new
 
