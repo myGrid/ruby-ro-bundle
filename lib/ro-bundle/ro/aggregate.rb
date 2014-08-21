@@ -13,6 +13,7 @@ module ROBundle
   # standard meta-data for either file or URI resources. An aggregate can only
   # represent a file OR a URI resource, not both at once.
   class Aggregate
+    include Provenance
 
     # :call-seq:
     #   new(filename, mediatype = nil)
@@ -59,22 +60,6 @@ module ROBundle
     end
 
     # :call-seq:
-    #   created_on
-    #
-    # The time that this resource was created.
-    def created_on
-      Util.parse_time(@structure[:createdOn])
-    end
-
-    # :call-seq:
-    #   created_by
-    #
-    # The Agent which created this aggregated resource.
-    def created_by
-      @structure[:createdBy]
-    end
-
-    # :call-seq:
     #   to_json(options = nil) -> String
     #
     # Write this Aggregate out as a json string. Takes the same options as
@@ -85,13 +70,16 @@ module ROBundle
 
     private
 
+    def structure
+      @structure
+    end
+
     def init_json(object)
       init_file_or_uri(object[:file] || object[:uri])
+      @structure = init_provenance_defaults(object)
 
       if @structure[:file]
         @structure[:mediatype] = object[:mediatype]
-        @structure[:createdOn] = object[:createdOn]
-        @structure[:createdBy] = Agent.new(object.fetch(:createdBy, {}))
       end
     end
 
