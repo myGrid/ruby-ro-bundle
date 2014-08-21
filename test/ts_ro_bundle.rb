@@ -18,6 +18,7 @@ $man_invalid = "test/data/invalid-manifest.json"
 
 require "tc_util"
 require "tc_agent"
+require "tc_provenance"
 require "tc_annotation"
 require "tc_aggregate"
 require "tc_manifest"

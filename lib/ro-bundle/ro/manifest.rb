@@ -11,6 +11,7 @@ module ROBundle
 
   # The manifest.json managed file entry for a Research Object.
   class Manifest < ZipContainer::ManagedFile
+    include Provenance
 
     FILE_NAME = "manifest.json" # :nodoc:
     DEFAULT_CONTEXT = "https://w3id.org/bundle/context" # :nodoc:
@@ -59,95 +60,6 @@ module ROBundle
     def id=(new_id)
       @edited = true
       structure[:id] = new_id
-    end
-
-    # :call-seq:
-    #   created_on -> Time
-    #
-    # Return the time that this RO Bundle was created as a Time object, or
-    # +nil+ if not present in the manifest.
-    def created_on
-      Util.parse_time(structure[:createdOn])
-    end
-
-    # :call-seq:
-    #   created_on = new_time
-    #
-    # Set a new createdOn time for this Manifest. Anything that Ruby can
-    # interpret as a time is accepted and converted to ISO8601 format on
-    # serialization.
-    def created_on=(new_time)
-      @edited = true
-      set_time(:createdOn, new_time)
-    end
-
-    # :call-seq:
-    #   created_by -> Agent
-    #
-    # Return the Agent that created this Research Object.
-    def created_by
-      structure[:createdBy]
-    end
-
-    # :call-seq:
-    #   created_by = new_creator
-    #
-    # Set the Agent that has created this RO Bundle. Anything passed to this
-    # method that is not an Agent will be converted to an Agent before setting
-    # the value.
-    def created_by=(new_creator)
-      unless new_creator.instance_of?(Agent)
-        new_creator = Agent.new(new_creator.to_s)
-      end
-
-      @edited = true
-      structure[:createdBy] = new_creator
-    end
-
-    # :call-seq:
-    #   authored_on -> Time
-    #
-    # Return the time that this RO Bundle was edited as a Time object, or
-    # +nil+ if not present in the manifest.
-    def authored_on
-      Util.parse_time(structure[:authoredOn])
-    end
-
-    # :call-seq:
-    #   authored_on = new_time
-    #
-    # Set a new authoredOn time for this Manifest. Anything that Ruby can
-    # interpret as a time is accepted and converted to ISO8601 format on
-    # serialization.
-    def authored_on=(new_time)
-      @edited = true
-      set_time(:authoredOn, new_time)
-    end
-
-    # :call-seq:
-    #   authored_by -> Agents
-    #
-    # Return the list of Agents that authored this Research Object.
-    def authored_by
-      structure[:authoredBy].dup
-    end
-
-    # :call-seq:
-    #   add_author(author) -> Agent
-    #
-    # Add an author to the list of authors for this Research Object. The
-    # supplied parameter can either be an Agent or the name of an author as a
-    # String.
-    #
-    # The Agent object added to the Research Object is returned.
-    def add_author(author)
-      unless author.is_a?(Agent)
-        author = Agent.new(author.to_s)
-      end
-
-      @edited = true
-      structure[:authoredBy] << author
-      author
     end
 
     # :call-seq:
@@ -342,14 +254,6 @@ module ROBundle
 
     private
 
-    def set_time(key, time)
-      if time.instance_of?(String)
-        time = Time.parse(time)
-      end
-
-      structure[key] = time.iso8601
-    end
-
     # The internal structure of this class cannot be setup at construction
     # time in the initializer as there is no route to its data on disk at that
     # point. Once loaded, parts of the structure are converted to local
@@ -369,11 +273,7 @@ module ROBundle
     def init_defaults(struct)
       init_default_context(struct)
       init_default_id(struct)
-      creator = struct[:createdBy]
-      struct[:createdBy] = Agent.new(creator) unless creator.nil?
-      struct[:authoredBy] = [*struct.fetch(:authoredBy, [])].map do |agent|
-        Agent.new(agent)
-      end
+      init_provenance_defaults(struct)
       struct[:history] = [*struct.fetch(:history, [])]
       struct[:aggregates] = [*struct.fetch(:aggregates, [])].map do |agg|
         Aggregate.new(agg)

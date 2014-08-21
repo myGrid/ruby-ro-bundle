@@ -77,43 +77,6 @@ class TestManifest < Test::Unit::TestCase
     assert @manifest.edited?
   end
 
-  def test_change_created_on
-    old = @manifest.created_on
-    now = Time.now.to_s
-    @manifest.created_on = now
-
-    assert_equal now, @manifest.created_on.to_s
-    assert_not_equal old.to_s, @manifest.created_on.to_s
-    assert @manifest.edited?
-  end
-
-  def test_change_created_by
-    agent = ROBundle::Agent.new("Robert Haines")
-    @manifest.created_by = agent
-
-    assert_same agent, @manifest.created_by
-    assert @manifest.edited?
-  end
-
-  def test_created_by_string_agent
-    old = @manifest.created_by
-    agent = "Robert Haines"
-    @manifest.created_by = agent
-
-    assert_not_same old, @manifest.created_by
-    assert @manifest.edited?
-  end
-
-  def test_change_authored_on
-    old = @manifest.authored_on
-    now = Time.now.to_s
-    @manifest.authored_on = now
-
-    assert_equal now, @manifest.authored_on.to_s
-    assert_not_equal old.to_s, @manifest.authored_on.to_s
-    assert @manifest.edited?
-  end
-
   def test_remove_annotation_by_object
     remove = @manifest.annotations[0]
     assert_equal 3, @manifest.annotations.length
