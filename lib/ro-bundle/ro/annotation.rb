@@ -11,6 +11,7 @@ module ROBundle
 
   # A class to represent an Annotation in a Research Object.
   class Annotation
+    include Provenance
 
     # :call-seq:
     #   new(target, content = nil)
@@ -25,6 +26,7 @@ module ROBundle
     def initialize(object, content = nil)
       if object.instance_of?(Hash)
         @structure = object
+        init_provenance_defaults(@structure)
       else
         @structure = {}
         @structure[:about] = object
@@ -74,6 +76,12 @@ module ROBundle
     # JSON#generate.
     def to_json(*a)
       Util.clean_json(@structure).to_json(*a)
+    end
+
+    private
+
+    def structure
+      @structure
     end
 
   end

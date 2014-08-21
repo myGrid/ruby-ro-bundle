@@ -15,11 +15,15 @@ class TestAnnotation < Test::Unit::TestCase
     @target = [ "/", "/file.txt" ]
     @content = "http://www.example.com/example.txt"
     @id = UUID.generate(:urn)
+    @creator = "Robert Haines"
+    @time = "2014-08-20T11:30:00+01:00"
 
     @json = {
       :about => @target,
       :content => @content,
-      :annotation => @id
+      :annotation => @id,
+      :createdBy => { :name => @creator },
+      :createdOn => @time
     }
   end
 
@@ -45,6 +49,8 @@ class TestAnnotation < Test::Unit::TestCase
     assert_equal @target, an.target
     assert_equal @content, an.content
     assert_equal @id, an.annotation_id
+    assert an.created_on.instance_of?(Time)
+    assert an.created_by.instance_of?(ROBundle::Agent)
   end
 
   def test_change_content
@@ -71,6 +77,8 @@ class TestAnnotation < Test::Unit::TestCase
     assert_equal @target, json["about"]
     assert_equal @content, json["content"]
     assert_equal @id, json["annotation"]
+    assert_equal @time, json["createdOn"]
+    assert_equal @creator, json["createdBy"]["name"]
   end
 
 end
