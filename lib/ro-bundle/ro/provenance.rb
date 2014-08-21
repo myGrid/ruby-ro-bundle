@@ -112,6 +112,22 @@ module ROBundle
       set_time(:createdOn, new_time)
     end
 
+    # :call-seq:
+    #   remove_author(name)
+    #   remove_author(Agent)
+    #
+    # Remove the specified author or all authors with the specified name from
+    # the +authoredBy+ field.
+    def remove_author(object)
+      if object.is_a?(Agent)
+        structure[:authoredBy].delete(object)
+        @edited = true
+      else
+        changed = structure[:authoredBy].reject! { |a| a.name == object }
+        @edited = true unless changed.nil?
+      end
+    end
+
     private
 
     def init_provenance_defaults(struct)

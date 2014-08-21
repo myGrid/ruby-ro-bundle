@@ -21,7 +21,7 @@ module ROBundle
     def_delegators :@manifest, :add_author, :aggregates, :annotations,
       :authored_by, :authored_on, :authored_on=, :created_by, :created_by=,
       :created_on, :created_on=, :history, :id, :id=, :remove_aggregate,
-      :remove_annotation
+      :remove_annotation, :remove_author
 
     private_class_method :new
 

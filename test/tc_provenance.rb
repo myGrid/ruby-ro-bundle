@@ -14,6 +14,12 @@ class TestProvenance < Test::Unit::TestCase
 
   def setup
     @prov = FakeProvenance.new
+
+    @agent = ROBundle::Agent.new(
+      "Robert Haines",
+      "https://github.com/hainesr",
+      "http://orcid.org/0000-0002-9538-7919"
+    )
   end
 
   def test_created_on
@@ -72,25 +78,44 @@ class TestProvenance < Test::Unit::TestCase
   end
 
   def test_add_author
-    agent = ROBundle::Agent.new(
-      "Robert Haines",
-      "https://github.com/hainesr",
-      "http://orcid.org/0000-0002-9538-7919"
-    )
-
     name = "Mr. Bigglesworth"
 
     assert @prov.authored_by.empty?
 
-    author = @prov.add_author(agent)
-    assert @prov.authored_by.include?(agent)
-    assert_same agent, author
+    author = @prov.add_author(@agent)
+    assert @prov.authored_by.include?(@agent)
+    assert_same @agent, author
     assert @prov.edited?
 
     author = @prov.add_author(name)
     assert name_in_agent_list(name, @prov.authored_by)
     assert author.instance_of?(ROBundle::Agent)
     assert @prov.edited?
+  end
+
+  def test_remove_author_by_object
+    name = "Mr. Bigglesworth"
+
+    author = @prov.add_author(name)
+    refute @prov.authored_by.empty?
+    assert name_in_agent_list(name, @prov.authored_by)
+
+    @prov.remove_author(author)
+    assert @prov.authored_by.empty?
+    refute name_in_agent_list(name, @prov.authored_by)
+  end
+
+  def test_remove_authors_by_name
+    name = "Robert Haines"
+    @prov.add_author(@agent)
+    @prov.add_author(name)
+
+    assert_equal 2, @prov.authored_by.length
+    assert name_in_agent_list(name, @prov.authored_by)
+
+    @prov.remove_author(name)
+    assert @prov.authored_by.empty?
+    refute name_in_agent_list(name, @prov.authored_by)
   end
 
 end
