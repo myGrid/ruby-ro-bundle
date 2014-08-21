@@ -190,19 +190,12 @@ module ROBundle
     # Remove (unregister) annotations from this Research Object and return
     # them. Return +nil+ if the annotation does not exist.
     def remove_annotation(object)
-      removed = []
-
       if object.is_a?(Annotation)
-        removed << structure[:annotations].delete(object)
+        removed = [structure[:annotations].delete(object)].compact
       else
-        annotations.each do |ann|
-          if ann.annotation_id == object || ann.target == object
-            removed << structure[:annotations].delete(ann)
-          end
-        end
+        removed = remove_annotation_by_field(object)
       end
 
-      removed.compact!
       removed.each do |ann|
         id = ann.annotation_id
         remove_annotation(id) unless id.nil?
@@ -318,6 +311,19 @@ module ROBundle
 
       # Return nil if nothing removed.
       nil
+    end
+
+    def remove_annotation_by_field(object)
+      removed = []
+
+      annotations.each do |ann|
+        if ann.annotation_id == object || ann.target == object
+
+          removed << structure[:annotations].delete(ann)
+        end
+      end
+
+      removed
     end
 
   end
