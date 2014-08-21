@@ -317,7 +317,9 @@ module ROBundle
       removed = []
 
       annotations.each do |ann|
-        if ann.annotation_id == object || ann.target == object
+        if ann.annotation_id == object ||
+          ann.target == object ||
+          ann.content == object
 
           removed << structure[:annotations].delete(ann)
         end
