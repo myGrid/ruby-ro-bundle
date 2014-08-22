@@ -1,0 +1,48 @@
+#!/usr/bin/env ruby
+#------------------------------------------------------------------------------
+# Copyright (c) 2014 The University of Manchester, UK.
+#
+# BSD Licenced. See LICENCE.rdoc for details.
+#
+# Author: Robert Haines
+#------------------------------------------------------------------------------
+
+require 'rubygems'
+require 'ro-bundle'
+
+def usage
+  puts "Usage:\n  dir2ro <directory> <ro-bundle> [name]"
+  exit 1
+end
+
+usage unless ARGV.length >= 2
+
+dir_name = ARGV[0]
+bundle_file = ARGV[1]
+creator = ARGV[2]
+time_now = Time.now
+
+begin
+  ROBundle::File.create(bundle_file) do |bundle|
+    # Set provenance data.
+    bundle.created_by = creator unless creator.nil?
+    bundle.created_on = time_now
+
+    dir_path = Pathname(dir_name)
+    Dir[File.join(dir_name, "**", "**")].each do |entry|
+      relative_path = Pathname.new(entry).relative_path_from(dir_path).to_s
+
+      # If the current entry is a directory, create it;
+      # if it's a file, add it.
+      if ::File.directory?(entry)
+        bundle.mkdir(relative_path)
+      else
+        aggregate = bundle.add(relative_path, entry)
+        aggregate.created_on = time_now
+      end
+    end
+  end
+rescue Errno::ENOENT, Zip::Error => err
+  puts err.to_s
+  exit 1
+end
