@@ -34,4 +34,24 @@ their documentation in addition to this:
   {documentation}[http://mygrid.github.io/ruby-ucf]
 
 There are some examples of how to use the library provided in the bin
-directory. See the contents of the tests directory for even more.
+directory:
+
+* <tt>ro-bundle-info</tt>: Print out simple metrics about this RO Bundle. This
+  is analogous to the standard <tt>zipinfo</tt> command.
+* <tt>verify-ro-bundle</tt>: Verify that the specified RO Bundle is valid.
+* <tt>dir2ro</tt>: Recursively package up a directory into a RO Bundle. All
+  files in the directory are added as aggregates.
+* <tt>zip2ro</tt>: Copy all files from a normal zip file into a RO Bundle. All
+  files in the zip file are added as aggregates.
+
+See the contents of the tests directory for even more example usage.
+
+== What this library cannot do yet
+
+The {RO Bundle specification}[http://wf4ever.github.io/ro/bundle/] is largely
+implemented but there are notable gaps at present, including:
+
+* Aggregates do not support ORE proxies yet.
+* Extra provenance information cannot yet be added using the <tt>pav:</tt>
+  namespace.
+* The <tt>@graph</tt> member is not supported in the top-level manifest.

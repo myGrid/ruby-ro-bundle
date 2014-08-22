@@ -6,6 +6,18 @@
 # Author: Robert Haines
 #------------------------------------------------------------------------------
 
-source 'https://rubygems.org'
+# Fake up a manifest for easy testing.
+class FakeManifest < ROBundle::Manifest
 
-gemspec
+  def initialize(file)
+    @file = file
+    super()
+  end
+
+  private
+
+  def contents
+    File.read(@file)
+  end
+
+end

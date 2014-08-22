@@ -7,11 +7,22 @@
 #------------------------------------------------------------------------------
 
 require "bundler/setup"
+require "forwardable"
 require "json"
+require "time"
 require "ucf"
+require "uri"
+require "uuid"
 
 require "ro-bundle/version"
-require "ro-bundle/ro-dir"
+require "ro-bundle/util"
+require "ro-bundle/exceptions"
+require "ro-bundle/ro/agent"
+require "ro-bundle/ro/provenance"
+require "ro-bundle/ro/annotation"
+require "ro-bundle/ro/aggregate"
+require "ro-bundle/ro/manifest"
+require "ro-bundle/ro/directory"
 require "ro-bundle/file"
 
 # This is a ruby library to read and write Research Object Bundle files in PK

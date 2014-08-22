@@ -11,6 +11,18 @@ Coveralls.wear!
 
 # Example data files
 $hello = "test/data/HelloAnyone.robundle"
+$invalid = "test/data/invalid-manifest.robundle"
+$man_ex3 = "test/data/example3-manifest.json"
+$man_empty = "test/data/empty-manifest.json"
+$man_invalid = "test/data/invalid-manifest.json"
 
+require "tc_util"
+require "tc_agent"
+require "tc_provenance"
+require "tc_annotation"
+require "tc_aggregate"
+require "tc_manifest"
 require "tc_read"
 require "tc_create"
+require "tc_add_annotation"
+require "tc_remove"
