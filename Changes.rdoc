@@ -1,5 +1,120 @@
 = Changes log for the RO Bundle Ruby Gem
 
+== Version 0.1.0
+
+* Use the ZipContainer::ZipError in examples and tests.
+* Use "self" for the File class methods and fix docs.
+* Read the id from the manifest.
+* Set .ro and .ro/manifest.json to be required entries.
+* Properly detect missing manifest during creation.
+* Simple validation of the manifest file.
+* Read createdOn and authoredOn info from the manifest.
+* Add a class to represent an Agent in an RO.
+* Read createdBy and authoredBy from the manifest.
+* Move the .ro directory code to a sub-directory.
+* Move the manifest class to its own file.
+* Document the RODir and Manifest classes.
+* Move operations on the manifest data into the manifest class.
+* Harden getting a missing time from the manifest.
+* Harden getting the id from the manifest.
+* Harden getting the creator and author list.
+* Get the list of history files from the manifest.
+* Ensure that an Agent always has a name.
+* Ensure lists are always returned when necessary.
+* Add separate tests for the Manifest class.
+* Add an exception for invalid aggregates.
+* Add a class to represent an aggregated resource.
+* Cache created_on and authored_on in the manifest.
+* Expose the aggregates method in the File class.
+* Ensure that Manifest#aggregates always returns a list.
+* Add a class to represent an annotation.
+* Add the #annotations method to the Manifest class.
+* Expose the annotations method in the File class.
+* Add Agent#to_json.
+* Refactor to use hashes for internal state storage.
+* Add a utility module for mixing in common functions.
+* Use the utility module to parse time values.
+* Use the utility module to parse URIs.
+* Use the utility module to clean JSON structures.
+* Fixup the to_json methods so that JSON#generate can use them.
+* Add a Util test case and test the parse_time method.
+* Add tests for the Util#parse_uri method.
+* Add tests for the Util#clean_json method.
+* Refactor the annotation tests to share setup.
+* Add json output for the Annotation class.
+* Return "/" by default for Manifest#id.
+* Refactor Manifest for easier serialization.
+* Improve Util#clean_json.
+* Add Manifest#to_json.
+* Add write support for Manifest#id.
+* Write support for Manifest#created_on and #authored_on.
+* Write support for Manifest#created_by.
+* Return duplicate lists from Manifest.
+* Add an edited flag to Manifest to detect changes.
+* Add Manifest write access methods to the File class.
+* Add File#add and File#add_aggregate.
+* Add File#add_history and support in the manifest.
+* Support for adding an author to the authoredBy list.
+* Override File#commit_required? to include the manifest.
+* Annotation: generate id on create, not on access.
+* Fix erroneous Annotation test data.
+* Allow annotation content to be set at creation time.
+* Edit annotation content.
+* Rename Annotation#about to Annotation#target.
+* Add access to the manifest @context element.
+* Create the .ro directory on init if needs be.
+* Write out the manifest when closing the bundle.
+* Don't create an empty Agent for Manifest#created_by.
+* Initialize default manifest @context if missing.
+* Initialize default manifest id if missing.
+* Allow Manifest#add_aggregate to be passed an Aggregate object.
+* Set aggregate mediatype on creation.
+* Add Util.is_absolute_uri? method.
+* Add File#aggregate? to test if an entry is aggregated.
+* Improve Util.is_absolute_uri?().
+* Mangle aggregate paths when building an Aggregate.
+* Enable adding URI aggregates.
+* Handle URIs in File#aggregate?().
+* Override File#find_entry() to cope with URIs.
+* Add URI aggregation tests.
+* Add File#annotation? to test registered annotations.
+* Add File#annotatable?().
+* Add support for adding annotations to the manifest.
+* Keep an internal manifest reference in RODir.
+* Add AnnotationsDir managed directory to RODir.
+* Add File#add_annotation.
+* Manifest#add_author now returns an Agent object.
+* Manifest#add_aggregate now returns an Aggregate object.
+* Manifest#add_annotation now returns an Annotation object.
+* Add tests for annotations with no targets.
+* Use released versions of ucf and zip-container gems.
+* Fix File#add_history documentation.
+* Make Manifest#created_by= more flexible.
+* Update the example manifest test fixture.
+* Add Manifest#remove_annotation.
+* Don't store an aggregate's uri as a URI object.
+* Add Manifest#remove_aggregate.
+* Don't store an agent's uri or orcid as URI objects.
+* Remove the Util.parse_uri() method.
+* Consolidate all require directives into one place.
+* Tests on an empty manifest ({}).
+* Tests on an invalid manifest.
+* Tests on a bundle with an invalid manifest.
+* Factor out the provenance information from the manifest.
+* Factor out the provenance information from aggregates.
+* Add provenance information to annotations.
+* Add Provenance#remove_author.
+* Refactor Manifest#remove_annotation.
+* Allow annotations to be removed by their content field.
+* Override File#remove to ensure manifest is kept up to date.
+* Cleanup annotation content stored in .ro/annotations.
+* Add Util.strip_leading_slash.
+* Add Aggregate#file_entry for convenience.
+* Add File#remove_aggregate.
+* Add a new example script "zip2ro".
+* Add a new example script "dir2ro".
+* Add example and limitations detail to the ReadMe.
+
 == Version 0.0.1
 
 * Very basic RO Bundle facilities complete (plus examples).
