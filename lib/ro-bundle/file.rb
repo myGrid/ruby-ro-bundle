@@ -231,7 +231,7 @@ module ROBundle
     def commit
       if @manifest.edited?
         name = @manifest.full_name
-        remove(name) unless find_entry(name).nil?
+        remove(name, true) unless find_entry(name).nil?
 
         file.open(name, "w") do |m|
           m.puts JSON.pretty_generate(@manifest)
@@ -263,6 +263,27 @@ module ROBundle
       return if Util.is_absolute_uri?(entry_name)
 
       super(entry_name, options)
+    end
+
+    # :call-seq:
+    #   remove(entry)
+    #
+    # Removes the specified entry from the Research Object bundle. If asked to
+    # remove any reserved files such as the special mimetype header file this
+    # method will do nothing.
+    #
+    # If the entry being removed is aggregated in this RO then the aggregation
+    # is removed. All annotations that refer to the removed entry are also
+    # removed.
+    def remove(entry, preserve_manifest = false)
+      super(entry)
+
+      # The preserve manifest flag is STRICTLY for internal use only.
+      unless preserve_manifest
+        name = entry_name(entry)
+        remove_aggregate("/#{name}")
+        remove_annotation("/#{name}")
+      end
     end
 
   end
