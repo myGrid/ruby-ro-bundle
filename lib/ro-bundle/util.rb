@@ -43,6 +43,15 @@ module ROBundle
       false
     end
 
+    # :call-seq:
+    #   strip_leading_slash(string)
+    #
+    # Return the supplied string with a leading slash removed.
+    def self.strip_leading_slash(string)
+      return if string.nil?
+      string.sub(/^\//, "")
+    end
+
   end
 
 end

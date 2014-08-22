@@ -46,4 +46,19 @@ class TestUtil < Test::Unit::TestCase
     refute ROBundle::Util.is_absolute_uri?(nil)
   end
 
+  def test_strip_slash
+    str1 = ""
+    str2 = "/"
+    str3 = "test"
+    str4 = "test/path"
+    str5 = "test/path/trailing/"
+
+    assert_nil ROBundle::Util.strip_leading_slash(nil)
+    assert_equal str1, ROBundle::Util.strip_leading_slash(str1)
+    assert_equal str1, ROBundle::Util.strip_leading_slash(str2)
+    assert_equal str3, ROBundle::Util.strip_leading_slash("/#{str3}")
+    assert_equal str4, ROBundle::Util.strip_leading_slash("/#{str4}")
+    assert_equal str5, ROBundle::Util.strip_leading_slash("/#{str5}")
+  end
+
 end
