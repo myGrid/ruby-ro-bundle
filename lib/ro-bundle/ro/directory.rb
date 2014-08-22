@@ -10,6 +10,8 @@
 module ROBundle
 
   # The managed .ro directory entry of a Research Object.
+  #
+  # For internal use only.
   class RODir < ZipContainer::ManagedDirectory
 
     DIR_NAME = ".ro" # :nodoc:
@@ -98,6 +100,8 @@ module ROBundle
     end
 
     # The managed annotations directory within the .ro directory.
+    #
+    # For internal use only.
     class AnnotationsDir < ZipContainer::ManagedDirectory
 
       DIR_NAME = "annotations" # :nodoc:
