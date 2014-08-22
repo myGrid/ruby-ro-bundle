@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>module ROBundle::Provenance -  Research Object Bundle Ruby Library version 0.1.0</title>
+
+<link href="../fonts.css" rel="stylesheet">
+<link href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script src="../js/jquery.js"></script>
+<script src="../js/navigation.js"></script>
+<script src="../js/search_index.js"></script>
+<script src="../js/search.js"></script>
+<script src="../js/searcher.js"></script>
+<script src="../js/darkfish.js"></script>
+
+
+<body id="top" role="document" class="module">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../table_of_contents.html#pages">Pages</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    
+    
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-i-add_author">#add_author</a>
+    
+    <li ><a href="#method-i-authored_by">#authored_by</a>
+    
+    <li ><a href="#method-i-authored_on">#authored_on</a>
+    
+    <li ><a href="#method-i-authored_on-3D">#authored_on=</a>
+    
+    <li ><a href="#method-i-created_by">#created_by</a>
+    
+    <li ><a href="#method-i-created_by-3D">#created_by=</a>
+    
+    <li ><a href="#method-i-created_on">#created_on</a>
+    
+    <li ><a href="#method-i-created_on-3D">#created_on=</a>
+    
+    <li ><a href="#method-i-remove_author">#remove_author</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="module-ROBundle::Provenance">
+  <h1 id="module-ROBundle::Provenance" class="module">
+    module ROBundle::Provenance
+  </h1>
+
+  <section class="description">
+    
+<p>This module is a mixin for Research Object <a
+href="http://wf4ever.github.io/ro/bundle/draft/#provenance">provenance</a>
+information.</p>
+
+<p>To use this module simply provide an (optionally private) method named
+‘structure’ which returns the internal fields of the object as a Hash.</p>
+
+<p>Fields added by this mixin are:</p>
+<ul><li>
+<p><code>:authoredBy</code></p>
+</li><li>
+<p><code>:authoredOn</code></p>
+</li><li>
+<p><code>:createdBy</code></p>
+</li><li>
+<p><code>:createdOn</code></p>
+</li></ul>
+
+  </section>
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-add_author" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            add_author(author) &rarr; Agent
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Add an author to the list of authors for this Research Object. The supplied
+parameter can either be an <a href="Agent.html">Agent</a> or the name of an
+author as a String.</p>
+
+<p>The <a href="Agent.html">Agent</a> object added to the Research Object is
+returned.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="add_author-source">
+            <pre><span class="ruby-comment"># File lib/ro-bundle/ro/provenance.rb, line 34</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">add_author</span>(<span class="ruby-identifier">author</span>)
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">author</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Agent</span>)
+    <span class="ruby-identifier">author</span> = <span class="ruby-constant">Agent</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">author</span>.<span class="ruby-identifier">to_s</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-ivar">@edited</span> = <span class="ruby-keyword">true</span>
+  (<span class="ruby-identifier">structure</span>[<span class="ruby-value">:authoredBy</span>] <span class="ruby-operator">||=</span> []) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">author</span>
+  <span class="ruby-identifier">author</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-authored_by" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            authored_by &rarr; Agents
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Return the list of Agents that authored this Research Object.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="authored_by-source">
+            <pre><span class="ruby-comment"># File lib/ro-bundle/ro/provenance.rb, line 48</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">authored_by</span>
+  <span class="ruby-identifier">structure</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:authoredBy</span>, []).<span class="ruby-identifier">dup</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-authored_on" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            authored_on &rarr; Time
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Return the time that this RO Bundle was edited as a Time object, or
+<code>nil</code> if not present in the manifest.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="authored_on-source">
+            <pre><span class="ruby-comment"># File lib/ro-bundle/ro/provenance.rb, line 57</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">authored_on</span>
+  <span class="ruby-constant">Util</span>.<span class="ruby-identifier">parse_time</span>(<span class="ruby-identifier">structure</span>[<span class="ruby-value">:authoredOn</span>])
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-authored_on-3D" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            authored_on = new_time
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Set a new authoredOn time for this <a href="Manifest.html">Manifest</a>.
+Anything that Ruby can interpret as a time is accepted and converted to
+ISO8601 format on serialization.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="authored_on-3D-source">
+            <pre><span class="ruby-comment"># File lib/ro-bundle/ro/provenance.rb, line 67</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">authored_on=</span>(<span class="ruby-identifier">new_time</span>)
+  <span class="ruby-ivar">@edited</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-identifier">set_time</span>(<span class="ruby-value">:authoredOn</span>, <span class="ruby-identifier">new_time</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-created_by" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            created_by &rarr; Agent
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Return the <a href="Agent.html">Agent</a> that created this Research
+Object.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="created_by-source">
+            <pre><span class="ruby-comment"># File lib/ro-bundle/ro/provenance.rb, line 76</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">created_by</span>
+  <span class="ruby-identifier">structure</span>[<span class="ruby-value">:createdBy</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-created_by-3D" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            created_by = new_creator
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Set the <a href="Agent.html">Agent</a> that has created this RO Bundle.
+Anything passed to this method that is not an <a
+href="Agent.html">Agent</a> will be converted to an <a
+href="Agent.html">Agent</a> before setting the value.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="created_by-3D-source">
+            <pre><span class="ruby-comment"># File lib/ro-bundle/ro/provenance.rb, line 86</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">created_by=</span>(<span class="ruby-identifier">new_creator</span>)
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">new_creator</span>.<span class="ruby-identifier">instance_of?</span>(<span class="ruby-constant">Agent</span>)
+    <span class="ruby-identifier">new_creator</span> = <span class="ruby-constant">Agent</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">new_creator</span>.<span class="ruby-identifier">to_s</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-ivar">@edited</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-identifier">structure</span>[<span class="ruby-value">:createdBy</span>] = <span class="ruby-identifier">new_creator</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-created_on" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            created_on &rarr; Time
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Return the time that this RO Bundle was created as a Time object, or
+<code>nil</code> if not present in the manifest.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="created_on-source">
+            <pre><span class="ruby-comment"># File lib/ro-bundle/ro/provenance.rb, line 100</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">created_on</span>
+  <span class="ruby-constant">Util</span>.<span class="ruby-identifier">parse_time</span>(<span class="ruby-identifier">structure</span>[<span class="ruby-value">:createdOn</span>])
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-created_on-3D" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            created_on = new_time
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Set a new createdOn time for this <a href="Manifest.html">Manifest</a>.
+Anything that Ruby can interpret as a time is accepted and converted to
+ISO8601 format on serialization.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="created_on-3D-source">
+            <pre><span class="ruby-comment"># File lib/ro-bundle/ro/provenance.rb, line 110</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">created_on=</span>(<span class="ruby-identifier">new_time</span>)
+  <span class="ruby-ivar">@edited</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-identifier">set_time</span>(<span class="ruby-value">:createdOn</span>, <span class="ruby-identifier">new_time</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-remove_author" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            remove_author(name)
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            remove_author(Agent)
+          </span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Remove the specified author or all authors with the specified name from the
+<code>authoredBy</code> field.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="remove_author-source">
+            <pre><span class="ruby-comment"># File lib/ro-bundle/ro/provenance.rb, line 121</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">remove_author</span>(<span class="ruby-identifier">object</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Agent</span>)
+    <span class="ruby-identifier">structure</span>[<span class="ruby-value">:authoredBy</span>].<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">object</span>)
+    <span class="ruby-ivar">@edited</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">changed</span> = <span class="ruby-identifier">structure</span>[<span class="ruby-value">:authoredBy</span>].<span class="ruby-identifier">reject!</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span> <span class="ruby-identifier">a</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">object</span> }
+    <span class="ruby-ivar">@edited</span> = <span class="ruby-keyword">true</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">changed</span>.<span class="ruby-identifier">nil?</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.1.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

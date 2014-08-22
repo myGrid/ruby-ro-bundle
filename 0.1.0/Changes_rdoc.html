@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>Changes -  Research Object Bundle Ruby Library version 0.1.0</title>
+
+<link href="./fonts.css" rel="stylesheet">
+<link href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script src="./js/jquery.js"></script>
+<script src="./js/navigation.js"></script>
+<script src="./js/search_index.js"></script>
+<script src="./js/search.js"></script>
+<script src="./js/searcher.js"></script>
+<script src="./js/darkfish.js"></script>
+
+
+<body id="top" role="document" class="file">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+<div class="nav-section">
+  <h3>Table of Contents</h3>
+
+  <ul class="link-list" role="directory">
+    <li><a href="#label-Changes+log+for+the+RO+Bundle+Ruby+Gem">Changes log for the RO Bundle Ruby Gem</a>
+    <li><a href="#label-Version+0.1.0">Version 0.1.0</a>
+    <li><a href="#label-Version+0.0.1">Version 0.0.1</a>
+    <li><a href="#label-About+this+Changes+file">About this Changes file</a>
+  </ul>
+</div>
+
+
+  <div id="project-metadata">
+    <div id="fileindex-section" class="nav-section">
+  <h3>Pages</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./Changes_rdoc.html">Changes</a>
+  
+    <li><a href="./Licence_rdoc.html">Licence</a>
+  
+    <li><a href="./ReadMe_rdoc.html">ReadMe</a>
+  
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-label="Page Changes.rdoc">
+
+<h1 id="label-Changes+log+for+the+RO+Bundle+Ruby+Gem"><a href="Changes_rdoc.html">Changes</a> log for the RO Bundle Ruby Gem<span><a href="#label-Changes+log+for+the+RO+Bundle+Ruby+Gem">&para;</a> <a href="#documentation">&uarr;</a></span></h1>
+
+<h2 id="label-Version+0.1.0">Version 0.1.0<span><a href="#label-Version+0.1.0">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+<ul><li>
+<p>Use the ZipContainer::ZipError in examples and tests.</p>
+</li><li>
+<p>Use “self” for the File class methods and fix docs.</p>
+</li><li>
+<p>Read the id from the manifest.</p>
+</li><li>
+<p>Set .ro and .ro/manifest.json to be required entries.</p>
+</li><li>
+<p>Properly detect missing manifest during creation.</p>
+</li><li>
+<p>Simple validation of the manifest file.</p>
+</li><li>
+<p>Read createdOn and authoredOn info from the manifest.</p>
+</li><li>
+<p>Add a class to represent an Agent in an RO.</p>
+</li><li>
+<p>Read createdBy and authoredBy from the manifest.</p>
+</li><li>
+<p>Move the .ro directory code to a sub-directory.</p>
+</li><li>
+<p>Move the manifest class to its own file.</p>
+</li><li>
+<p>Document the RODir and Manifest classes.</p>
+</li><li>
+<p>Move operations on the manifest data into the manifest class.</p>
+</li><li>
+<p>Harden getting a missing time from the manifest.</p>
+</li><li>
+<p>Harden getting the id from the manifest.</p>
+</li><li>
+<p>Harden getting the creator and author list.</p>
+</li><li>
+<p>Get the list of history files from the manifest.</p>
+</li><li>
+<p>Ensure that an Agent always has a name.</p>
+</li><li>
+<p>Ensure lists are always returned when necessary.</p>
+</li><li>
+<p>Add separate tests for the Manifest class.</p>
+</li><li>
+<p>Add an exception for invalid aggregates.</p>
+</li><li>
+<p>Add a class to represent an aggregated resource.</p>
+</li><li>
+<p>Cache created_on and authored_on in the manifest.</p>
+</li><li>
+<p>Expose the aggregates method in the File class.</p>
+</li><li>
+<p>Ensure that Manifest#aggregates always returns a list.</p>
+</li><li>
+<p>Add a class to represent an annotation.</p>
+</li><li>
+<p>Add the annotations method to the Manifest class.</p>
+</li><li>
+<p>Expose the annotations method in the File class.</p>
+</li><li>
+<p>Add Agent#to_json.</p>
+</li><li>
+<p>Refactor to use hashes for internal state storage.</p>
+</li><li>
+<p>Add a utility module for mixing in common functions.</p>
+</li><li>
+<p>Use the utility module to parse time values.</p>
+</li><li>
+<p>Use the utility module to parse URIs.</p>
+</li><li>
+<p>Use the utility module to clean JSON structures.</p>
+</li><li>
+<p>Fixup the to_json methods so that JSON#generate can use them.</p>
+</li><li>
+<p>Add a Util test case and test the parse_time method.</p>
+</li><li>
+<p>Add tests for the Util#parse_uri method.</p>
+</li><li>
+<p>Add tests for the Util#clean_json method.</p>
+</li><li>
+<p>Refactor the annotation tests to share setup.</p>
+</li><li>
+<p>Add json output for the Annotation class.</p>
+</li><li>
+<p>Return “/” by default for Manifest#id.</p>
+</li><li>
+<p>Refactor Manifest for easier serialization.</p>
+</li><li>
+<p>Improve Util#clean_json.</p>
+</li><li>
+<p>Add Manifest#to_json.</p>
+</li><li>
+<p>Add write support for Manifest#id.</p>
+</li><li>
+<p>Write support for Manifest#created_on and authored_on.</p>
+</li><li>
+<p>Write support for Manifest#created_by.</p>
+</li><li>
+<p>Return duplicate lists from Manifest.</p>
+</li><li>
+<p>Add an edited flag to Manifest to detect changes.</p>
+</li><li>
+<p>Add Manifest write access methods to the File class.</p>
+</li><li>
+<p>Add File#add and File#add_aggregate.</p>
+</li><li>
+<p>Add File#add_history and support in the manifest.</p>
+</li><li>
+<p>Support for adding an author to the authoredBy list.</p>
+</li><li>
+<p>Override File#commit_required? to include the manifest.</p>
+</li><li>
+<p>Annotation: generate id on create, not on access.</p>
+</li><li>
+<p>Fix erroneous Annotation test data.</p>
+</li><li>
+<p>Allow annotation content to be set at creation time.</p>
+</li><li>
+<p>Edit annotation content.</p>
+</li><li>
+<p>Rename Annotation#about to Annotation#target.</p>
+</li><li>
+<p>Add access to the manifest @context element.</p>
+</li><li>
+<p>Create the .ro directory on init if needs be.</p>
+</li><li>
+<p>Write out the manifest when closing the bundle.</p>
+</li><li>
+<p>Don’t create an empty Agent for Manifest#created_by.</p>
+</li><li>
+<p>Initialize default manifest @context if missing.</p>
+</li><li>
+<p>Initialize default manifest id if missing.</p>
+</li><li>
+<p>Allow Manifest#add_aggregate to be passed an Aggregate object.</p>
+</li><li>
+<p>Set aggregate mediatype on creation.</p>
+</li><li>
+<p>Add Util.is_absolute_uri? method.</p>
+</li><li>
+<p>Add File#aggregate? to test if an entry is aggregated.</p>
+</li><li>
+<p>Improve Util.is_absolute_uri?().</p>
+</li><li>
+<p>Mangle aggregate paths when building an Aggregate.</p>
+</li><li>
+<p>Enable adding URI aggregates.</p>
+</li><li>
+<p>Handle URIs in File#aggregate?().</p>
+</li><li>
+<p>Override File#find_entry() to cope with URIs.</p>
+</li><li>
+<p>Add URI aggregation tests.</p>
+</li><li>
+<p>Add File#annotation? to test registered annotations.</p>
+</li><li>
+<p>Add File#annotatable?().</p>
+</li><li>
+<p>Add support for adding annotations to the manifest.</p>
+</li><li>
+<p>Keep an internal manifest reference in RODir.</p>
+</li><li>
+<p>Add AnnotationsDir managed directory to RODir.</p>
+</li><li>
+<p>Add File#add_annotation.</p>
+</li><li>
+<p>Manifest#add_author now returns an Agent object.</p>
+</li><li>
+<p>Manifest#add_aggregate now returns an Aggregate object.</p>
+</li><li>
+<p>Manifest#add_annotation now returns an Annotation object.</p>
+</li><li>
+<p>Add tests for annotations with no targets.</p>
+</li><li>
+<p>Use released versions of ucf and zip-container gems.</p>
+</li><li>
+<p>Fix File#add_history documentation.</p>
+</li><li>
+<p>Make Manifest#created_by= more flexible.</p>
+</li><li>
+<p>Update the example manifest test fixture.</p>
+</li><li>
+<p>Add Manifest#remove_annotation.</p>
+</li><li>
+<p>Don’t store an aggregate’s uri as a URI object.</p>
+</li><li>
+<p>Add Manifest#remove_aggregate.</p>
+</li><li>
+<p>Don’t store an agent’s uri or orcid as URI objects.</p>
+</li><li>
+<p>Remove the Util.parse_uri() method.</p>
+</li><li>
+<p>Consolidate all require directives into one place.</p>
+</li><li>
+<p>Tests on an empty manifest ({}).</p>
+</li><li>
+<p>Tests on an invalid manifest.</p>
+</li><li>
+<p>Tests on a bundle with an invalid manifest.</p>
+</li><li>
+<p>Factor out the provenance information from the manifest.</p>
+</li><li>
+<p>Factor out the provenance information from aggregates.</p>
+</li><li>
+<p>Add provenance information to annotations.</p>
+</li><li>
+<p>Add Provenance#remove_author.</p>
+</li><li>
+<p>Refactor Manifest#remove_annotation.</p>
+</li><li>
+<p>Allow annotations to be removed by their content field.</p>
+</li><li>
+<p>Override File#remove to ensure manifest is kept up to date.</p>
+</li><li>
+<p>Cleanup annotation content stored in .ro/annotations.</p>
+</li><li>
+<p>Add Util.strip_leading_slash.</p>
+</li><li>
+<p>Add Aggregate#file_entry for convenience.</p>
+</li><li>
+<p>Add File#remove_aggregate.</p>
+</li><li>
+<p>Add a new example script “zip2ro”.</p>
+</li><li>
+<p>Add a new example script “dir2ro”.</p>
+</li><li>
+<p>Add example and limitations detail to the <a
+href="ReadMe_rdoc.html">ReadMe</a>.</p>
+</li></ul>
+
+<h2 id="label-Version+0.0.1">Version 0.0.1<span><a href="#label-Version+0.0.1">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+<ul><li>
+<p>Very basic RO Bundle facilities complete (plus examples).</p>
+</li><li>
+<p>Very simple verification of RO Bundle files.</p>
+</li><li>
+<p>API documentation added.</p>
+</li><li>
+<p>Add tests.</p>
+</li></ul>
+
+<h2 id="label-About+this+Changes+file">About this <a href="Changes_rdoc.html">Changes</a> file<span><a href="#label-About+this+Changes+file">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p>This file is, at least in part, generated by the following command:</p>
+
+<pre>$ git log --pretty=format:&quot;* %s&quot; --reverse --no-merges &lt;commit-hash&gt;..</pre>
+</main>
+
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.1.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+
