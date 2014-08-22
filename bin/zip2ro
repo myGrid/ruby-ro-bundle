@@ -1,0 +1,57 @@
+#!/usr/bin/env ruby
+#------------------------------------------------------------------------------
+# Copyright (c) 2014 The University of Manchester, UK.
+#
+# BSD Licenced. See LICENCE.rdoc for details.
+#
+# Author: Robert Haines
+#------------------------------------------------------------------------------
+
+require 'rubygems'
+require 'ro-bundle'
+
+def usage
+  puts "Usage:\n  zip2ro <zip-file> <ro-bundle> [name]"
+  exit 1
+end
+
+usage unless ARGV.length >= 2
+
+zip_file = ARGV[0]
+bundle_file = ARGV[1]
+creator = ARGV[2]
+time_now = Time.now
+
+begin
+  ROBundle::File.create(bundle_file) do |bundle|
+    # Set provenance data.
+    bundle.created_by = creator unless creator.nil?
+    bundle.created_on = time_now
+
+    Zip::File.open(zip_file) do |zip|
+      zip.each do |entry|
+
+        # If the current entry is a directory, create it;
+        # if it's a file, copy it.
+        if zip.file.directory?(entry.name)
+          bundle.mkdir entry.name
+        else
+          zip.file.open(entry.name, "r") do |z_file|
+
+            # Copy the contents of the entry.
+            bundle.file.open(entry.name, "w") do |b_file|
+              b_file.write z_file.read
+            end
+
+            # Register the new entry as an aggregate of the RO.
+            aggregate = bundle.add_aggregate entry.name
+            aggregate.created_on = time_now
+          end
+        end
+      end
+    end
+  end
+rescue Errno::ENOENT, Zip::Error => err
+  puts err.to_s
+  exit 1
+end
