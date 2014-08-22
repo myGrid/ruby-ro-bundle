@@ -43,6 +43,14 @@ module ROBundle
     end
 
     # :call-seq:
+    #   file_entry
+    #
+    # The path of this aggregate in "rubyzip" format, i.e. no leading '/'.
+    def file_entry
+      Util.strip_leading_slash(file)
+    end
+
+    # :call-seq:
     #   uri
     #
     # The URI of this aggregate. It should be an absolute URI.

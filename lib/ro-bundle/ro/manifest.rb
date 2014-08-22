@@ -308,7 +308,9 @@ module ROBundle
         if Util.is_absolute_uri?(object)
           return structure[:aggregates].delete(agg).uri if object == agg.uri
         else
-          return structure[:aggregates].delete(agg).file if object == agg.file
+          if object == agg.file || object == agg.file_entry
+            return structure[:aggregates].delete(agg).file
+          end
         end
       end
 

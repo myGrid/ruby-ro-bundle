@@ -186,11 +186,12 @@ module ROBundle
         entry = entry.to_s
       else
         entry = entry_name(entry)
-        entry = entry.start_with?("/") ? entry : "/#{entry}"
       end
 
       aggregates.each do |agg|
-        return true if agg.uri == entry || agg.file == entry
+        return true if agg.uri == entry ||
+          agg.file == entry ||
+          agg.file_entry == entry
       end
 
       false
