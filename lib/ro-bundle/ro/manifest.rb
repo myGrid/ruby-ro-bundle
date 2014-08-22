@@ -189,6 +189,9 @@ module ROBundle
     #
     # Remove (unregister) annotations from this Research Object and return
     # them. Return +nil+ if the annotation does not exist.
+    #
+    # Any annotation content that is stored in the .ro/annotations directory
+    # is automatically cleaned up when the RO is closed.
     def remove_annotation(object)
       if object.is_a?(Annotation)
         removed = [structure[:annotations].delete(object)].compact

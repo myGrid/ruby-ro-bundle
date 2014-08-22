@@ -28,6 +28,24 @@ module ROBundle
     end
 
     # :stopdoc:
+    def cleanup_annotation_data
+      container.glob("#{@annotations_directory.full_name}/*",
+        :include_hidden => true) do |file|
+
+        found = false
+        @manifest.annotations.each do |ann|
+          content_name = normalize_content_name(ann.content)
+
+          if content_name == file.name
+            found = true
+            break
+          end
+        end
+
+        container.remove(file.name, true) unless found
+      end
+    end
+
     def write_annotation_data(source, options)
       uuid = UUID.generate
 
@@ -62,6 +80,20 @@ module ROBundle
       dir_name = "#{full_name}/#{@annotations_directory.name}"
       if container.find_entry(dir_name, :include_hidden => true).nil?
         container.mkdir dir_name
+      end
+    end
+
+    # Convert an annotation content field into something compatible with the
+    # rubyzip file naming convention (i.e. full paths not prefixed with /).
+    def normalize_content_name(name)
+      return if name.nil?
+
+      if name.start_with?(@annotations_directory.name)
+        "#{full_name}/#{name}"
+      elsif name.start_with?("/#{@annotations_directory.full_name}")
+        name.slice(1, name.length)
+      else
+        nil
       end
     end
 

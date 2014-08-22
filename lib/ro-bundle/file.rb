@@ -236,6 +236,8 @@ module ROBundle
         file.open(name, "w") do |m|
           m.puts JSON.pretty_generate(@manifest)
         end
+
+        @ro_dir.cleanup_annotation_data
       end
 
       super
