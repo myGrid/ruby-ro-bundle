@@ -9,5 +9,5 @@
 #
 module ROBundle
   # The version number of this library as a String.
-  VERSION = "0.0.1"
+  VERSION = "0.1.0"
 end
