@@ -20,8 +20,8 @@ module ROBundle
     extend Forwardable
     def_delegators :@manifest, :add_author, :aggregates, :annotations,
       :authored_by, :authored_on, :authored_on=, :created_by, :created_by=,
-      :created_on, :created_on=, :history, :id, :id=, :remove_aggregate,
-      :remove_annotation, :remove_author
+      :created_on, :created_on=, :history, :id, :id=, :remove_annotation,
+      :remove_author
 
     private_class_method :new
 
@@ -284,9 +284,39 @@ module ROBundle
       # The preserve manifest flag is STRICTLY for internal use only.
       unless preserve_manifest
         name = entry_name(entry)
-        remove_aggregate("/#{name}")
+        @manifest.remove_aggregate("/#{name}")
         remove_annotation("/#{name}")
       end
+    end
+
+    # :call-seq:
+    #   remove_aggregate(entry)
+    #   remove_aggregate(uri)
+    #   remove_aggregate(Aggregate)
+    #
+    # Remove (unregister) an aggregate from this Research Object. If it is a
+    # file then the file is no longer aggregated, and it is deleted from the
+    # bundle by this method unless the option <tt>:keep_file => true</tt> is
+    # supplied.
+    #
+    # Any annotations with the removed aggregate as their target are also
+    # removed from the RO.
+    def remove_aggregate(object, options = {})
+      options = { :keep_file => false }.merge(options)
+      file = nil
+
+      if object.is_a?(Aggregate)
+        file = object.file_entry
+      elsif !Util.is_absolute_uri?(object)
+        object = entry_name(object)
+        file = Util.strip_leading_slash(object)
+      end
+
+      if !file.nil? && !options[:keep_file]
+        remove(file, true)
+      end
+
+      @manifest.remove_aggregate(object)
     end
 
   end
