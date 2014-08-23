@@ -1,11 +1,11 @@
-Fri, 22 Aug 2014 17:18:53 +0100
-ReadMe.rdoc	Fri, 22 Aug 2014 17:00:51 +0100
+Sat, 23 Aug 2014 10:17:30 +0100
+ReadMe.rdoc	Fri, 22 Aug 2014 18:14:55 +0100
 Licence.rdoc	Fri, 03 Jan 2014 18:30:02 +0000
-Changes.rdoc	Fri, 22 Aug 2014 17:11:29 +0100
+Changes.rdoc	Fri, 22 Aug 2014 18:14:55 +0100
 lib/ro-bundle.rb	Fri, 22 Aug 2014 17:00:51 +0100
 lib/ro-bundle/util.rb	Fri, 22 Aug 2014 17:00:51 +0100
 lib/ro-bundle/file.rb	Fri, 22 Aug 2014 17:00:51 +0100
-lib/ro-bundle/version.rb	Fri, 22 Aug 2014 16:57:27 +0100
+lib/ro-bundle/version.rb	Fri, 22 Aug 2014 18:14:55 +0100
 lib/ro-bundle/ro/annotation.rb	Fri, 22 Aug 2014 17:00:51 +0100
 lib/ro-bundle/ro/directory.rb	Fri, 22 Aug 2014 17:00:51 +0100
 lib/ro-bundle/ro/manifest.rb	Fri, 22 Aug 2014 17:00:51 +0100
