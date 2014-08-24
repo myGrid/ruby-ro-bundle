@@ -9,6 +9,7 @@
 
 require 'rubygems'
 require 'ro-bundle'
+require 'pathname'
 
 def usage
   puts "Usage:\n  dir2ro <directory> <ro-bundle> [name]"
