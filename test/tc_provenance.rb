@@ -121,4 +121,19 @@ class TestProvenance < Test::Unit::TestCase
     refute name_in_agent_list(name, @prov.authored_by)
   end
 
+  def test_retrieved_on
+    assert @prov.retrieved_on.instance_of?(Time)
+  end
+
+  def test_change_retrieved_on
+    old = @prov.retrieved_on
+    now = Time.now.to_s
+    @prov.retrieved_on = now
+
+    assert @prov.retrieved_on.instance_of?(Time)
+    assert_equal now, @prov.retrieved_on.to_s
+    assert_not_equal old.to_s, @prov.retrieved_on.to_s
+    assert @prov.edited?
+  end
+
 end

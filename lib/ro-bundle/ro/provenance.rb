@@ -21,6 +21,7 @@ module ROBundle
   # * <tt>:authoredOn</tt>
   # * <tt>:createdBy</tt>
   # * <tt>:createdOn</tt>
+  # * <tt>:retrievedOn</tt>
   module Provenance
 
     # :call-seq:
@@ -126,6 +127,26 @@ module ROBundle
         changed = structure[:authoredBy].reject! { |a| a.name == object }
         @edited = true unless changed.nil?
       end
+    end
+
+    # :call-seq:
+    #   retrieved_on -> Time
+    #
+    # Return the time that this resource was retrieved as a Time object, or
+    # +nil+ if not present in the manifest.
+    def retrieved_on
+      Util.parse_time(structure[:retrievedOn])
+    end
+
+    # :call-seq:
+    #   retrieved_on = new_time
+    #
+    # Set a new retrievedOn time for this resource. Anything that Ruby can
+    # interpret as a time is accepted and converted to ISO8601 format on
+    # serialization.
+    def retrieved_on=(new_time)
+      @edited = true
+      set_time(:retrievedOn, new_time)
     end
 
     private
