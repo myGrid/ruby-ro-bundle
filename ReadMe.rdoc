@@ -15,7 +15,7 @@ Copyright::   (c) 2014 The University of Manchester, UK
 == Synopsis
 
 This is a Ruby library for working with Research Object Bundle files. See the
-{Research Object Bundle}[http://wf4ever.github.io/ro/bundle/] specification
+{Research Object Bundle}[https://w3id.org/bundle/] specification
 for more details.
 
 <b>This library is a work in progress!</b> Until we release version 1.0.0 you
@@ -49,7 +49,7 @@ See the contents of the tests directory for even more example usage.
 
 == What this library cannot do yet
 
-The {RO Bundle specification}[http://wf4ever.github.io/ro/bundle/] is largely
+The {RO Bundle specification}[https://w3id.org/bundle/] is largely
 implemented but there are notable gaps at present, including:
 
 * Aggregates do not support ORE proxies yet.
