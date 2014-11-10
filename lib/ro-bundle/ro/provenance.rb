@@ -10,8 +10,7 @@
 module ROBundle
 
   # This module is a mixin for Research Object
-  # {provenance}[http://wf4ever.github.io/ro/bundle/draft/#provenance]
-  # information.
+  # {provenance}[https://w3id.org/bundle/#provenance] information.
   #
   # To use this module simply provide an (optionally private) method named
   # 'structure' which returns the internal fields of the object as a Hash.

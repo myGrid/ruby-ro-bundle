@@ -29,8 +29,7 @@ require "ro-bundle/file"
 # Zip format. See the ROBundle::File class for more information.
 #
 # See
-# {the RO Bundle specification}[http://wf4ever.github.io/ro/bundle/]
-# for more details.
+# {the RO Bundle specification}[https://w3id.org/bundle/] for more details.
 #
 # Most of this library's API is provided by two underlying gems. Please
 # consult their documentation in addition to this:

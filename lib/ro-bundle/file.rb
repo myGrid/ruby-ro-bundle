@@ -10,8 +10,7 @@
 module ROBundle
 
   # This class represents a Research Object Bundle file. See the
-  # {RO Bundle specification}[http://wf4ever.github.io/ro/bundle/]
-  # for more details.
+  # {RO Bundle specification}[https://w3id.org/bundle/] for more details.
   #
   # Many of the methods that this class provides are actually implemented in
   # the Manifest class, so please see its documentation for details.
