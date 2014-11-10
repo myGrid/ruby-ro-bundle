@@ -31,6 +31,7 @@ class TestProvenance < Test::Unit::TestCase
     now = Time.now.to_s
     @prov.created_on = now
 
+    assert @prov.created_on.instance_of?(Time)
     assert_equal now, @prov.created_on.to_s
     assert_not_equal old.to_s, @prov.created_on.to_s
     assert @prov.edited?
@@ -55,6 +56,7 @@ class TestProvenance < Test::Unit::TestCase
     agent = "Stian Soiland-Reyes"
     @prov.created_by = agent
 
+    assert @prov.created_by.instance_of?(ROBundle::Agent)
     assert_not_same old, @prov.created_by
     assert @prov.edited?
   end
@@ -68,6 +70,7 @@ class TestProvenance < Test::Unit::TestCase
     now = Time.now.to_s
     @prov.authored_on = now
 
+    assert @prov.authored_on.instance_of?(Time)
     assert_equal now, @prov.authored_on.to_s
     assert_not_equal old.to_s, @prov.authored_on.to_s
     assert @prov.edited?
