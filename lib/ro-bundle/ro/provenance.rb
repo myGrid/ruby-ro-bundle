@@ -26,11 +26,11 @@ module ROBundle
     # :call-seq:
     #   add_author(author) -> Agent
     #
-    # Add an author to the list of authors for this Research Object. The
+    # Add an author to the list of authors for this resource. The
     # supplied parameter can either be an Agent or the name of an author as a
     # String.
     #
-    # The Agent object added to the Research Object is returned.
+    # The Agent object that is added is returned.
     def add_author(author)
       unless author.is_a?(Agent)
         author = Agent.new(author.to_s)
@@ -44,7 +44,7 @@ module ROBundle
     # :call-seq:
     #   authored_by -> Agents
     #
-    # Return the list of Agents that authored this Research Object.
+    # Return the list of Agents that authored this resource.
     def authored_by
       structure.fetch(:authoredBy, []).dup
     end
@@ -52,7 +52,7 @@ module ROBundle
     # :call-seq:
     #   authored_on -> Time
     #
-    # Return the time that this RO Bundle was edited as a Time object, or
+    # Return the time that this resource was edited as a Time object, or
     # +nil+ if not present in the manifest.
     def authored_on
       Util.parse_time(structure[:authoredOn])
@@ -61,7 +61,7 @@ module ROBundle
     # :call-seq:
     #   authored_on = new_time
     #
-    # Set a new authoredOn time for this Manifest. Anything that Ruby can
+    # Set a new authoredOn time for this resource. Anything that Ruby can
     # interpret as a time is accepted and converted to ISO8601 format on
     # serialization.
     def authored_on=(new_time)
@@ -72,7 +72,7 @@ module ROBundle
     # :call-seq:
     #   created_by -> Agent
     #
-    # Return the Agent that created this Research Object.
+    # Return the Agent that created this resource.
     def created_by
       structure[:createdBy]
     end
@@ -80,7 +80,7 @@ module ROBundle
     # :call-seq:
     #   created_by = new_creator
     #
-    # Set the Agent that has created this RO Bundle. Anything passed to this
+    # Set the Agent that has created this resource. Anything passed to this
     # method that is not an Agent will be converted to an Agent before setting
     # the value.
     def created_by=(new_creator)
@@ -95,7 +95,7 @@ module ROBundle
     # :call-seq:
     #   created_on -> Time
     #
-    # Return the time that this RO Bundle was created as a Time object, or
+    # Return the time that this resource was created as a Time object, or
     # +nil+ if not present in the manifest.
     def created_on
       Util.parse_time(structure[:createdOn])
@@ -104,7 +104,7 @@ module ROBundle
     # :call-seq:
     #   created_on = new_time
     #
-    # Set a new createdOn time for this Manifest. Anything that Ruby can
+    # Set a new createdOn time for this resource. Anything that Ruby can
     # interpret as a time is accepted and converted to ISO8601 format on
     # serialization.
     def created_on=(new_time)
