@@ -21,6 +21,7 @@ module ROBundle
   # * <tt>:authoredOn</tt>
   # * <tt>:createdBy</tt>
   # * <tt>:createdOn</tt>
+  # * <tt>:retrievedBy</tt>
   # * <tt>:retrievedOn</tt>
   module Provenance
 
@@ -130,6 +131,29 @@ module ROBundle
     end
 
     # :call-seq:
+    #   retrieved_by -> Agent
+    #
+    # Return the Agent that retrieved this resource.
+    def retrieved_by
+      structure[:retrievedBy]
+    end
+
+    # :call-seq:
+    #   retrieved_by = new_retrievor
+    #
+    # Set the Agent that has retrieved this resource. Anything passed to this
+    # method that is not an Agent will be converted to an Agent before setting
+    # the value.
+    def retrieved_by=(new_retrievor)
+      unless new_retrievor.instance_of?(Agent)
+        new_retrievor = Agent.new(new_retrievor.to_s)
+      end
+
+      @edited = true
+      structure[:retrievedBy] = new_retrievor
+    end
+
+    # :call-seq:
     #   retrieved_on -> Time
     #
     # Return the time that this resource was retrieved as a Time object, or
@@ -157,6 +181,8 @@ module ROBundle
       struct[:authoredBy] = [*struct.fetch(:authoredBy, [])].map do |agent|
         Agent.new(agent)
       end
+      retrievor = struct[:retrievedBy]
+      struct[:retrievedBy] = Agent.new(retrievor) unless retrievor.nil?
 
       struct
     end

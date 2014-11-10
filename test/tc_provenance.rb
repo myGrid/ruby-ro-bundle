@@ -121,6 +121,30 @@ class TestProvenance < Test::Unit::TestCase
     refute name_in_agent_list(name, @prov.authored_by)
   end
 
+  def test_retrieved_by
+    retrievor = @prov.retrieved_by
+    assert retrievor.instance_of?(ROBundle::Agent)
+    assert_equal retrievor.name, "Robert Haines"
+  end
+
+  def test_change_retrieved_by
+    agent = ROBundle::Agent.new("Matt Gamble")
+    @prov.retrieved_by = agent
+
+    assert_same agent, @prov.retrieved_by
+    assert @prov.edited?
+  end
+
+  def test_retrieved_by_string_agent
+    old = @prov.retrieved_by
+    agent = "Stian Soiland-Reyes"
+    @prov.retrieved_by = agent
+
+    assert @prov.retrieved_by.instance_of?(ROBundle::Agent)
+    assert_not_same old, @prov.retrieved_by
+    assert @prov.edited?
+  end
+
   def test_retrieved_on
     assert @prov.retrieved_on.instance_of?(Time)
   end
