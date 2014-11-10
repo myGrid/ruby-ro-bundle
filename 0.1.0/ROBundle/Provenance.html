@@ -98,8 +98,7 @@
   <section class="description">
     
 <p>This module is a mixin for Research Object <a
-href="http://wf4ever.github.io/ro/bundle/draft/#provenance">provenance</a>
-information.</p>
+href="https://w3id.org/bundle/#provenance">provenance</a> information.</p>
 
 <p>To use this module simply provide an (optionally private) method named
 ‘structure’ which returns the internal fields of the object as a Hash.</p>
@@ -163,7 +162,7 @@ returned.</p>
 
           
           <div class="method-source-code" id="add_author-source">
-            <pre><span class="ruby-comment"># File lib/ro-bundle/ro/provenance.rb, line 34</span>
+            <pre><span class="ruby-comment"># File lib/ro-bundle/ro/provenance.rb, line 33</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">add_author</span>(<span class="ruby-identifier">author</span>)
   <span class="ruby-keyword">unless</span> <span class="ruby-identifier">author</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Agent</span>)
     <span class="ruby-identifier">author</span> = <span class="ruby-constant">Agent</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">author</span>.<span class="ruby-identifier">to_s</span>)
@@ -205,7 +204,7 @@ returned.</p>
 
           
           <div class="method-source-code" id="authored_by-source">
-            <pre><span class="ruby-comment"># File lib/ro-bundle/ro/provenance.rb, line 48</span>
+            <pre><span class="ruby-comment"># File lib/ro-bundle/ro/provenance.rb, line 47</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">authored_by</span>
   <span class="ruby-identifier">structure</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:authoredBy</span>, []).<span class="ruby-identifier">dup</span>
 <span class="ruby-keyword">end</span></pre>
@@ -242,7 +241,7 @@ returned.</p>
 
           
           <div class="method-source-code" id="authored_on-source">
-            <pre><span class="ruby-comment"># File lib/ro-bundle/ro/provenance.rb, line 57</span>
+            <pre><span class="ruby-comment"># File lib/ro-bundle/ro/provenance.rb, line 56</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">authored_on</span>
   <span class="ruby-constant">Util</span>.<span class="ruby-identifier">parse_time</span>(<span class="ruby-identifier">structure</span>[<span class="ruby-value">:authoredOn</span>])
 <span class="ruby-keyword">end</span></pre>
@@ -280,7 +279,7 @@ ISO8601 format on serialization.</p>
 
           
           <div class="method-source-code" id="authored_on-3D-source">
-            <pre><span class="ruby-comment"># File lib/ro-bundle/ro/provenance.rb, line 67</span>
+            <pre><span class="ruby-comment"># File lib/ro-bundle/ro/provenance.rb, line 66</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">authored_on=</span>(<span class="ruby-identifier">new_time</span>)
   <span class="ruby-ivar">@edited</span> = <span class="ruby-keyword">true</span>
   <span class="ruby-identifier">set_time</span>(<span class="ruby-value">:authoredOn</span>, <span class="ruby-identifier">new_time</span>)
@@ -318,7 +317,7 @@ Object.</p>
 
           
           <div class="method-source-code" id="created_by-source">
-            <pre><span class="ruby-comment"># File lib/ro-bundle/ro/provenance.rb, line 76</span>
+            <pre><span class="ruby-comment"># File lib/ro-bundle/ro/provenance.rb, line 75</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">created_by</span>
   <span class="ruby-identifier">structure</span>[<span class="ruby-value">:createdBy</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -357,7 +356,7 @@ href="Agent.html">Agent</a> before setting the value.</p>
 
           
           <div class="method-source-code" id="created_by-3D-source">
-            <pre><span class="ruby-comment"># File lib/ro-bundle/ro/provenance.rb, line 86</span>
+            <pre><span class="ruby-comment"># File lib/ro-bundle/ro/provenance.rb, line 85</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">created_by=</span>(<span class="ruby-identifier">new_creator</span>)
   <span class="ruby-keyword">unless</span> <span class="ruby-identifier">new_creator</span>.<span class="ruby-identifier">instance_of?</span>(<span class="ruby-constant">Agent</span>)
     <span class="ruby-identifier">new_creator</span> = <span class="ruby-constant">Agent</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">new_creator</span>.<span class="ruby-identifier">to_s</span>)
@@ -399,7 +398,7 @@ href="Agent.html">Agent</a> before setting the value.</p>
 
           
           <div class="method-source-code" id="created_on-source">
-            <pre><span class="ruby-comment"># File lib/ro-bundle/ro/provenance.rb, line 100</span>
+            <pre><span class="ruby-comment"># File lib/ro-bundle/ro/provenance.rb, line 99</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">created_on</span>
   <span class="ruby-constant">Util</span>.<span class="ruby-identifier">parse_time</span>(<span class="ruby-identifier">structure</span>[<span class="ruby-value">:createdOn</span>])
 <span class="ruby-keyword">end</span></pre>
@@ -437,7 +436,7 @@ ISO8601 format on serialization.</p>
 
           
           <div class="method-source-code" id="created_on-3D-source">
-            <pre><span class="ruby-comment"># File lib/ro-bundle/ro/provenance.rb, line 110</span>
+            <pre><span class="ruby-comment"># File lib/ro-bundle/ro/provenance.rb, line 109</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">created_on=</span>(<span class="ruby-identifier">new_time</span>)
   <span class="ruby-ivar">@edited</span> = <span class="ruby-keyword">true</span>
   <span class="ruby-identifier">set_time</span>(<span class="ruby-value">:createdOn</span>, <span class="ruby-identifier">new_time</span>)
@@ -482,7 +481,7 @@ ISO8601 format on serialization.</p>
 
           
           <div class="method-source-code" id="remove_author-source">
-            <pre><span class="ruby-comment"># File lib/ro-bundle/ro/provenance.rb, line 121</span>
+            <pre><span class="ruby-comment"># File lib/ro-bundle/ro/provenance.rb, line 120</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">remove_author</span>(<span class="ruby-identifier">object</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Agent</span>)
     <span class="ruby-identifier">structure</span>[<span class="ruby-value">:authoredBy</span>].<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">object</span>)

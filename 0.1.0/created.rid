@@ -1,15 +1,15 @@
-Sat, 23 Aug 2014 10:17:30 +0100
-ReadMe.rdoc	Fri, 22 Aug 2014 18:14:55 +0100
+Mon, 10 Nov 2014 18:21:42 +0000
+ReadMe.rdoc	Mon, 10 Nov 2014 18:07:27 +0000
 Licence.rdoc	Fri, 03 Jan 2014 18:30:02 +0000
 Changes.rdoc	Fri, 22 Aug 2014 18:14:55 +0100
-lib/ro-bundle.rb	Fri, 22 Aug 2014 17:00:51 +0100
+lib/ro-bundle.rb	Mon, 10 Nov 2014 18:20:54 +0000
 lib/ro-bundle/util.rb	Fri, 22 Aug 2014 17:00:51 +0100
-lib/ro-bundle/file.rb	Fri, 22 Aug 2014 17:00:51 +0100
+lib/ro-bundle/file.rb	Mon, 10 Nov 2014 18:20:29 +0000
 lib/ro-bundle/version.rb	Fri, 22 Aug 2014 18:14:55 +0100
 lib/ro-bundle/ro/annotation.rb	Fri, 22 Aug 2014 17:00:51 +0100
 lib/ro-bundle/ro/directory.rb	Fri, 22 Aug 2014 17:00:51 +0100
 lib/ro-bundle/ro/manifest.rb	Fri, 22 Aug 2014 17:00:51 +0100
-lib/ro-bundle/ro/provenance.rb	Fri, 22 Aug 2014 17:00:51 +0100
+lib/ro-bundle/ro/provenance.rb	Mon, 10 Nov 2014 18:20:35 +0000
 lib/ro-bundle/ro/aggregate.rb	Fri, 22 Aug 2014 17:00:51 +0100
 lib/ro-bundle/ro/agent.rb	Fri, 22 Aug 2014 17:00:51 +0100
 lib/ro-bundle/exceptions.rb	Fri, 22 Aug 2014 17:00:51 +0100

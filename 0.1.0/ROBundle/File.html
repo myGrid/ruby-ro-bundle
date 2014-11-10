@@ -126,8 +126,8 @@
   <section class="description">
     
 <p>This class represents a Research Object Bundle file. See the <a
-href="http://wf4ever.github.io/ro/bundle/">RO Bundle specification</a> for
-more details.</p>
+href="https://w3id.org/bundle/">RO Bundle specification</a> for more
+details.</p>
 
 <p>Many of the methods that this class provides are actually implemented in
 the <a href="Manifest.html">Manifest</a> class, so please see its
@@ -209,7 +209,7 @@ unfortunately.</p>
 
           
           <div class="method-source-code" id="create-source">
-            <pre><span class="ruby-comment"># File lib/ro-bundle/file.rb, line 61</span>
+            <pre><span class="ruby-comment"># File lib/ro-bundle/file.rb, line 60</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">mimetype</span> = <span class="ruby-constant">MIMETYPE</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-keyword">super</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">mimetype</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -271,7 +271,7 @@ href="Aggregate.html">Aggregate</a> object is returned, otherwise
 
           
           <div class="method-source-code" id="add-source">
-            <pre><span class="ruby-comment"># File lib/ro-bundle/file.rb, line 81</span>
+            <pre><span class="ruby-comment"># File lib/ro-bundle/file.rb, line 80</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">add</span>(<span class="ruby-identifier">entry</span>, <span class="ruby-identifier">src_path</span>, <span class="ruby-identifier">options</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">continue_on_exists_proc</span>)
   <span class="ruby-keyword">super</span>(<span class="ruby-identifier">entry</span>, <span class="ruby-identifier">src_path</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">continue_on_exists_proc</span>)
 
@@ -337,7 +337,7 @@ Research Object is returned.</p>
 
           
           <div class="method-source-code" id="add_aggregate-source">
-            <pre><span class="ruby-comment"># File lib/ro-bundle/file.rb, line 106</span>
+            <pre><span class="ruby-comment"># File lib/ro-bundle/file.rb, line 105</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">add_aggregate</span>(<span class="ruby-identifier">entry</span>, <span class="ruby-identifier">src_path</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">continue_on_exists_proc</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">src_path</span>.<span class="ruby-identifier">nil?</span>
     <span class="ruby-ivar">@manifest</span>.<span class="ruby-identifier">add_aggregate</span>(<span class="ruby-identifier">entry</span>)
@@ -453,7 +453,7 @@ Object is returned.</p>
 
           
           <div class="method-source-code" id="add_annotation-source">
-            <pre><span class="ruby-comment"># File lib/ro-bundle/file.rb, line 139</span>
+            <pre><span class="ruby-comment"># File lib/ro-bundle/file.rb, line 138</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">add_annotation</span>(<span class="ruby-identifier">target</span>, <span class="ruby-identifier">body</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">options</span> = {})
   <span class="ruby-identifier">options</span> = { <span class="ruby-value">:aggregate</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">false</span> }.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>)
 
@@ -517,7 +517,7 @@ entry is not aggregated.</p>
 
           
           <div class="method-source-code" id="add_history-source">
-            <pre><span class="ruby-comment"># File lib/ro-bundle/file.rb, line 169</span>
+            <pre><span class="ruby-comment"># File lib/ro-bundle/file.rb, line 168</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">add_history</span>(<span class="ruby-identifier">entry</span>, <span class="ruby-identifier">src_path</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">continue_on_exists_proc</span>)
   <span class="ruby-keyword">unless</span> <span class="ruby-identifier">src_path</span>.<span class="ruby-identifier">nil?</span>
     <span class="ruby-identifier">add</span>(<span class="ruby-identifier">entry</span>, <span class="ruby-identifier">src_path</span>, <span class="ruby-value">:aggregate</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">false</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">continue_on_exists_proc</span>)
@@ -564,7 +564,7 @@ entry is not aggregated.</p>
 
           
           <div class="method-source-code" id="aggregate-3F-source">
-            <pre><span class="ruby-comment"># File lib/ro-bundle/file.rb, line 182</span>
+            <pre><span class="ruby-comment"># File lib/ro-bundle/file.rb, line 181</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">aggregate?</span>(<span class="ruby-identifier">entry</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">entry</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@manifest</span>.<span class="ruby-identifier">id</span>
 
@@ -616,7 +616,7 @@ aggregated resource or another registered annotation.</p>
 
           
           <div class="method-source-code" id="annotatable-3F-source">
-            <pre><span class="ruby-comment"># File lib/ro-bundle/file.rb, line 206</span>
+            <pre><span class="ruby-comment"># File lib/ro-bundle/file.rb, line 205</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">annotatable?</span>(<span class="ruby-identifier">target</span>)
   <span class="ruby-constant">Util</span>.<span class="ruby-identifier">is_absolute_uri?</span>(<span class="ruby-identifier">target</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">annotation?</span>(<span class="ruby-identifier">target</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">aggregate?</span>(<span class="ruby-identifier">target</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -659,7 +659,7 @@ aggregated resource or another registered annotation.</p>
 
           
           <div class="method-source-code" id="annotation-3F-source">
-            <pre><span class="ruby-comment"># File lib/ro-bundle/file.rb, line 215</span>
+            <pre><span class="ruby-comment"># File lib/ro-bundle/file.rb, line 214</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">annotation?</span>(<span class="ruby-identifier">id</span>)
   <span class="ruby-identifier">id</span> = <span class="ruby-identifier">id</span>.<span class="ruby-identifier">annotation_id</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">id</span>.<span class="ruby-identifier">instance_of?</span>(<span class="ruby-constant">Annotation</span>)
 
@@ -743,7 +743,7 @@ Bundle file. Returns <code>true</code> if anything was actually done,
 
           
           <div class="method-source-code" id="commit-source">
-            <pre><span class="ruby-comment"># File lib/ro-bundle/file.rb, line 232</span>
+            <pre><span class="ruby-comment"># File lib/ro-bundle/file.rb, line 231</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">commit</span>
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@manifest</span>.<span class="ruby-identifier">edited?</span>
     <span class="ruby-identifier">name</span> = <span class="ruby-ivar">@manifest</span>.<span class="ruby-identifier">full_name</span>
@@ -800,7 +800,7 @@ file since the last commit, <code>false</code> otherwise.</p>
 
           
           <div class="method-source-code" id="commit_required-3F-source">
-            <pre><span class="ruby-comment"># File lib/ro-bundle/file.rb, line 254</span>
+            <pre><span class="ruby-comment"># File lib/ro-bundle/file.rb, line 253</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">commit_required?</span>
   <span class="ruby-keyword">super</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@manifest</span>.<span class="ruby-identifier">edited?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -844,7 +844,7 @@ entries in the search.</p>
 
           
           <div class="method-source-code" id="find_entry-source">
-            <pre><span class="ruby-comment"># File lib/ro-bundle/file.rb, line 265</span>
+            <pre><span class="ruby-comment"># File lib/ro-bundle/file.rb, line 264</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">find_entry</span>(<span class="ruby-identifier">entry_name</span>, <span class="ruby-identifier">options</span> = {})
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">Util</span>.<span class="ruby-identifier">is_absolute_uri?</span>(<span class="ruby-identifier">entry_name</span>)
 
@@ -892,7 +892,7 @@ removed. All annotations that refer to the removed entry are also removed.</p>
 
           
           <div class="method-source-code" id="remove-source">
-            <pre><span class="ruby-comment"># File lib/ro-bundle/file.rb, line 281</span>
+            <pre><span class="ruby-comment"># File lib/ro-bundle/file.rb, line 280</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">remove</span>(<span class="ruby-identifier">entry</span>, <span class="ruby-identifier">preserve_manifest</span> = <span class="ruby-keyword">false</span>)
   <span class="ruby-keyword">super</span>(<span class="ruby-identifier">entry</span>)
 
@@ -955,7 +955,7 @@ from the RO.</p>
 
           
           <div class="method-source-code" id="remove_aggregate-source">
-            <pre><span class="ruby-comment"># File lib/ro-bundle/file.rb, line 304</span>
+            <pre><span class="ruby-comment"># File lib/ro-bundle/file.rb, line 303</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">remove_aggregate</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">options</span> = {})
   <span class="ruby-identifier">options</span> = { <span class="ruby-value">:keep_file</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">false</span> }.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>)
   <span class="ruby-identifier">file</span> = <span class="ruby-keyword">nil</span>
