@@ -22,6 +22,7 @@ module ROBundle
   # * <tt>:createdBy</tt>
   # * <tt>:createdOn</tt>
   # * <tt>:retrievedBy</tt>
+  # * <tt>:retrievedFrom</tt>
   # * <tt>:retrievedOn</tt>
   module Provenance
 
@@ -151,6 +152,17 @@ module ROBundle
 
       @edited = true
       structure[:retrievedBy] = new_retrievor
+    end
+
+    def retrieved_from
+      structure[:retrievedFrom]
+    end
+
+    def retrieved_from=(uri)
+      return unless Util.is_absolute_uri?(uri)
+
+      @edited = true
+      structure[:retrievedFrom] = uri
     end
 
     # :call-seq:

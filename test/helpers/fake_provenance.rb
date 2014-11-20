@@ -27,6 +27,7 @@ class FakeProvenance
         :createdBy => { :name => "Robert Haines" },
         :createdOn => "2014-08-20T11:30:00+01:00",
         :retrievedBy => { :name => "Robert Haines" },
+        :retrievedFrom => "http://example.org/thing",
         :retrievedOn => "2014-11-10T18:30:00Z"
       }
     )

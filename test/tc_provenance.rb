@@ -145,6 +145,29 @@ class TestProvenance < Test::Unit::TestCase
     assert @prov.edited?
   end
 
+  def test_retrieved_from
+    assert @prov.retrieved_from.instance_of?(String)
+  end
+
+  def test_change_retrieved_from
+    old = @prov.retrieved_from
+    uri = "http://example.com:8080"
+    @prov.retrieved_from = uri
+
+    assert @prov.retrieved_from.instance_of?(String)
+    assert_not_equal old, @prov.retrieved_from
+    assert @prov.edited?
+  end
+
+  def test_change_retrieved_from_fail
+    old = @prov.retrieved_from
+    uri = "www.example.com"
+    @prov.retrieved_from = uri
+
+    assert_equal old, @prov.retrieved_from
+    refute @prov.edited?
+  end
+
   def test_retrieved_on
     assert @prov.retrieved_on.instance_of?(Time)
   end
