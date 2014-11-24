@@ -213,10 +213,10 @@ module ROBundle
     #
     # Is the supplied id or annotation registered in this Research Object?
     def annotation?(id)
-      id = id.annotation_id if id.instance_of?(Annotation)
+      id = id.uri if id.instance_of?(Annotation)
 
       annotations.each do |ann|
-        return true if ann.annotation_id == id
+        return true if ann.uri == id
       end
 
       false

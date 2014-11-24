@@ -30,7 +30,7 @@ module ROBundle
       else
         @structure = {}
         @structure[:about] = object
-        @structure[:annotation] = UUID.generate(:urn)
+        @structure[:uri] = UUID.generate(:urn)
         @structure[:content] = content
       end
     end
@@ -62,11 +62,11 @@ module ROBundle
     end
 
     # :call-seq:
-    #   annotation_id -> String
+    #   uri -> String in the form of a urn:uuid URI.
     #
     # Return the annotation id of this Annotation.
-    def annotation_id
-      @structure[:annotation]
+    def uri
+      @structure[:uri]
     end
 
     # :call-seq:

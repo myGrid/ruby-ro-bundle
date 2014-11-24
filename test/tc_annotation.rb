@@ -21,7 +21,7 @@ class TestAnnotation < Test::Unit::TestCase
     @json = {
       :about => @target,
       :content => @content,
-      :annotation => @id,
+      :uri => @id,
       :createdBy => { :name => @creator },
       :createdOn => @time
     }
@@ -32,7 +32,7 @@ class TestAnnotation < Test::Unit::TestCase
 
     assert_equal @target, an.target
     assert_nil an.content
-    assert_not_nil an.annotation_id
+    assert_not_nil an.uri
   end
 
   def test_create_with_content
@@ -40,7 +40,7 @@ class TestAnnotation < Test::Unit::TestCase
 
     assert_equal @target, an.target
     assert_equal @content, an.content
-    assert_not_nil an.annotation_id
+    assert_not_nil an.uri
   end
 
   def test_create_from_json
@@ -48,7 +48,7 @@ class TestAnnotation < Test::Unit::TestCase
 
     assert_equal @target, an.target
     assert_equal @content, an.content
-    assert_equal @id, an.annotation_id
+    assert_equal @id, an.uri
     assert an.created_on.instance_of?(Time)
     assert an.created_by.instance_of?(ROBundle::Agent)
   end
@@ -63,11 +63,11 @@ class TestAnnotation < Test::Unit::TestCase
 
   def test_generate_annotation_id
     an = ROBundle::Annotation.new(@target)
-    id = an.annotation_id
+    id = an.uri
 
     assert id.instance_of?(String)
     assert id.start_with?("urn:uuid:")
-    assert_same id, an.annotation_id
+    assert_same id, an.uri
   end
 
   def test_json_output
@@ -76,7 +76,7 @@ class TestAnnotation < Test::Unit::TestCase
 
     assert_equal @target, json["about"]
     assert_equal @content, json["content"]
-    assert_equal @id, json["annotation"]
+    assert_equal @id, json["uri"]
     assert_equal @time, json["createdOn"]
     assert_equal @creator, json["createdBy"]["name"]
   end

@@ -165,7 +165,7 @@ module ROBundle
         # If the supplied Annotation object is already registered then it is
         # the annotation itself we are annotating!
         if container.annotation?(object)
-          object = Annotation.new(object.annotation_id, content)
+          object = Annotation.new(object.uri, content)
         end
       else
         object = Annotation.new(object, content)
@@ -200,7 +200,7 @@ module ROBundle
       end
 
       removed.each do |ann|
-        id = ann.annotation_id
+        id = ann.uri
         remove_annotation(id) unless id.nil?
       end
 
@@ -322,7 +322,7 @@ module ROBundle
       removed = []
 
       annotations.each do |ann|
-        if ann.annotation_id == object ||
+        if ann.uri == object ||
           ann.target == object ||
           ann.content == object
 
