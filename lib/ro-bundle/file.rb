@@ -189,9 +189,7 @@ module ROBundle
       end
 
       aggregates.each do |agg|
-        return true if agg.uri == entry ||
-          agg.file == entry ||
-          agg.file_entry == entry
+        return true if agg.uri == entry || agg.file_entry == entry
       end
 
       false

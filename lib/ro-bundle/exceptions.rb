@@ -13,18 +13,4 @@ module ROBundle
   class ROError < RuntimeError
   end
 
-  # This exception is raised when an invalid aggregate is detected.
-  class InvalidAggregateError < ROError
-
-    # :call-seq:
-    #   new(name)
-    #
-    # Create a new InvalidAggregateError with the invalid object (file or
-    # URI) supplied.
-    def initialize(object)
-      super("'#{object}' is not an absolute filename or a URI.")
-    end
-
-  end
-
 end

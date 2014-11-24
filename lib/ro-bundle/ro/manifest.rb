@@ -134,12 +134,9 @@ module ROBundle
 
       if object.is_a?(Aggregate)
         removed = structure[:aggregates].delete(object)
-
-        unless removed.nil?
-          removed = removed.file.nil? ? removed.uri : removed.file
-        end
+        removed = removed.uri unless removed.nil?
       else
-        removed = remove_aggregate_by_file_or_uri(object)
+        removed = remove_aggregate_by_uri(object)
       end
 
       unless removed.nil?
@@ -303,14 +300,10 @@ module ROBundle
       struct
     end
 
-    def remove_aggregate_by_file_or_uri(object)
+    def remove_aggregate_by_uri(object)
       aggregates.each do |agg|
-        if Util.is_absolute_uri?(object)
-          return structure[:aggregates].delete(agg).uri if object == agg.uri
-        else
-          if object == agg.file || object == agg.file_entry
-            return structure[:aggregates].delete(agg).file
-          end
+        if object == agg.uri || object == agg.file_entry
+          return structure[:aggregates].delete(agg).uri
         end
       end
 

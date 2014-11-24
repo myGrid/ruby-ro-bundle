@@ -16,30 +16,23 @@ module ROBundle
     include Provenance
 
     # :call-seq:
-    #   new(filename, mediatype = nil)
-    #   new(URI)
+    #   new(uri, mediatype)
+    #   new(uri)
     #
     # Create a new file or URI aggregate.
-    def initialize(object, second = nil)
+    def initialize(object, mediatype = nil)
       @structure = {}
 
       if object.instance_of?(Hash)
         init_json(object)
       else
-        init_file_or_uri(object)
-
-        if @structure[:file]
-          @structure[:mediatype] = second
-        end
+        @structure[:uri] = if Util.is_absolute_uri?(object)
+                             object.to_s
+                           else
+                             object.start_with?("/") ? object : "/#{object}"
+                           end
+        @structure[:mediatype] = mediatype
       end
-    end
-
-    # :call-seq:
-    #   file
-    #
-    # The path of this aggregate. It should start with '/'.
-    def file
-      @structure[:file]
     end
 
     # :call-seq:
@@ -47,7 +40,7 @@ module ROBundle
     #
     # The path of this aggregate in "rubyzip" format, i.e. no leading '/'.
     def file_entry
-      Util.strip_leading_slash(file)
+      Util.strip_leading_slash(uri) unless Util.is_absolute_uri?(uri)
     end
 
     # :call-seq:
@@ -83,23 +76,9 @@ module ROBundle
     end
 
     def init_json(object)
-      init_file_or_uri(object[:file] || object[:uri])
       @structure = init_provenance_defaults(object)
-
-      if @structure[:file]
-        @structure[:mediatype] = object[:mediatype]
-      end
-    end
-
-    def init_file_or_uri(object)
-      if object.is_a?(String) && !Util.is_absolute_uri?(object)
-        name = object.start_with?("/") ? object : "/#{object}"
-        @structure[:file] = name
-      elsif Util.is_absolute_uri?(object)
-        @structure[:uri] = object.to_s
-      else
-        raise InvalidAggregateError.new(object)
-      end
+      @structure[:uri] = object[:uri]
+      @structure[:mediatype] = object[:mediatype]
     end
 
   end
