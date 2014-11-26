@@ -54,7 +54,7 @@ module ROBundle
     # :call-seq:
     #   mediatype
     #
-    # For a file aggregate, its
+    # This aggregate's
     # {IANA media type}[http://www.iana.org/assignments/media-types].
     def mediatype
       @structure[:mediatype]
