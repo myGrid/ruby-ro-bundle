@@ -154,10 +154,19 @@ module ROBundle
       structure[:retrievedBy] = new_retrievor
     end
 
+    # :call-seq:
+    #   retrieved_from -> String URI
+    #
+    # Return the URI from which this resource was retrieved.
     def retrieved_from
       structure[:retrievedFrom]
     end
 
+    # :call-seq:
+    #   retrieved_from = uri
+    #
+    # Set the URI from which this resource was retrieved. If a URI object is
+    # given it is converted to a String first.
     def retrieved_from=(uri)
       return unless Util.is_absolute_uri?(uri)
 
