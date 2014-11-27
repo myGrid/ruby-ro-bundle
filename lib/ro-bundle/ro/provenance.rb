@@ -162,7 +162,7 @@ module ROBundle
       return unless Util.is_absolute_uri?(uri)
 
       @edited = true
-      structure[:retrievedFrom] = uri
+      structure[:retrievedFrom] = uri.to_s
     end
 
     # :call-seq:
