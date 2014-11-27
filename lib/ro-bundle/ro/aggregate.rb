@@ -61,6 +61,16 @@ module ROBundle
     end
 
     # :call-seq:
+    #   proxy -> Proxy
+    #
+    # Return this aggregate's ORE proxy as per the specification of the
+    # {JSON structure}[https://researchobject.github.io/specifications/bundle/#json-structure]
+    # of the manifest.
+    def proxy
+      @structure[:bundledAs]
+    end
+
+    # :call-seq:
     #   to_json(options = nil) -> String
     #
     # Write this Aggregate out as a json string. Takes the same options as
@@ -79,6 +89,9 @@ module ROBundle
       @structure = init_provenance_defaults(object)
       @structure[:uri] = object[:uri]
       @structure[:mediatype] = object[:mediatype]
+      unless object[:bundledAs].nil?
+        @structure[:bundledAs] = Proxy.new(object[:bundledAs])
+      end
     end
 
   end
