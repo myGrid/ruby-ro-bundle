@@ -35,6 +35,14 @@ module ROBundle
     end
 
     # :call-seq:
+    #   edited? -> true or false
+    #
+    # Has this aggregate been altered in any way?
+    def edited?
+      @edited || (proxy.nil? ? false : proxy.edited?)
+    end
+
+    # :call-seq:
     #   file_entry
     #
     # The path of this aggregate in "rubyzip" format, i.e. no leading '/'.

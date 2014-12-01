@@ -217,7 +217,11 @@ module ROBundle
     #
     # Has this manifest been altered in any way?
     def edited?
-      @edited
+      if @structure.nil?
+        @edited
+      else
+        @edited || edited(aggregates) || edited(annotations)
+      end
     end
 
     # :call-seq:
@@ -324,6 +328,14 @@ module ROBundle
       end
 
       removed
+    end
+
+    def edited(resource)
+      resource.each do |res|
+        return true if res.edited?
+      end
+
+      false
     end
 
   end
