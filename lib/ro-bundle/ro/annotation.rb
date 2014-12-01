@@ -10,8 +10,7 @@
 module ROBundle
 
   # A class to represent an Annotation in a Research Object.
-  class Annotation
-    include Provenance
+  class Annotation < ManifestEntry
 
     # :call-seq:
     #   new(target, content = nil)
@@ -24,6 +23,8 @@ module ROBundle
     # An annotation id is a UUID prefixed with "urn:uuid" as per
     # {RFC4122}[http://www.ietf.org/rfc/rfc4122.txt].
     def initialize(object, content = nil)
+      super()
+
       if object.instance_of?(Hash)
         @structure = object
         init_provenance_defaults(@structure)
@@ -76,12 +77,6 @@ module ROBundle
     # JSON#generate.
     def to_json(*a)
       Util.clean_json(@structure).to_json(*a)
-    end
-
-    private
-
-    def structure
-      @structure
     end
 
   end

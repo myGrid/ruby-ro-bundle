@@ -13,8 +13,7 @@ module ROBundle
   #of the
   # {JSON structure}[https://researchobject.github.io/specifications/bundle/#json-structure]
   # of the manifest.
-  class Proxy
-    include Provenance
+  class Proxy < ManifestEntry
 
     # :call-seq:
     #   new
@@ -23,6 +22,8 @@ module ROBundle
     #
     # Create a new ORE Proxy. If +folder+ is not supplied then "/" is assumed.
     def initialize(object = "", filename = nil)
+      super()
+
       if object.instance_of?(Hash)
         @structure = object
         init_provenance_defaults(@structure)
@@ -68,10 +69,6 @@ module ROBundle
     end
 
     private
-
-    def structure
-      @structure
-    end
 
     def folder_slashes(folder)
       folder = "/#{folder}" unless folder.start_with?('/')
