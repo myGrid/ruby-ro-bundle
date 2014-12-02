@@ -229,12 +229,8 @@ module ROBundle
     # otherwise.
     def commit
       if @manifest.edited?
-        name = @manifest.full_name
-        remove(name, true) unless find_entry(name).nil?
-
-        file.open(name, "w") do |m|
-          m.puts JSON.pretty_generate(@manifest)
-        end
+        # This will overwrite the old version.
+        @manifest.write
 
         @ro_dir.cleanup_annotation_data
       end

@@ -243,6 +243,16 @@ module ROBundle
       Util.clean_json(structure).to_json(*a)
     end
 
+    # :call-seq:
+    #   write
+    #
+    # Write this manifest into the RO Bundle, overwriting the old version.
+    def write
+      container.file.open(full_name, "w") do |m|
+        m.puts JSON.pretty_generate(self)
+      end
+    end
+
     protected
 
     # :call-seq:
