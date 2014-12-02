@@ -34,10 +34,6 @@ class TestCreation < Test::Unit::TestCase
 
           # Manifest has been accessed so has been populated with defaults.
           assert b.commit_required?
-
-          b.file.open(".ro/manifest.json", "w") do |m|
-            m.puts "{ }"
-          end
         end
       end
 
