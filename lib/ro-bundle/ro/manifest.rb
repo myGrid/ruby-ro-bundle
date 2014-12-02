@@ -24,7 +24,17 @@ module ROBundle
     def initialize
       super(FILE_NAME, :required => true)
 
+      @structure = nil
+      @initialized = false
       @edited = false
+    end
+
+    # :call-seq:
+    #   initialized? -> true or false
+    #
+    # Has this manifest been initialized?
+    def initialized?
+      @initialized
     end
 
     # :call-seq:
@@ -256,7 +266,8 @@ module ROBundle
     # point. Once loaded, parts of the structure are converted to local
     # objects where appropriate.
     def structure
-      return @structure if @structure
+      return @structure if initialized?
+      @initialized = true
 
       begin
         struct ||= JSON.parse(contents, :symbolize_names => true)
