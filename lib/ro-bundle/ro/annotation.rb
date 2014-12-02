@@ -59,6 +59,7 @@ module ROBundle
     #
     # Set the content of this annotation.
     def content=(new_content)
+      @edited = true
       @structure[:content] = new_content
     end
 

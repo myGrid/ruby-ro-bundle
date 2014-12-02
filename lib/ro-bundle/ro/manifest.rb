@@ -209,7 +209,7 @@ module ROBundle
     #
     # Return a list of all the annotations in this Research Object.
     def annotations
-      structure[:annotations].dup
+      structure[:annotations]
     end
 
     # :call-seq:
@@ -318,7 +318,9 @@ module ROBundle
     def remove_annotation_by_field(object)
       removed = []
 
-      annotations.each do |ann|
+      # Need to dup the list here so we don't break it when deleting things.
+      # We can't use delete_if because we want to know what we've deleted!
+      structure[:annotations].dup.each do |ann|
         if ann.uri == object ||
           ann.target == object ||
           ann.content == object
