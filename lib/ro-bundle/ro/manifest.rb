@@ -93,7 +93,7 @@ module ROBundle
     #
     # Return a list of all the aggregated resources in this Research Object.
     def aggregates
-      structure[:aggregates].dup
+      structure[:aggregates]
     end
 
     # :call-seq:
@@ -305,7 +305,7 @@ module ROBundle
     end
 
     def remove_aggregate_by_uri(object)
-      aggregates.each do |agg|
+      structure[:aggregates].each do |agg|
         if object == agg.uri || object == agg.file_entry
           return structure[:aggregates].delete(agg).uri
         end
