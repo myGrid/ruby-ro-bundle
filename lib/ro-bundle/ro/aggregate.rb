@@ -12,8 +12,7 @@ module ROBundle
   # A class to represent an aggregated resource in a Research Object. It holds
   # standard meta-data for either file or URI resources. An aggregate can only
   # represent a file OR a URI resource, not both at once.
-  class Aggregate
-    include Provenance
+  class Aggregate < ManifestEntry
 
     # :call-seq:
     #   new(uri, mediatype)
@@ -21,7 +20,7 @@ module ROBundle
     #
     # Create a new file or URI aggregate.
     def initialize(object, mediatype = nil)
-      @structure = {}
+      super()
 
       if object.instance_of?(Hash)
         init_json(object)
@@ -33,6 +32,14 @@ module ROBundle
                            end
         @structure[:mediatype] = mediatype
       end
+    end
+
+    # :call-seq:
+    #   edited? -> true or false
+    #
+    # Has this aggregate been altered in any way?
+    def edited?
+      @edited || (proxy.nil? ? false : proxy.edited?)
     end
 
     # :call-seq:
@@ -80,10 +87,6 @@ module ROBundle
     end
 
     private
-
-    def structure
-      @structure
-    end
 
     def init_json(object)
       @structure = init_provenance_defaults(object)

@@ -93,7 +93,7 @@ module ROBundle
     #
     # Return a list of all the aggregated resources in this Research Object.
     def aggregates
-      structure[:aggregates].dup
+      structure[:aggregates]
     end
 
     # :call-seq:
@@ -209,7 +209,7 @@ module ROBundle
     #
     # Return a list of all the annotations in this Research Object.
     def annotations
-      structure[:annotations].dup
+      structure[:annotations]
     end
 
     # :call-seq:
@@ -217,7 +217,11 @@ module ROBundle
     #
     # Has this manifest been altered in any way?
     def edited?
-      @edited
+      if @structure.nil?
+        @edited
+      else
+        @edited || edited(aggregates) || edited(annotations)
+      end
     end
 
     # :call-seq:
@@ -301,7 +305,7 @@ module ROBundle
     end
 
     def remove_aggregate_by_uri(object)
-      aggregates.each do |agg|
+      structure[:aggregates].each do |agg|
         if object == agg.uri || object == agg.file_entry
           return structure[:aggregates].delete(agg).uri
         end
@@ -314,7 +318,9 @@ module ROBundle
     def remove_annotation_by_field(object)
       removed = []
 
-      annotations.each do |ann|
+      # Need to dup the list here so we don't break it when deleting things.
+      # We can't use delete_if because we want to know what we've deleted!
+      structure[:annotations].dup.each do |ann|
         if ann.uri == object ||
           ann.target == object ||
           ann.content == object
@@ -324,6 +330,14 @@ module ROBundle
       end
 
       removed
+    end
+
+    def edited(resource)
+      resource.each do |res|
+        return true if res.edited?
+      end
+
+      false
     end
 
   end
