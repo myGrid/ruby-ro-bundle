@@ -18,7 +18,8 @@ class TestUtil < Test::Unit::TestCase
     json_mix = json_ok.merge(json_nil).merge(json_empty)
     empty = {}
 
-    assert_same json_ok, ROBundle::Util.clean_json(json_ok)
+    assert_not_same json_ok, ROBundle::Util.clean_json(json_ok)
+    assert_equal json_ok, ROBundle::Util.clean_json(json_ok)
     assert_equal empty, ROBundle::Util.clean_json(json_nil)
     assert_equal empty, ROBundle::Util.clean_json(json_empty)
     assert_equal json_ok, ROBundle::Util.clean_json(json_mix)
