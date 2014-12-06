@@ -59,7 +59,19 @@ module ROBundle
     # for much more information and a list of all the other methods available
     # in this class. RDoc does not list inherited methods, unfortunately.
     def self.create(filename, mimetype = MIMETYPE, &block)
-      super(filename, mimetype, &block)
+      # Wow. I have to specifically send nil as the block to stop super from
+      # sending the other block up automatically. Is this a bug in Ruby?
+      ro = super(filename, mimetype, &nil)
+
+      if block_given?
+        begin
+          yield ro
+        ensure
+          ro.close
+        end
+      end
+
+      ro
     end
 
     # :call-seq:
