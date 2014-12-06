@@ -255,6 +255,25 @@ module ROBundle
       stored
     end
 
+    # :stopdoc:
+    # For internal use only!
+    def init(struct = {})
+      init_default_context(struct)
+      init_default_id(struct)
+      init_provenance_defaults(struct)
+      struct[:history] = [*struct.fetch(:history, [])]
+      struct[:aggregates] = [*struct.fetch(:aggregates, [])].map do |agg|
+        Aggregate.new(agg)
+      end
+      struct[:annotations] = [*struct.fetch(:annotations, [])].map do |ann|
+        Annotation.new(ann)
+      end
+
+      @initialized = true
+      @structure = struct
+    end
+    # :startdoc:
+
     protected
 
     # :call-seq:
@@ -284,7 +303,6 @@ module ROBundle
     # objects where appropriate.
     def structure
       return @structure if initialized?
-      @initialized = true
 
       begin
         struct ||= JSON.parse(contents, :symbolize_names => true)
@@ -292,22 +310,7 @@ module ROBundle
         struct = {}
       end
 
-      @structure = init_defaults(struct)
-    end
-
-    def init_defaults(struct)
-      init_default_context(struct)
-      init_default_id(struct)
-      init_provenance_defaults(struct)
-      struct[:history] = [*struct.fetch(:history, [])]
-      struct[:aggregates] = [*struct.fetch(:aggregates, [])].map do |agg|
-        Aggregate.new(agg)
-      end
-      struct[:annotations] = [*struct.fetch(:annotations, [])].map do |ann|
-        Annotation.new(ann)
-      end
-
-      struct
+      init(struct)
     end
 
     def init_default_context(struct)

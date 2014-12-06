@@ -18,6 +18,20 @@ class TestCreation < Test::Unit::TestCase
     Dir.mktmpdir do |dir|
       filename = File.join(dir, "test.bundle")
 
+      bundle = ROBundle::File.create(filename)
+      refute bundle.commit_required?
+      bundle.close
+
+      assert_nothing_raised(ZipContainer::MalformedContainerError, ZipContainer::ZipError) do
+        ROBundle::File.verify!(filename)
+      end
+    end
+  end
+
+  def test_check_empty_bundle
+    Dir.mktmpdir do |dir|
+      filename = File.join(dir, "test.bundle")
+
       assert_nothing_raised do
         ROBundle::File.create(filename) do |b|
           assert(b.on_disk?)
@@ -32,8 +46,8 @@ class TestCreation < Test::Unit::TestCase
             b.id
           end
 
-          # Manifest has been accessed so has been populated with defaults.
-          assert b.commit_required?
+          # Manifest has been accessed but not changed.
+          refute b.commit_required?
         end
       end
 
@@ -55,7 +69,7 @@ class TestCreation < Test::Unit::TestCase
         bundle = ROBundle::File.create(filename) do |b|
           assert b.aggregates.empty?
           assert_nil b.find_entry(entry1)
-          assert b.commit_required?
+          refute b.commit_required?
 
           agg = b.add(entry1, $man_ex3, :aggregate => false)
           assert b.aggregates.empty?

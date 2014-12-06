@@ -323,6 +323,7 @@ module ROBundle
     # :stopdoc:
     def init_metadata
       mkdir(@ro_dir.full_name)
+      @manifest.init
       commit
     end
     # :startdoc:
