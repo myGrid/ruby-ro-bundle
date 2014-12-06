@@ -35,12 +35,6 @@ module ROBundle
       @manifest = Manifest.new
       @ro_dir = RODir.new(@manifest)
       initialize_managed_entries(@ro_dir)
-
-      # Create the .ro directory if it does not already exist.
-      if find_entry(@ro_dir.full_name).nil?
-        mkdir(@ro_dir.full_name)
-        commit
-      end
     end
     # :startdoc:
 
@@ -62,6 +56,7 @@ module ROBundle
       # Wow. I have to specifically send nil as the block to stop super from
       # sending the other block up automatically. Is this a bug in Ruby?
       ro = super(filename, mimetype, &nil)
+      ro.init_metadata
 
       if block_given?
         begin
@@ -324,6 +319,13 @@ module ROBundle
 
       @manifest.remove_aggregate(object)
     end
+
+    # :stopdoc:
+    def init_metadata
+      mkdir(@ro_dir.full_name)
+      commit
+    end
+    # :startdoc:
 
   end
 end
