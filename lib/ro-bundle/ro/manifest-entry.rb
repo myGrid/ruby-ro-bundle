@@ -34,6 +34,13 @@ module ROBundle
       @edited
     end
 
+    # :stopdoc:
+    # For internal use only!
+    def stored
+      @edited = false
+    end
+    # :startdoc:
+
     private
 
     def structure

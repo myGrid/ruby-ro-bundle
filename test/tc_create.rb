@@ -52,7 +52,7 @@ class TestCreation < Test::Unit::TestCase
       entry3 = "test3.json"
 
       assert_nothing_raised do
-        ROBundle::File.create(filename) do |b|
+        bundle = ROBundle::File.create(filename) do |b|
           assert b.aggregates.empty?
           assert_nil b.find_entry(entry1)
           assert b.commit_required?
@@ -76,6 +76,8 @@ class TestCreation < Test::Unit::TestCase
           b.add_aggregate(new_agg)
           assert b.aggregate?(entry1)
         end
+
+        refute bundle.commit_required?
       end
 
       ROBundle::File.open(filename) do |b|
@@ -102,7 +104,7 @@ class TestCreation < Test::Unit::TestCase
       entry2 = URI.parse(entry1)
 
       assert_nothing_raised do
-        ROBundle::File.create(filename) do |b|
+        bundle = ROBundle::File.create(filename) do |b|
           agg = b.add_aggregate(entry1)
           assert b.aggregate?(entry1)
           assert_nil b.find_entry(entry1)
@@ -111,7 +113,10 @@ class TestCreation < Test::Unit::TestCase
           b.add_aggregate(entry2)
           assert b.aggregate?(entry2)
           assert_nil b.find_entry(entry2)
+          assert b.commit_required?
         end
+
+        refute bundle.commit_required?
       end
 
       ROBundle::File.open(filename) do |b|
@@ -135,7 +140,7 @@ class TestCreation < Test::Unit::TestCase
       entry2 = ".ro/test2.json"
 
       assert_nothing_raised do
-        ROBundle::File.create(filename) do |b|
+        bundle = ROBundle::File.create(filename) do |b|
           assert b.history.empty?
           assert_nil b.find_entry(entry1)
 
@@ -148,7 +153,10 @@ class TestCreation < Test::Unit::TestCase
 
           b.add_history(entry1)
           assert entry_in_history_list(entry1, b.history)
+          assert b.commit_required?
         end
+
+        refute bundle.commit_required?
       end
 
       ROBundle::File.open(filename) do |b|

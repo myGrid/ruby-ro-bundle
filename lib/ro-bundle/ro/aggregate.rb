@@ -86,6 +86,14 @@ module ROBundle
       Util.clean_json(@structure).to_json(*a)
     end
 
+    # :stopdoc:
+    # For internal use only!
+    def stored
+      super
+      proxy.stored unless proxy.nil?
+    end
+    # :startdoc:
+
     private
 
     def init_json(object)

@@ -22,7 +22,7 @@ class TestAddAnnotation < Test::Unit::TestCase
       annotation2 = ROBundle::Annotation.new(entry, uri)
       annotation3 = ROBundle::Annotation.new(annotation1)
 
-      ROBundle::File.create(filename) do |b|
+      bundle = ROBundle::File.create(filename) do |b|
         b.add_aggregate(entry, $man_ex3)
 
         ann = b.add_annotation(annotation1)
@@ -42,7 +42,10 @@ class TestAddAnnotation < Test::Unit::TestCase
 
         assert b.annotation?(ann3.uri)
         assert_same annotation3, ann3
+        assert b.commit_required?
       end
+
+      refute bundle.commit_required?
 
       ROBundle::File.open(filename) do |b|
         refute b.aggregates.empty?

@@ -19,7 +19,7 @@ class TestRemove < Test::Unit::TestCase
 
       rm_file = "workflow.wfbundle"
 
-      ROBundle::File.open(filename) do |b|
+      bundle = ROBundle::File.open(filename) do |b|
         assert b.aggregate?(rm_file)
         assert_not_nil b.find_entry(rm_file)
         num_agg = b.aggregates.length
@@ -31,7 +31,10 @@ class TestRemove < Test::Unit::TestCase
         assert_nil b.find_entry(rm_file)
         assert_equal num_agg - 1, b.aggregates.length
         assert_equal num_ann - 4, b.annotations.length
+        assert b.commit_required?
       end
+
+      refute bundle.commit_required?
 
       removed_annotations = [
         ".ro/annotations/workflow.wfdesc.ttl",

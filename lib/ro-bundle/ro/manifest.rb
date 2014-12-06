@@ -251,6 +251,8 @@ module ROBundle
       container.file.open(full_name, "w") do |m|
         m.puts JSON.pretty_generate(self)
       end
+
+      stored
     end
 
     protected
@@ -270,6 +272,11 @@ module ROBundle
     end
 
     private
+
+    def stored
+      @edited = false
+      (aggregates + annotations).each { |a| a.stored }
+    end
 
     # The internal structure of this class cannot be setup at construction
     # time in the initializer as there is no route to its data on disk at that
