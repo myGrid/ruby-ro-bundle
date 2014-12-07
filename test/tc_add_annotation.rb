@@ -22,7 +22,7 @@ class TestAddAnnotation < Test::Unit::TestCase
       annotation2 = ROBundle::Annotation.new(entry, uri)
       annotation3 = ROBundle::Annotation.new(annotation1)
 
-      ROBundle::File.create(filename) do |b|
+      bundle = ROBundle::File.create(filename) do |b|
         b.add_aggregate(entry, $man_ex3)
 
         ann = b.add_annotation(annotation1)
@@ -33,16 +33,19 @@ class TestAddAnnotation < Test::Unit::TestCase
 
         ann1, ann2, ann3 = b.annotations
 
-        assert b.annotation?(ann1.annotation_id)
+        assert b.annotation?(ann1.uri)
         assert_same annotation1, ann1
 
-        assert b.annotation?(ann2.annotation_id)
+        assert b.annotation?(ann2.uri)
         assert_same annotation2, ann2
         assert_equal uri, ann2.content
 
-        assert b.annotation?(ann3.annotation_id)
+        assert b.annotation?(ann3.uri)
         assert_same annotation3, ann3
+        assert b.commit_required?
       end
+
+      refute bundle.commit_required?
 
       ROBundle::File.open(filename) do |b|
         refute b.aggregates.empty?
@@ -51,14 +54,14 @@ class TestAddAnnotation < Test::Unit::TestCase
 
         ann1, ann2, ann3 = b.annotations
 
-        assert b.annotation?(ann1.annotation_id)
+        assert b.annotation?(ann1.uri)
         assert_not_same annotation1, ann1
 
-        assert b.annotation?(ann2.annotation_id)
+        assert b.annotation?(ann2.uri)
         assert_not_same annotation2, ann2
         assert_equal uri, ann2.content
 
-        assert b.annotation?(ann3.annotation_id)
+        assert b.annotation?(ann3.uri)
         assert_not_same annotation3, ann3
       end
     end
@@ -124,10 +127,10 @@ class TestAddAnnotation < Test::Unit::TestCase
 
         ann1, ann2, ann3 = b.annotations
 
-        assert b.annotation?(ann1.annotation_id)
+        assert b.annotation?(ann1.uri)
         refute b.aggregate?(ann1.content)
 
-        assert b.annotation?(ann2.annotation_id)
+        assert b.annotation?(ann2.uri)
         assert b.aggregate?(ann2.content)
 
         assert b.annotation?(ann3)
@@ -141,10 +144,10 @@ class TestAddAnnotation < Test::Unit::TestCase
 
         ann1, ann2, ann3 = b.annotations
 
-        assert b.annotation?(ann1.annotation_id)
+        assert b.annotation?(ann1.uri)
         refute b.aggregate?(ann1.content)
 
-        assert b.annotation?(ann2.annotation_id)
+        assert b.annotation?(ann2.uri)
         assert b.aggregate?(ann2.content)
 
         assert b.annotation?(ann3)
@@ -174,10 +177,10 @@ class TestAddAnnotation < Test::Unit::TestCase
 
         ann1, ann2, ann3 = b.annotations
 
-        assert b.annotation?(ann1.annotation_id)
+        assert b.annotation?(ann1.uri)
         refute b.aggregate?(ann1.content)
 
-        assert b.annotation?(ann2.annotation_id)
+        assert b.annotation?(ann2.uri)
         assert b.aggregate?(ann2.content)
 
         assert b.annotation?(ann3)
@@ -191,10 +194,10 @@ class TestAddAnnotation < Test::Unit::TestCase
 
         ann1, ann2, ann3 = b.annotations
 
-        assert b.annotation?(ann1.annotation_id)
+        assert b.annotation?(ann1.uri)
         refute b.aggregate?(ann1.content)
 
-        assert b.annotation?(ann2.annotation_id)
+        assert b.annotation?(ann2.uri)
         assert b.aggregate?(ann2.content)
 
         assert b.annotation?(ann3)
@@ -223,11 +226,11 @@ class TestAddAnnotation < Test::Unit::TestCase
 
         ann1, ann2, ann3 = b.annotations
 
-        assert b.annotation?(ann1.annotation_id)
+        assert b.annotation?(ann1.uri)
         refute b.aggregate?(ann1.content)
         assert_equal content, b.file.read(".ro/#{ann1.content}")
 
-        assert b.annotation?(ann2.annotation_id)
+        assert b.annotation?(ann2.uri)
         assert b.aggregate?(ann2.content)
         assert_equal content, b.file.read(ann2.content)
 
@@ -243,11 +246,11 @@ class TestAddAnnotation < Test::Unit::TestCase
 
         ann1, ann2, ann3 = b.annotations
 
-        assert b.annotation?(ann1.annotation_id)
+        assert b.annotation?(ann1.uri)
         refute b.aggregate?(ann1.content)
         assert_equal content, b.file.read(".ro/#{ann1.content}")
 
-        assert b.annotation?(ann2.annotation_id)
+        assert b.annotation?(ann2.uri)
         assert b.aggregate?(ann2.content)
         assert_equal content, b.file.read(ann2.content)
 
@@ -280,10 +283,10 @@ class TestAddAnnotation < Test::Unit::TestCase
 
         ann1, ann2, ann3 = b.annotations
 
-        assert b.annotation?(ann1.annotation_id)
+        assert b.annotation?(ann1.uri)
         refute b.aggregate?(ann1.content)
 
-        assert b.annotation?(ann2.annotation_id)
+        assert b.annotation?(ann2.uri)
         refute b.aggregate?(uri1)
         assert b.aggregate?(ann2.content)
 
@@ -298,10 +301,10 @@ class TestAddAnnotation < Test::Unit::TestCase
 
         ann1, ann2, ann3 = b.annotations
 
-        assert b.annotation?(ann1.annotation_id)
+        assert b.annotation?(ann1.uri)
         refute b.aggregate?(ann1.content)
 
-        assert b.annotation?(ann2.annotation_id)
+        assert b.annotation?(ann2.uri)
         refute b.aggregate?(uri1)
         assert b.aggregate?(ann2.content)
 
@@ -333,10 +336,10 @@ class TestAddAnnotation < Test::Unit::TestCase
 
         ann1, ann2, ann3 = b.annotations
 
-        assert b.annotation?(ann1.annotation_id)
+        assert b.annotation?(ann1.uri)
         refute b.aggregate?(ann1.content)
 
-        assert b.annotation?(ann2.annotation_id)
+        assert b.annotation?(ann2.uri)
         refute b.aggregate?(uri1)
         assert b.aggregate?(ann2.content)
 
@@ -351,10 +354,10 @@ class TestAddAnnotation < Test::Unit::TestCase
 
         ann1, ann2, ann3 = b.annotations
 
-        assert b.annotation?(ann1.annotation_id)
+        assert b.annotation?(ann1.uri)
         refute b.aggregate?(ann1.content)
 
-        assert b.annotation?(ann2.annotation_id)
+        assert b.annotation?(ann2.uri)
         refute b.aggregate?(uri1)
         assert b.aggregate?(ann2.content)
 
@@ -383,11 +386,11 @@ class TestAddAnnotation < Test::Unit::TestCase
 
         ann1, ann2, ann3 = b.annotations
 
-        assert b.annotation?(ann1.annotation_id)
+        assert b.annotation?(ann1.uri)
         refute b.aggregate?(ann1.content)
         assert_equal content, b.file.read(".ro/#{ann1.content}")
 
-        assert b.annotation?(ann2.annotation_id)
+        assert b.annotation?(ann2.uri)
         assert b.aggregate?(ann2.content)
         assert_equal content, b.file.read(ann2.content)
 
@@ -403,11 +406,11 @@ class TestAddAnnotation < Test::Unit::TestCase
 
         ann1, ann2, ann3 = b.annotations
 
-        assert b.annotation?(ann1.annotation_id)
+        assert b.annotation?(ann1.uri)
         refute b.aggregate?(ann1.content)
         assert_equal content, b.file.read(".ro/#{ann1.content}")
 
-        assert b.annotation?(ann2.annotation_id)
+        assert b.annotation?(ann2.uri)
         assert b.aggregate?(ann2.content)
         assert_equal content, b.file.read(ann2.content)
 
@@ -433,7 +436,7 @@ class TestAddAnnotation < Test::Unit::TestCase
         b.add_annotation(annotation1)
         b.add_annotation(annotation2)
 
-        ann = b.add_annotation(annotation1.annotation_id, $man_ex3)
+        ann = b.add_annotation(annotation1.uri, $man_ex3)
         b.add_annotation(annotation1, $man_ex3, :aggregate => true)
         b.add_annotation(annotation2, entry)
 
@@ -441,10 +444,10 @@ class TestAddAnnotation < Test::Unit::TestCase
 
         _, _, ann1, ann2, ann3 = b.annotations
 
-        assert b.annotation?(ann1.annotation_id)
+        assert b.annotation?(ann1.uri)
         refute b.aggregate?(ann1.content)
 
-        assert b.annotation?(ann2.annotation_id)
+        assert b.annotation?(ann2.uri)
         assert b.aggregate?(ann2.content)
 
         assert b.annotation?(ann3)
@@ -458,10 +461,10 @@ class TestAddAnnotation < Test::Unit::TestCase
 
         _, _, ann1, ann2, ann3 = b.annotations
 
-        assert b.annotation?(ann1.annotation_id)
+        assert b.annotation?(ann1.uri)
         refute b.aggregate?(ann1.content)
 
-        assert b.annotation?(ann2.annotation_id)
+        assert b.annotation?(ann2.uri)
         assert b.aggregate?(ann2.content)
 
         assert b.annotation?(ann3)
@@ -493,10 +496,10 @@ class TestAddAnnotation < Test::Unit::TestCase
 
         _, ann1, ann2, ann3 = b.annotations
 
-        assert b.annotation?(ann1.annotation_id)
+        assert b.annotation?(ann1.uri)
         refute b.aggregate?(ann1.content)
 
-        assert b.annotation?(ann2.annotation_id)
+        assert b.annotation?(ann2.uri)
         assert b.aggregate?(ann2.content)
 
         assert b.annotation?(ann3)
@@ -510,10 +513,10 @@ class TestAddAnnotation < Test::Unit::TestCase
 
         _, ann1, ann2, ann3 = b.annotations
 
-        assert b.annotation?(ann1.annotation_id)
+        assert b.annotation?(ann1.uri)
         refute b.aggregate?(ann1.content)
 
-        assert b.annotation?(ann2.annotation_id)
+        assert b.annotation?(ann2.uri)
         assert b.aggregate?(ann2.content)
 
         assert b.annotation?(ann3)
@@ -541,11 +544,11 @@ class TestAddAnnotation < Test::Unit::TestCase
 
         _, ann1, ann2 = b.annotations
 
-        assert b.annotation?(ann1.annotation_id)
+        assert b.annotation?(ann1.uri)
         refute b.aggregate?(ann1.content)
         assert_equal content, b.file.read(".ro/#{ann1.content}")
 
-        assert b.annotation?(ann2.annotation_id)
+        assert b.annotation?(ann2.uri)
         assert b.aggregate?(ann2.content)
         assert_equal content, b.file.read(ann2.content)
       end
@@ -557,11 +560,11 @@ class TestAddAnnotation < Test::Unit::TestCase
 
         _, ann1, ann2 = b.annotations
 
-        assert b.annotation?(ann1.annotation_id)
+        assert b.annotation?(ann1.uri)
         refute b.aggregate?(ann1.content)
         assert_equal content, b.file.read(".ro/#{ann1.content}")
 
-        assert b.annotation?(ann2.annotation_id)
+        assert b.annotation?(ann2.uri)
         assert b.aggregate?(ann2.content)
         assert_equal content, b.file.read(ann2.content)
       end

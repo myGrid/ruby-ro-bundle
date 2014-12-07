@@ -18,6 +18,20 @@ class TestCreation < Test::Unit::TestCase
     Dir.mktmpdir do |dir|
       filename = File.join(dir, "test.bundle")
 
+      bundle = ROBundle::File.create(filename)
+      refute bundle.commit_required?
+      bundle.close
+
+      assert_nothing_raised(ZipContainer::MalformedContainerError, ZipContainer::ZipError) do
+        ROBundle::File.verify!(filename)
+      end
+    end
+  end
+
+  def test_check_empty_bundle
+    Dir.mktmpdir do |dir|
+      filename = File.join(dir, "test.bundle")
+
       assert_nothing_raised do
         ROBundle::File.create(filename) do |b|
           assert(b.on_disk?)
@@ -32,12 +46,8 @@ class TestCreation < Test::Unit::TestCase
             b.id
           end
 
-          # Manifest has been accessed so has been populated with defaults.
-          assert b.commit_required?
-
-          b.file.open(".ro/manifest.json", "w") do |m|
-            m.puts "{ }"
-          end
+          # Manifest has been accessed but not changed.
+          refute b.commit_required?
         end
       end
 
@@ -56,10 +66,10 @@ class TestCreation < Test::Unit::TestCase
       entry3 = "test3.json"
 
       assert_nothing_raised do
-        ROBundle::File.create(filename) do |b|
+        bundle = ROBundle::File.create(filename) do |b|
           assert b.aggregates.empty?
           assert_nil b.find_entry(entry1)
-          assert b.commit_required?
+          refute b.commit_required?
 
           agg = b.add(entry1, $man_ex3, :aggregate => false)
           assert b.aggregates.empty?
@@ -80,6 +90,8 @@ class TestCreation < Test::Unit::TestCase
           b.add_aggregate(new_agg)
           assert b.aggregate?(entry1)
         end
+
+        refute bundle.commit_required?
       end
 
       ROBundle::File.open(filename) do |b|
@@ -106,7 +118,7 @@ class TestCreation < Test::Unit::TestCase
       entry2 = URI.parse(entry1)
 
       assert_nothing_raised do
-        ROBundle::File.create(filename) do |b|
+        bundle = ROBundle::File.create(filename) do |b|
           agg = b.add_aggregate(entry1)
           assert b.aggregate?(entry1)
           assert_nil b.find_entry(entry1)
@@ -115,7 +127,10 @@ class TestCreation < Test::Unit::TestCase
           b.add_aggregate(entry2)
           assert b.aggregate?(entry2)
           assert_nil b.find_entry(entry2)
+          assert b.commit_required?
         end
+
+        refute bundle.commit_required?
       end
 
       ROBundle::File.open(filename) do |b|
@@ -139,7 +154,7 @@ class TestCreation < Test::Unit::TestCase
       entry2 = ".ro/test2.json"
 
       assert_nothing_raised do
-        ROBundle::File.create(filename) do |b|
+        bundle = ROBundle::File.create(filename) do |b|
           assert b.history.empty?
           assert_nil b.find_entry(entry1)
 
@@ -152,7 +167,10 @@ class TestCreation < Test::Unit::TestCase
 
           b.add_history(entry1)
           assert entry_in_history_list(entry1, b.history)
+          assert b.commit_required?
         end
+
+        refute bundle.commit_required?
       end
 
       ROBundle::File.open(filename) do |b|

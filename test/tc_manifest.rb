@@ -50,7 +50,7 @@ class TestManifest < Test::Unit::TestCase
   end
 
   def test_ensure_copied_lists
-    %w(authored_by history aggregates annotations).map(&:to_sym).each do |m|
+    %w(authored_by history).map(&:to_sym).each do |m|
       list = @manifest.send(m)
       list << "new item"
       assert_not_equal list, @manifest.send(m)
@@ -74,6 +74,22 @@ class TestManifest < Test::Unit::TestCase
 
     assert_equal "/new", @manifest.id
     assert_not_equal old, @manifest.id
+    assert @manifest.edited?
+  end
+
+  def test_change_aggregate
+    change = @manifest.aggregates[0]
+    change.add_author "Robert Haines"
+
+    assert @manifest.aggregates[0].edited?
+    assert @manifest.edited?
+  end
+
+  def test_change_annotation
+    change = @manifest.annotations[1]
+    change.content = "http://example.com/different"
+
+    assert @manifest.annotations[1].edited?
     assert @manifest.edited?
   end
 

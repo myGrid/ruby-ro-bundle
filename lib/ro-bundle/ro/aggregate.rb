@@ -12,34 +12,34 @@ module ROBundle
   # A class to represent an aggregated resource in a Research Object. It holds
   # standard meta-data for either file or URI resources. An aggregate can only
   # represent a file OR a URI resource, not both at once.
-  class Aggregate
-    include Provenance
+  class Aggregate < ManifestEntry
 
     # :call-seq:
-    #   new(filename, mediatype = nil)
-    #   new(URI)
+    #   new(uri, mediatype)
+    #   new(uri)
     #
     # Create a new file or URI aggregate.
-    def initialize(object, second = nil)
-      @structure = {}
+    def initialize(object, mediatype = nil)
+      super()
 
       if object.instance_of?(Hash)
         init_json(object)
       else
-        init_file_or_uri(object)
-
-        if @structure[:file]
-          @structure[:mediatype] = second
-        end
+        @structure[:uri] = if Util.is_absolute_uri?(object)
+                             object.to_s
+                           else
+                             object.start_with?("/") ? object : "/#{object}"
+                           end
+        @structure[:mediatype] = mediatype
       end
     end
 
     # :call-seq:
-    #   file
+    #   edited? -> true or false
     #
-    # The path of this aggregate. It should start with '/'.
-    def file
-      @structure[:file]
+    # Has this aggregate been altered in any way?
+    def edited?
+      @edited || (proxy.nil? ? false : proxy.edited?)
     end
 
     # :call-seq:
@@ -47,7 +47,7 @@ module ROBundle
     #
     # The path of this aggregate in "rubyzip" format, i.e. no leading '/'.
     def file_entry
-      Util.strip_leading_slash(file)
+      Util.strip_leading_slash(uri) unless Util.is_absolute_uri?(uri)
     end
 
     # :call-seq:
@@ -61,10 +61,20 @@ module ROBundle
     # :call-seq:
     #   mediatype
     #
-    # For a file aggregate, its
+    # This aggregate's
     # {IANA media type}[http://www.iana.org/assignments/media-types].
     def mediatype
       @structure[:mediatype]
+    end
+
+    # :call-seq:
+    #   proxy -> Proxy
+    #
+    # Return this aggregate's ORE proxy as per the specification of the
+    # {JSON structure}[https://researchobject.github.io/specifications/bundle/#json-structure]
+    # of the manifest.
+    def proxy
+      @structure[:bundledAs]
     end
 
     # :call-seq:
@@ -76,29 +86,22 @@ module ROBundle
       Util.clean_json(@structure).to_json(*a)
     end
 
+    # :stopdoc:
+    # For internal use only!
+    def stored
+      super
+      proxy.stored unless proxy.nil?
+    end
+    # :startdoc:
+
     private
 
-    def structure
-      @structure
-    end
-
     def init_json(object)
-      init_file_or_uri(object[:file] || object[:uri])
       @structure = init_provenance_defaults(object)
-
-      if @structure[:file]
-        @structure[:mediatype] = object[:mediatype]
-      end
-    end
-
-    def init_file_or_uri(object)
-      if object.is_a?(String) && !Util.is_absolute_uri?(object)
-        name = object.start_with?("/") ? object : "/#{object}"
-        @structure[:file] = name
-      elsif Util.is_absolute_uri?(object)
-        @structure[:uri] = object.to_s
-      else
-        raise InvalidAggregateError.new(object)
+      @structure[:uri] = object[:uri]
+      @structure[:mediatype] = object[:mediatype]
+      unless object[:bundledAs].nil?
+        @structure[:bundledAs] = Proxy.new(object[:bundledAs])
       end
     end
 

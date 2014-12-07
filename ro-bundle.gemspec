@@ -19,8 +19,8 @@ Gem::Specification.new do |spec|
     "Research Object (RO) bundles."
   spec.description   = "This library provides an API for manipulating "\
     "Research Object (RO) bundles. The RO bundle specification can be found "\
-    "at http://purl.org/wf4ever/ro-bundle."
-  spec.homepage      = "http://www.taverna.org.uk"
+    "at https://w3id.org/bundle/."
+  spec.homepage      = "http://www.researchobject.org/"
   spec.license       = "BSD"
 
   spec.files         = `git ls-files`.split($/)
@@ -35,7 +35,8 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = ">= 1.9.3"
   spec.add_development_dependency "bundler", "~> 1.5"
   spec.add_development_dependency "rake", "~> 10.1"
-  spec.add_development_dependency("rdoc", "~> 4.1")
+  spec.add_development_dependency "rdoc", "~> 4.1"
+  spec.add_development_dependency "test-unit", "~> 3.0"
   spec.add_development_dependency "coveralls"
   spec.add_runtime_dependency "ucf", "~> 1.0"
   spec.add_runtime_dependency "json", "~> 1.8"

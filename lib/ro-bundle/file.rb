@@ -34,12 +34,6 @@ module ROBundle
       @manifest = Manifest.new
       @ro_dir = RODir.new(@manifest)
       initialize_managed_entries(@ro_dir)
-
-      # Create the .ro directory if it does not already exist.
-      if find_entry(@ro_dir.full_name).nil?
-        mkdir(@ro_dir.full_name)
-        commit
-      end
     end
     # :startdoc:
 
@@ -58,7 +52,20 @@ module ROBundle
     # for much more information and a list of all the other methods available
     # in this class. RDoc does not list inherited methods, unfortunately.
     def self.create(filename, mimetype = MIMETYPE, &block)
-      super(filename, mimetype, &block)
+      # Wow. I have to specifically send nil as the block to stop super from
+      # sending the other block up automatically. Is this a bug in Ruby?
+      ro = super(filename, mimetype, &nil)
+      ro.init_metadata
+
+      if block_given?
+        begin
+          yield ro
+        ensure
+          ro.close
+        end
+      end
+
+      ro
     end
 
     # :call-seq:
@@ -188,9 +195,7 @@ module ROBundle
       end
 
       aggregates.each do |agg|
-        return true if agg.uri == entry ||
-          agg.file == entry ||
-          agg.file_entry == entry
+        return true if agg.uri == entry || agg.file_entry == entry
       end
 
       false
@@ -212,10 +217,10 @@ module ROBundle
     #
     # Is the supplied id or annotation registered in this Research Object?
     def annotation?(id)
-      id = id.annotation_id if id.instance_of?(Annotation)
+      id = id.uri if id.instance_of?(Annotation)
 
       annotations.each do |ann|
-        return true if ann.annotation_id == id
+        return true if ann.uri == id
       end
 
       false
@@ -230,12 +235,8 @@ module ROBundle
     # otherwise.
     def commit
       if @manifest.edited?
-        name = @manifest.full_name
-        remove(name, true) unless find_entry(name).nil?
-
-        file.open(name, "w") do |m|
-          m.puts JSON.pretty_generate(@manifest)
-        end
+        # This will overwrite the old version.
+        @manifest.write
 
         @ro_dir.cleanup_annotation_data
       end
@@ -317,6 +318,14 @@ module ROBundle
 
       @manifest.remove_aggregate(object)
     end
+
+    # :stopdoc:
+    def init_metadata
+      mkdir(@ro_dir.full_name)
+      @manifest.init
+      commit
+    end
+    # :startdoc:
 
   end
 end

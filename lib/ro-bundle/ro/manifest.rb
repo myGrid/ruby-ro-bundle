@@ -24,7 +24,17 @@ module ROBundle
     def initialize
       super(FILE_NAME, :required => true)
 
+      @structure = nil
+      @initialized = false
       @edited = false
+    end
+
+    # :call-seq:
+    #   initialized? -> true or false
+    #
+    # Has this manifest been initialized?
+    def initialized?
+      @initialized
     end
 
     # :call-seq:
@@ -93,7 +103,7 @@ module ROBundle
     #
     # Return a list of all the aggregated resources in this Research Object.
     def aggregates
-      structure[:aggregates].dup
+      structure[:aggregates]
     end
 
     # :call-seq:
@@ -134,12 +144,9 @@ module ROBundle
 
       if object.is_a?(Aggregate)
         removed = structure[:aggregates].delete(object)
-
-        unless removed.nil?
-          removed = removed.file.nil? ? removed.uri : removed.file
-        end
+        removed = removed.uri unless removed.nil?
       else
-        removed = remove_aggregate_by_file_or_uri(object)
+        removed = remove_aggregate_by_uri(object)
       end
 
       unless removed.nil?
@@ -165,7 +172,7 @@ module ROBundle
         # If the supplied Annotation object is already registered then it is
         # the annotation itself we are annotating!
         if container.annotation?(object)
-          object = Annotation.new(object.annotation_id, content)
+          object = Annotation.new(object.uri, content)
         end
       else
         object = Annotation.new(object, content)
@@ -200,7 +207,7 @@ module ROBundle
       end
 
       removed.each do |ann|
-        id = ann.annotation_id
+        id = ann.uri
         remove_annotation(id) unless id.nil?
       end
 
@@ -212,7 +219,7 @@ module ROBundle
     #
     # Return a list of all the annotations in this Research Object.
     def annotations
-      structure[:annotations].dup
+      structure[:annotations]
     end
 
     # :call-seq:
@@ -220,7 +227,11 @@ module ROBundle
     #
     # Has this manifest been altered in any way?
     def edited?
-      @edited
+      if @structure.nil?
+        @edited
+      else
+        @edited || edited(aggregates) || edited(annotations)
+      end
     end
 
     # :call-seq:
@@ -231,6 +242,37 @@ module ROBundle
     def to_json(*a)
       Util.clean_json(structure).to_json(*a)
     end
+
+    # :call-seq:
+    #   write
+    #
+    # Write this manifest into the RO Bundle, overwriting the old version.
+    def write
+      container.file.open(full_name, "w") do |m|
+        m.puts JSON.pretty_generate(self)
+      end
+
+      stored
+    end
+
+    # :stopdoc:
+    # For internal use only!
+    def init(struct = {})
+      init_default_context(struct)
+      init_default_id(struct)
+      init_provenance_defaults(struct)
+      struct[:history] = [*struct.fetch(:history, [])]
+      struct[:aggregates] = [*struct.fetch(:aggregates, [])].map do |agg|
+        Aggregate.new(agg)
+      end
+      struct[:annotations] = [*struct.fetch(:annotations, [])].map do |ann|
+        Annotation.new(ann)
+      end
+
+      @initialized = true
+      @structure = struct
+    end
+    # :startdoc:
 
     protected
 
@@ -250,12 +292,17 @@ module ROBundle
 
     private
 
+    def stored
+      @edited = false
+      (aggregates + annotations).each { |a| a.stored }
+    end
+
     # The internal structure of this class cannot be setup at construction
     # time in the initializer as there is no route to its data on disk at that
     # point. Once loaded, parts of the structure are converted to local
     # objects where appropriate.
     def structure
-      return @structure if @structure
+      return @structure if initialized?
 
       begin
         struct ||= JSON.parse(contents, :symbolize_names => true)
@@ -263,22 +310,7 @@ module ROBundle
         struct = {}
       end
 
-      @structure = init_defaults(struct)
-    end
-
-    def init_defaults(struct)
-      init_default_context(struct)
-      init_default_id(struct)
-      init_provenance_defaults(struct)
-      struct[:history] = [*struct.fetch(:history, [])]
-      struct[:aggregates] = [*struct.fetch(:aggregates, [])].map do |agg|
-        Aggregate.new(agg)
-      end
-      struct[:annotations] = [*struct.fetch(:annotations, [])].map do |ann|
-        Annotation.new(ann)
-      end
-
-      struct
+      init(struct)
     end
 
     def init_default_context(struct)
@@ -303,14 +335,10 @@ module ROBundle
       struct
     end
 
-    def remove_aggregate_by_file_or_uri(object)
-      aggregates.each do |agg|
-        if Util.is_absolute_uri?(object)
-          return structure[:aggregates].delete(agg).uri if object == agg.uri
-        else
-          if object == agg.file || object == agg.file_entry
-            return structure[:aggregates].delete(agg).file
-          end
+    def remove_aggregate_by_uri(object)
+      structure[:aggregates].each do |agg|
+        if object == agg.uri || object == agg.file_entry
+          return structure[:aggregates].delete(agg).uri
         end
       end
 
@@ -321,8 +349,10 @@ module ROBundle
     def remove_annotation_by_field(object)
       removed = []
 
-      annotations.each do |ann|
-        if ann.annotation_id == object ||
+      # Need to dup the list here so we don't break it when deleting things.
+      # We can't use delete_if because we want to know what we've deleted!
+      structure[:annotations].dup.each do |ann|
+        if ann.uri == object ||
           ann.target == object ||
           ann.content == object
 
@@ -331,6 +361,14 @@ module ROBundle
       end
 
       removed
+    end
+
+    def edited(resource)
+      resource.each do |res|
+        return true if res.edited?
+      end
+
+      false
     end
 
   end
