@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #------------------------------------------------------------------------------
-# Copyright (c) 2014 The University of Manchester, UK.
+# Copyright (c) 2014, 2015 The University of Manchester, UK.
 #
 # BSD Licenced. See LICENCE.rdoc for details.
 #
@@ -21,7 +21,7 @@ bundle = ARGV[0]
 
 begin
   ro = ROBundle::File.open(bundle)
-rescue ZipContainer::MalformedContainerError, ZipContainer::ZipError => err
+rescue ZipContainer::MalformedContainerError, ZipContainer::Error => err
   puts err.to_s
   exit 1
 end

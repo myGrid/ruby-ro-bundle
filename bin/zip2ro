@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #------------------------------------------------------------------------------
-# Copyright (c) 2014 The University of Manchester, UK.
+# Copyright (c) 2014, 2015 The University of Manchester, UK.
 #
 # BSD Licenced. See LICENCE.rdoc for details.
 #
@@ -51,7 +51,7 @@ begin
       end
     end
   end
-rescue Errno::ENOENT, Zip::Error => err
+rescue Errno::ENOENT, ZipContainer::Error => err
   puts err.to_s
   exit 1
 end

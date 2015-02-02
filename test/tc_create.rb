@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-# Copyright (c) 2014 The University of Manchester, UK.
+# Copyright (c) 2014, 2015 The University of Manchester, UK.
 #
 # BSD Licenced. See LICENCE.rdoc for details.
 #
@@ -22,7 +22,7 @@ class TestCreation < Test::Unit::TestCase
       refute bundle.commit_required?
       bundle.close
 
-      assert_nothing_raised(ZipContainer::MalformedContainerError, ZipContainer::ZipError) do
+      assert_nothing_raised(ZipContainer::MalformedContainerError, ZipContainer::Error) do
         ROBundle::File.verify!(filename)
       end
     end
@@ -51,7 +51,7 @@ class TestCreation < Test::Unit::TestCase
         end
       end
 
-      assert_nothing_raised(ZipContainer::MalformedContainerError, ZipContainer::ZipError) do
+      assert_nothing_raised(ZipContainer::MalformedContainerError, ZipContainer::Error) do
         ROBundle::File.verify!(filename)
       end
     end
