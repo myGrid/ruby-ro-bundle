@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-# Copyright (c) 2014 The University of Manchester, UK.
+# Copyright (c) 2014, 2015 The University of Manchester, UK.
 #
 # BSD Licenced. See LICENCE.rdoc for details.
 #
@@ -48,7 +48,9 @@ class TestAggregate < Test::Unit::TestCase
       :uri => file,
       :mediatype => type,
       :createdOn => "2013-02-12T19:37:32.939Z",
-      :createdBy => { "name" => "Robert Haines" }
+      :createdBy => { "name" => "Robert Haines" },
+      :authoredOn => "2013-02-12T19:37:32.939Z",
+      :authoredBy => { "name" => "Robert Haines" }
     }
 
     agg = ROBundle::Aggregate.new(json)
@@ -57,6 +59,9 @@ class TestAggregate < Test::Unit::TestCase
     assert_equal type, agg.mediatype
     assert agg.created_on.instance_of?(Time)
     assert agg.created_by.instance_of?(ROBundle::Agent)
+    assert agg.authored_on.instance_of?(Time)
+    assert agg.authored_by.instance_of?(Array)
+    assert agg.authored_by[0].instance_of?(ROBundle::Agent)
   end
 
   def test_complex_uri
