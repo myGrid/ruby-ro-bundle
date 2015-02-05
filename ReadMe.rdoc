@@ -52,7 +52,7 @@ See the contents of the tests directory for even more example usage.
 The {RO Bundle specification}[https://w3id.org/bundle/] is largely
 implemented but there are notable gaps at present, including:
 
-* Aggregates do not support ORE proxies yet.
 * Extra provenance information cannot yet be added using the <tt>pav:</tt>
   namespace.
-* The <tt>@graph</tt> member is not supported in the top-level manifest.
+* The <tt>@graph</tt> member is not supported in the top-level manifest
+  (although if it is present it will be preserved).
