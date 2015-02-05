@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-# Copyright (c) 2014 The University of Manchester, UK.
+# Copyright (c) 2014, 2015 The University of Manchester, UK.
 #
 # BSD Licenced. See LICENCE.rdoc for details.
 #
@@ -43,6 +43,14 @@ class TestProxy < Test::Unit::TestCase
     assert_not_nil proxy
     assert_equal "/folder/", proxy.folder
     assert_equal "external.txt", proxy.filename
+  end
+
+  def test_json_output
+    proxy = @manifest.aggregates[3].proxy
+    json = JSON.parse(JSON.generate(proxy))
+
+    assert_equal "/folder/", json["folder"]
+    assert_equal "external.txt", json["filename"]
   end
 
 end
