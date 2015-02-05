@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-# Copyright (c) 2014 The University of Manchester, UK.
+# Copyright (c) 2014, 2015 The University of Manchester, UK.
 #
 # BSD Licenced. See LICENCE.rdoc for details.
 #
@@ -13,6 +13,7 @@ Coveralls.wear!
 $hello = "test/data/HelloAnyone.robundle"
 $invalid = "test/data/invalid-manifest.robundle"
 $man_ex3 = "test/data/example3-manifest.json"
+$man_ex6 = "test/data/example6-manifest.json"
 $man_empty = "test/data/empty-manifest.json"
 $man_invalid = "test/data/invalid-manifest.json"
 

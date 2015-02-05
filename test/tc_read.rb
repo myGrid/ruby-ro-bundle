@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-# Copyright (c) 2014 The University of Manchester, UK.
+# Copyright (c) 2014, 2015 The University of Manchester, UK.
 #
 # BSD Licenced. See LICENCE.rdoc for details.
 #
@@ -12,11 +12,11 @@ require "ro-bundle"
 class TestRead < Test::Unit::TestCase
 
   def test_verify_valid
-    assert_nothing_raised(ZipContainer::MalformedContainerError, ZipContainer::ZipError) do
+    assert_nothing_raised(ZipContainer::MalformedContainerError, ZipContainer::Error) do
       ROBundle::File.verify!($hello)
     end
 
-    assert(ROBundle::File.verify($hello))
+    assert ROBundle::File.verify?($hello)
   end
 
   def test_verify_invalid
@@ -24,7 +24,7 @@ class TestRead < Test::Unit::TestCase
       ROBundle::File.verify!($invalid)
     end
 
-    refute ROBundle::File.verify($invalid)
+    refute ROBundle::File.verify?($invalid)
   end
 
   def test_manifest

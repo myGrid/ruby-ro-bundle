@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-# Copyright (c) 2014 The University of Manchester, UK.
+# Copyright (c) 2014, 2015 The University of Manchester, UK.
 #
 # BSD Licenced. See LICENCE.rdoc for details.
 #
@@ -38,7 +38,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rdoc", "~> 4.1"
   spec.add_development_dependency "test-unit", "~> 3.0"
   spec.add_development_dependency "coveralls"
-  spec.add_runtime_dependency "ucf", "~> 1.1"
+  spec.add_runtime_dependency "ucf", "~> 2.0"
   spec.add_runtime_dependency "json", "~> 1.8"
   spec.add_runtime_dependency "uuid", "~> 2.3"
 end

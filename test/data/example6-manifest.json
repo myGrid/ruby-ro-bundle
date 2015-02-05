@@ -1,0 +1,17 @@
+{
+    "@context":  [
+        "https://w3id.org/bundle/context"
+    ],
+    "id": "/",
+    "manifest": "manifest.json",
+    "aggregates": [
+       { "uri": "http://example.com/blog/2012" },
+       { "uri": "http://example.com/blog/2013" }
+    ],
+    "@graph": [
+      { "@id": "http://example.com/blog/2013",
+        "dct:replaces": "http://example.com/blog/2012" },
+      { "@id": "http://example.com/blog/2012",
+        "dct:isReplacedBy": "http://example.com/blog/2013" }
+    ]
+}

@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-# Copyright (c) 2014 The University of Manchester, UK.
+# Copyright (c) 2014, 2015 The University of Manchester, UK.
 #
 # BSD Licenced. See LICENCE.rdoc for details.
 #
@@ -232,6 +232,13 @@ class TestManifest < Test::Unit::TestCase
     assert_raises(JSON::ParserError) do
       assert manifest.context.instance_of?(Array)
     end
+  end
+
+  def test_manifest_graph_statement_preserved
+    manifest = FakeManifest.new($man_ex6)
+
+    json = JSON.parse(JSON.generate(manifest))
+    assert_not_nil json["@graph"]
   end
 
 end
