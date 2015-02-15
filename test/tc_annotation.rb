@@ -121,4 +121,16 @@ class TestAnnotation < Test::Unit::TestCase
     assert_equal [target1, target2] + @target, an.target
   end
 
+  def test_remove_target
+    an = ROBundle::Annotation.new(@json)
+
+    assert an.target.instance_of?(Array)
+    assert_equal 2, an.target.length
+    rem = an.remove_target("/")
+    assert an.edited?
+    assert_equal "/", rem
+    assert an.target.instance_of?(String)
+    assert_equal "/file.txt", an.target
+  end
+
 end

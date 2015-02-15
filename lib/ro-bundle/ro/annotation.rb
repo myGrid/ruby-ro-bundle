@@ -64,6 +64,21 @@ module ROBundle
     end
 
     # :call-seq:
+    #   remove_target(target) -> target or nil
+    #
+    # Remove a target from this annotation. An annotation must always have a
+    # target so this method will do nothing if it already has only one target.
+    #
+    # If the target can be removed then it is returned, otherwise nil is
+    # returned.
+    def remove_target(remove)
+      return if @structure[:about].length == 1
+
+      @edited = true
+      @structure[:about].delete(remove)
+    end
+
+    # :call-seq:
     #   content
     #
     # The identifier for a resource that contains the body of the annotation.
