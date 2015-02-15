@@ -78,7 +78,21 @@ class TestAnnotation < Test::Unit::TestCase
     assert_same id, an.uri
   end
 
-  def test_json_output
+  def test_json_output_single_target
+    an = ROBundle::Annotation.new("/")
+    json = JSON.parse(JSON.generate(an))
+
+    assert_equal "/", json["about"]
+  end
+
+  def test_json_output_multiple_targets
+    an = ROBundle::Annotation.new(@target)
+    json = JSON.parse(JSON.generate(an))
+
+    assert_equal @target, json["about"]
+  end
+
+  def test_full_json_output
     an = ROBundle::Annotation.new(@json)
     json = JSON.parse(JSON.generate(an))
 

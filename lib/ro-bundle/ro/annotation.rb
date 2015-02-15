@@ -27,23 +27,27 @@ module ROBundle
 
       if object.instance_of?(Hash)
         @structure = object
+        @structure[:about] = [*@structure[:about]]
         init_provenance_defaults(@structure)
       else
         @structure = {}
-        @structure[:about] = object
+        @structure[:about] = [*object]
         @structure[:uri] = UUID.generate(:urn)
         @structure[:content] = content
       end
     end
 
     # :call-seq:
-    #   target
+    #   target -> String or Array
     #
-    # The identifier for the annotated resource. This is considered the target
-    # of the annotation, that is the resource the annotation content is
-    # "somewhat about".
+    # The identifier(s) for the annotated resource. This is considered the
+    # target of the annotation, that is the resource (or resources) the
+    # annotation content is "somewhat about".
+    #
+    # The target can either be a singleton or a list of targets.
     def target
-      @structure[:about].dup
+      about = @structure[:about]
+      about.length == 1 ? about[0] : about.dup
     end
 
     # :call-seq:
@@ -77,7 +81,9 @@ module ROBundle
     # Write this Annotation out as a json string. Takes the same options as
     # JSON#generate.
     def to_json(*a)
-      Util.clean_json(@structure).to_json(*a)
+      cleaned = Util.clean_json(@structure)
+      cleaned[:about] = target
+      cleaned.to_json(*a)
     end
 
   end
