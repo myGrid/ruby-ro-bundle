@@ -38,6 +38,14 @@ module ROBundle
     end
 
     # :call-seq:
+    #   annotates?(target) -> true or false
+    #
+    # Does this annotation object annotate the supplied target?
+    def annotates?(target)
+      @structure[:about].include?(target)
+    end
+
+    # :call-seq:
     #   target -> String or Array
     #
     # The identifier(s) for the annotated resource. This is considered the

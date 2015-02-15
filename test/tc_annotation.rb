@@ -33,6 +33,8 @@ class TestAnnotation < Test::Unit::TestCase
     assert_equal @target, an.target
     assert_nil an.content
     assert_not_nil an.uri
+    assert an.annotates?("/")
+    assert an.annotates?("/file.txt")
     refute an.edited?
   end
 
@@ -63,6 +65,7 @@ class TestAnnotation < Test::Unit::TestCase
     an.target << "/more.html"
     assert_equal 2, an.target.length
     refute an.edited?
+    refute an.annotates?("/more.html")
   end
 
   def test_change_content
@@ -116,8 +119,11 @@ class TestAnnotation < Test::Unit::TestCase
 
     assert_equal target1, an.target
     an.add_target(target2)
+    assert an.annotates?("/more.html")
     assert_equal [target1, target2], an.target
     an.add_target(@target)
+    assert an.annotates?("/")
+    assert an.annotates?("/file.txt")
     assert_equal [target1, target2] + @target, an.target
   end
 
@@ -128,6 +134,7 @@ class TestAnnotation < Test::Unit::TestCase
     assert_equal 2, an.target.length
     rem = an.remove_target("/")
     assert an.edited?
+    refute an.annotates?("/")
     assert_equal "/", rem
     assert an.target.instance_of?(String)
     assert_equal "/file.txt", an.target
