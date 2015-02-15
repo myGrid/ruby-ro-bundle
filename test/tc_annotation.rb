@@ -33,6 +33,7 @@ class TestAnnotation < Test::Unit::TestCase
     assert_equal @target, an.target
     assert_nil an.content
     assert_not_nil an.uri
+    refute an.edited?
   end
 
   def test_create_with_content
@@ -41,6 +42,7 @@ class TestAnnotation < Test::Unit::TestCase
     assert_equal @target, an.target
     assert_equal @content, an.content
     assert_not_nil an.uri
+    refute an.edited?
   end
 
   def test_create_from_json
@@ -51,6 +53,7 @@ class TestAnnotation < Test::Unit::TestCase
     assert_equal @id, an.uri
     assert an.created_on.instance_of?(Time)
     assert an.created_by.instance_of?(ROBundle::Agent)
+    refute an.edited?
   end
 
   def test_cannot_change_target_directly
@@ -59,6 +62,7 @@ class TestAnnotation < Test::Unit::TestCase
     assert_equal 2, an.target.length
     an.target << "/more.html"
     assert_equal 2, an.target.length
+    refute an.edited?
   end
 
   def test_change_content
@@ -67,6 +71,7 @@ class TestAnnotation < Test::Unit::TestCase
     an.content = new_content
 
     assert_equal new_content, an.content
+    assert an.edited?
   end
 
   def test_generate_annotation_id
@@ -76,6 +81,7 @@ class TestAnnotation < Test::Unit::TestCase
     assert id.instance_of?(String)
     assert id.start_with?("urn:uuid:")
     assert_same id, an.uri
+    refute an.edited?
   end
 
   def test_json_output_single_target
