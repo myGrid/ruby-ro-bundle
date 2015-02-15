@@ -51,6 +51,19 @@ module ROBundle
     end
 
     # :call-seq:
+    #   add_target(new_target, ...) -> added target(s)
+    #
+    # Add a new target, or targets, to this annotation.
+    #
+    # The target(s) added are returned.
+    def add_target(add)
+      @structure[:about] += [*add]
+
+      @edited = true
+      add
+    end
+
+    # :call-seq:
     #   content
     #
     # The identifier for a resource that contains the body of the annotation.

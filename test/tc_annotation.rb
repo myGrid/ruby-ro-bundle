@@ -109,4 +109,16 @@ class TestAnnotation < Test::Unit::TestCase
     assert_equal @creator, json["createdBy"]["name"]
   end
 
+  def test_add_targets
+    target1 = "/target.pdf"
+    target2 = "/more.html"
+    an = ROBundle::Annotation.new(target1)
+
+    assert_equal target1, an.target
+    an.add_target(target2)
+    assert_equal [target1, target2], an.target
+    an.add_target(@target)
+    assert_equal [target1, target2] + @target, an.target
+  end
+
 end
