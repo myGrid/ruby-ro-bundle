@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-# Copyright (c) 2014 The University of Manchester, UK.
+# Copyright (c) 2014, 2015 The University of Manchester, UK.
 #
 # BSD Licenced. See LICENCE.rdoc for details.
 #
@@ -27,23 +27,63 @@ module ROBundle
 
       if object.instance_of?(Hash)
         @structure = object
+        @structure[:about] = [*@structure[:about]]
         init_provenance_defaults(@structure)
       else
         @structure = {}
-        @structure[:about] = object
+        @structure[:about] = [*object]
         @structure[:uri] = UUID.generate(:urn)
         @structure[:content] = content
       end
     end
 
     # :call-seq:
-    #   target
+    #   annotates?(target) -> true or false
     #
-    # The identifier for the annotated resource. This is considered the target
-    # of the annotation, that is the resource the annotation content is
-    # "somewhat about".
+    # Does this annotation object annotate the supplied target?
+    def annotates?(target)
+      @structure[:about].include?(target)
+    end
+
+    # :call-seq:
+    #   target -> String or Array
+    #
+    # The identifier(s) for the annotated resource. This is considered the
+    # target of the annotation, that is the resource (or resources) the
+    # annotation content is "somewhat about".
+    #
+    # The target can either be a singleton or a list of targets.
     def target
-      @structure[:about]
+      about = @structure[:about]
+      about.length == 1 ? about[0] : about.dup
+    end
+
+    # :call-seq:
+    #   add_target(new_target, ...) -> added target(s)
+    #
+    # Add a new target, or targets, to this annotation.
+    #
+    # The target(s) added are returned.
+    def add_target(add)
+      @structure[:about] += [*add]
+
+      @edited = true
+      add
+    end
+
+    # :call-seq:
+    #   remove_target(target) -> target or nil
+    #
+    # Remove a target from this annotation. An annotation must always have a
+    # target so this method will do nothing if it already has only one target.
+    #
+    # If the target can be removed then it is returned, otherwise nil is
+    # returned.
+    def remove_target(remove)
+      return if @structure[:about].length == 1
+
+      @edited = true
+      @structure[:about].delete(remove)
     end
 
     # :call-seq:
@@ -77,7 +117,9 @@ module ROBundle
     # Write this Annotation out as a json string. Takes the same options as
     # JSON#generate.
     def to_json(*a)
-      Util.clean_json(@structure).to_json(*a)
+      cleaned = Util.clean_json(@structure)
+      cleaned[:about] = target
+      cleaned.to_json(*a)
     end
 
   end
