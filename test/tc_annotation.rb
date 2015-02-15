@@ -53,6 +53,14 @@ class TestAnnotation < Test::Unit::TestCase
     assert an.created_by.instance_of?(ROBundle::Agent)
   end
 
+  def test_cannot_change_target_directly
+    an = ROBundle::Annotation.new(@json)
+
+    assert_equal 2, an.target.length
+    an.target << "/more.html"
+    assert_equal 2, an.target.length
+  end
+
   def test_change_content
     an = ROBundle::Annotation.new(@json)
     new_content = "/file.txt"

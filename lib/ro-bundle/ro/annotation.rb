@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-# Copyright (c) 2014 The University of Manchester, UK.
+# Copyright (c) 2014, 2015 The University of Manchester, UK.
 #
 # BSD Licenced. See LICENCE.rdoc for details.
 #
@@ -43,7 +43,7 @@ module ROBundle
     # of the annotation, that is the resource the annotation content is
     # "somewhat about".
     def target
-      @structure[:about]
+      @structure[:about].dup
     end
 
     # :call-seq:
