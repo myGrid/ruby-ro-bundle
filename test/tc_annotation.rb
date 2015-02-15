@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-# Copyright (c) 2014 The University of Manchester, UK.
+# Copyright (c) 2014, 2015 The University of Manchester, UK.
 #
 # BSD Licenced. See LICENCE.rdoc for details.
 #
@@ -71,8 +71,8 @@ class TestAnnotation < Test::Unit::TestCase
   end
 
   def test_json_output
-    agent = ROBundle::Annotation.new(@json)
-    json = JSON.parse(JSON.generate(agent))
+    an = ROBundle::Annotation.new(@json)
+    json = JSON.parse(JSON.generate(an))
 
     assert_equal @target, json["about"]
     assert_equal @content, json["content"]
