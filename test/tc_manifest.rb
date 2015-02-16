@@ -95,102 +95,102 @@ class TestManifest < Test::Unit::TestCase
 
   def test_remove_annotation_by_object
     remove = @manifest.annotations[0]
-    assert_equal 3, @manifest.annotations.length
+    assert_equal 4, @manifest.annotations.length
 
     @manifest.remove_annotation(remove)
-    assert_equal 1, @manifest.annotations.length
+    assert_equal 2, @manifest.annotations.length
     assert @manifest.edited?
 
     @manifest.remove_annotation(remove)
-    assert_equal 1, @manifest.annotations.length
+    assert_equal 2, @manifest.annotations.length
     assert @manifest.edited?
   end
 
   def test_remove_annotation_by_id
     id = "urn:uuid:d67466b4-3aeb-4855-8203-90febe71abdf"
-    assert_equal 3, @manifest.annotations.length
+    assert_equal 4, @manifest.annotations.length
 
     @manifest.remove_annotation(id)
-    assert_equal 1, @manifest.annotations.length
+    assert_equal 2, @manifest.annotations.length
     assert @manifest.edited?
 
     @manifest.remove_annotation(id)
-    assert_equal 1, @manifest.annotations.length
+    assert_equal 2, @manifest.annotations.length
     assert @manifest.edited?
   end
 
   def test_remove_annotation_by_about
     about = "/folder/soup.jpeg"
-    assert_equal 3, @manifest.annotations.length
+    assert_equal 4, @manifest.annotations.length
 
     @manifest.remove_annotation(about)
-    assert_equal 1, @manifest.annotations.length
+    assert_equal 2, @manifest.annotations.length
     assert @manifest.edited?
 
     @manifest.remove_annotation(about)
-    assert_equal 1, @manifest.annotations.length
+    assert_equal 2, @manifest.annotations.length
     assert @manifest.edited?
   end
 
   def test_remove_non_existent_annotations
     about = "not-here!"
     id = about
-    assert_equal 3, @manifest.annotations.length
+    assert_equal 4, @manifest.annotations.length
 
     @manifest.remove_annotation(about)
-    assert_equal 3, @manifest.annotations.length
+    assert_equal 4, @manifest.annotations.length
     refute @manifest.edited?
 
     @manifest.remove_annotation(id)
-    assert_equal 3, @manifest.annotations.length
+    assert_equal 4, @manifest.annotations.length
     refute @manifest.edited?
   end
 
   def test_remove_aggregate_by_object
     remove = @manifest.aggregates[0]
     assert_equal 4, @manifest.aggregates.length
-    assert_equal 3, @manifest.annotations.length
+    assert_equal 4, @manifest.annotations.length
 
     @manifest.remove_aggregate(remove)
     assert_equal 3, @manifest.aggregates.length
-    assert_equal 1, @manifest.annotations.length
+    assert_equal 2, @manifest.annotations.length
     assert @manifest.edited?
 
     @manifest.remove_aggregate(remove)
     assert_equal 3, @manifest.aggregates.length
-    assert_equal 1, @manifest.annotations.length
+    assert_equal 2, @manifest.annotations.length
     assert @manifest.edited?
   end
 
   def test_remove_aggregate_by_file
     remove = "/folder/soup.jpeg"
     assert_equal 4, @manifest.aggregates.length
-    assert_equal 3, @manifest.annotations.length
+    assert_equal 4, @manifest.annotations.length
 
     @manifest.remove_aggregate(remove)
     assert_equal 3, @manifest.aggregates.length
-    assert_equal 1, @manifest.annotations.length
+    assert_equal 2, @manifest.annotations.length
     assert @manifest.edited?
 
     @manifest.remove_aggregate(remove)
     assert_equal 3, @manifest.aggregates.length
-    assert_equal 1, @manifest.annotations.length
+    assert_equal 2, @manifest.annotations.length
     assert @manifest.edited?
   end
 
   def test_remove_aggregate_by_uri
     remove = "http://example.com/blog/"
     assert_equal 4, @manifest.aggregates.length
-    assert_equal 3, @manifest.annotations.length
+    assert_equal 4, @manifest.annotations.length
 
     @manifest.remove_aggregate(remove)
     assert_equal 3, @manifest.aggregates.length
-    assert_equal 3, @manifest.annotations.length
+    assert_equal 4, @manifest.annotations.length
     assert @manifest.edited?
 
     @manifest.remove_aggregate(remove)
     assert_equal 3, @manifest.aggregates.length
-    assert_equal 3, @manifest.annotations.length
+    assert_equal 4, @manifest.annotations.length
     assert @manifest.edited?
   end
 

@@ -358,6 +358,10 @@ module ROBundle
 
           removed << structure[:annotations].delete(ann)
         end
+
+        # Maybe the annotation has multiple targets? In which remove one if it
+        # matches. This works because #dup is a shallow copy.
+        ann.remove_target(object) if ann.annotates?(object)
       end
 
       removed
