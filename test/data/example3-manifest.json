@@ -9,7 +9,7 @@
         "uri":     "http://example.com/foaf#alice",
         "orcid":   "http://orcid.org/0000-0002-1825-0097",
         "name":    "Alice W. Land" },
-    "history":   "evolution.ttl",
+    "history":   [ "evolution.ttl" ],
     "aggregates": [
        { "uri":  "/folder/soup.jpeg" },
        { "uri":  "http://example.com/blog/" },
@@ -34,7 +34,7 @@
       { "about":   "urn:uuid:a0cf8616-bee4-4a71-b21e-c60e6499a644",
         "content": "http://example.com/blog/they-aggregated-our-file" },
 
-      { "about":   [ "urn:uuid:d67466b4-3aeb-4855-8203-90febe71abdf" ],
+      { "about":   "urn:uuid:d67466b4-3aeb-4855-8203-90febe71abdf",
         "content": "annotations/a-meta-annotation-in-this-ro.txt" },
 
       { "about":   [ "/", "urn:uuid:d67466b4-3aeb-4855-8203-90febe71abdf" ],

@@ -241,4 +241,13 @@ class TestManifest < Test::Unit::TestCase
     assert_not_nil json["@graph"]
   end
 
+  def test_json_output
+    manifest = FakeManifest.new($man_ex3)
+
+    ex3_json = JSON.parse(File.read($man_ex3))
+    json = JSON.parse(JSON.generate(manifest))
+
+    assert_equal ex3_json, json
+  end
+
 end
