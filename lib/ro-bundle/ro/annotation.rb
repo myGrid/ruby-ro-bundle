@@ -119,7 +119,7 @@ module ROBundle
     def to_json(*a)
       cleaned = Util.clean_json(@structure)
       cleaned[:about] = target
-      cleaned.to_json(*a)
+      JSON.generate(cleaned,*a)
     end
 
   end

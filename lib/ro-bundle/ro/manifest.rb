@@ -240,7 +240,7 @@ module ROBundle
     # Write this Manifest out as a json string. Takes the same options as
     # JSON#generate.
     def to_json(*a)
-      Util.clean_json(structure).to_json(*a)
+      JSON.generate(Util.clean_json(structure),*a)
     end
 
     # :call-seq:
