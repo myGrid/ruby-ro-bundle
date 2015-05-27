@@ -11,12 +11,17 @@ module ROBundle
 
   # A class to represent an aggregated resource in a Research Object. It holds
   # standard meta-data for either file or URI resources. An aggregate can only
-  # represent a file OR a URI resource, not both at once.
+  # represent a file path OR a URI resource, not both at once.
+  #
+  # If a file path is passed, it will be correctly encoded into a valid absolute URI. If an absolute URI is passed, it is
+  # assumed to already have been encoded.
   class Aggregate < ManifestEntry
 
     # :call-seq:
     #   new(uri, mediatype)
     #   new(uri)
+    #   new(filepath)
+    #   new(filepath, mediatype)
     #
     # Create a new file or URI aggregate.
     def initialize(object, mediatype = nil)
@@ -28,7 +33,7 @@ module ROBundle
         @structure[:uri] = if Util.is_absolute_uri?(object)
                              object.to_s
                            else
-                             object.start_with?("/") ? object : "/#{object}"
+                             URI.encode(object.start_with?("/") ? object : "/#{object}")
                            end
         @structure[:mediatype] = mediatype
       end
@@ -47,7 +52,7 @@ module ROBundle
     #
     # The path of this aggregate in "rubyzip" format, i.e. no leading '/'.
     def file_entry
-      Util.strip_leading_slash(uri) unless Util.is_absolute_uri?(uri)
+      URI.decode(Util.strip_leading_slash(uri)) unless Util.is_absolute_uri?(uri)
     end
 
     # :call-seq:

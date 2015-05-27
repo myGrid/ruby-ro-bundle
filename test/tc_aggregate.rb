@@ -64,6 +64,27 @@ class TestAggregate < Test::Unit::TestCase
     assert agg.authored_by[0].instance_of?(ROBundle::Agent)
   end
 
+  def test_filepath_encoding_handling
+    file = "file with spaces.txt"
+    agg = ROBundle::Aggregate.new(file)
+    assert_equal "/file%20with%20spaces.txt",agg.uri
+    assert_equal file,agg.file_entry
+  end
+
+  def test_encoded_uri
+    uri = "http://example.com/encoded%20uri"
+
+    json = {
+        :uri => uri
+    }
+    agg = ROBundle::Aggregate.new(json)
+
+    assert_equal uri, agg.uri
+
+    agg = ROBundle::Aggregate.new(uri)
+    assert_equal uri, agg.uri
+  end
+
   def test_complex_uri
     uri = "http://example.com/good.txt"
 
