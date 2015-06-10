@@ -1,6 +1,6 @@
 = Research Object Bundle Ruby Library
 
-Authors::     Robert Haines
+Authors::     Robert Haines, Stuart Owen
 Contact::     mailto:support@mygrid.org.uk
 Homepage::    http://mygrid.github.io/ruby-ro-bundle
 Source code:: https://github.com/myGrid/ruby-ro-bundle
