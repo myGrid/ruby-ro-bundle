@@ -13,7 +13,7 @@ require 'ro-bundle/version'
 Gem::Specification.new do |spec|
   spec.name          = "ro-bundle"
   spec.version       = ROBundle::VERSION
-  spec.authors       = ["Robert Haines"]
+  spec.authors       = ["Robert Haines", "Stuart Owen", "Finn Bacall"]
   spec.email         = ["support@mygrid.org.uk"]
   spec.summary       = "This library provides an API for manipulating "\
     "Research Object (RO) bundles."
