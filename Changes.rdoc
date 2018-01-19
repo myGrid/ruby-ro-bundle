@@ -1,5 +1,9 @@
 = Changes log for the RO Bundle Ruby Gem
 
+== Version 0.2.2
+
+* Update ucf dependency to fix rubyzip security vulnerability.
+
 == Version 0.1.0
 
 * Use the ZipContainer::ZipError in examples and tests.
