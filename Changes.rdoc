@@ -1,5 +1,9 @@
 = Changes log for the RO Bundle Ruby Gem
 
+== Version 0.2.3
+
+* Re-added missing `manifest` reader to ROBundle::File.
+
 == Version 0.2.2
 
 * Update ucf dependency to fix rubyzip security vulnerability.

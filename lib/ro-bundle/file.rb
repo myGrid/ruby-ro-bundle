@@ -26,6 +26,8 @@ module ROBundle
 
     private_class_method :new
 
+    attr_reader :manifest
+
     # :stopdoc:
     MIMETYPE = "application/vnd.wf4ever.robundle+zip"
 

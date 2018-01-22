@@ -185,4 +185,18 @@ class TestCreation < Test::Unit::TestCase
     end
   end
 
+  def test_get_manifest
+    Dir.mktmpdir do |dir|
+      filename = File.join(dir, "test.bundle")
+
+      assert_nothing_raised do
+        ROBundle::File.create(filename) do |b|
+          assert_nothing_raised do
+            b.manifest
+          end
+        end
+      end
+    end
+  end
+
 end
