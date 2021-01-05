@@ -13,6 +13,7 @@ require "time"
 require "ucf"
 require "uri"
 require "uuid"
+require "addressable"
 
 require "ro-bundle/version"
 require "ro-bundle/util"

@@ -15,7 +15,7 @@ task :default => [:test]
 Rake::TestTask.new do |t|
   t.libs << "test"
   t.test_files = FileList['test/ts_ro_bundle.rb']
-  t.verbose = true
+  t.verbose = false
 end
 
 RDoc::Task.new do |r|

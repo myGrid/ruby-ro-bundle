@@ -33,7 +33,7 @@ module ROBundle
         @structure[:uri] = if Util.is_absolute_uri?(object)
                              object.to_s
                            else
-                             URI.encode(object.start_with?("/") ? object : "/#{object}")
+                             Addressable::URI.encode(object.start_with?("/") ? object : "/#{object}")
                            end
         @structure[:mediatype] = mediatype
       end
@@ -52,7 +52,7 @@ module ROBundle
     #
     # The path of this aggregate in "rubyzip" format, i.e. no leading '/'.
     def file_entry
-      URI.decode(Util.strip_leading_slash(uri)) unless Util.is_absolute_uri?(uri)
+      Addressable::URI.unencode(Util.strip_leading_slash(uri)) unless Util.is_absolute_uri?(uri)
     end
 
     # :call-seq:

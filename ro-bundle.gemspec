@@ -28,17 +28,17 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.has_rdoc         = true
   spec.extra_rdoc_files = [ "Changes.rdoc", "Licence.rdoc", "ReadMe.rdoc" ]
   spec.rdoc_options     = [ "-N", "--tab-width=2", "--main=ReadMe.rdoc" ]
 
   spec.required_ruby_version = ">= 1.9.3"
   spec.add_development_dependency "bundler", "~> 1.5"
-  spec.add_development_dependency "rake", "~> 10.1"
+  spec.add_development_dependency "rake", ">= 12.3.3"
   spec.add_development_dependency "rdoc", "~> 4.1"
   spec.add_development_dependency "test-unit", "~> 3.0"
   spec.add_development_dependency "coveralls"
   spec.add_runtime_dependency "ucf", "~> 2.0.2"
-  spec.add_runtime_dependency "json", "~> 1.8"
+  spec.add_runtime_dependency "json", ">= 2.3.0"
   spec.add_runtime_dependency "uuid", "~> 2.3"
+  spec.add_runtime_dependency "addressable", "~> 2.7.0"
 end
