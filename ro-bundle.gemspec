@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
     "Research Object (RO) bundles. The RO bundle specification can be found "\
     "at https://w3id.org/bundle/."
   spec.homepage      = "http://www.researchobject.org/"
-  spec.license       = "BSD"
+  spec.license       = "BSD-3-Clause"
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
@@ -35,7 +35,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 12.3.3"
   spec.add_development_dependency "rdoc", "~> 6.3.1"
   spec.add_development_dependency "test-unit", "~> 3.0"
-  spec.add_development_dependency "coveralls"
+  spec.add_development_dependency "coveralls", "~> 0.8.23"
   spec.add_runtime_dependency "ucf", "~> 2.0.2"
   spec.add_runtime_dependency "json", "~> 2.3.0"
   spec.add_runtime_dependency "uuid", "~> 2.3"
